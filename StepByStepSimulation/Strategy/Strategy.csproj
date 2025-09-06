@@ -5,16 +5,14 @@
     <PropertyGroup>
         <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
         <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-        <ProjectGuid>{C6BAF886-5113-4615-A47F-F9C695F989F2}</ProjectGuid>
+        <ProjectGuid>{409CAE95-0C57-4CB4-9A8C-D7364FB646DE}</ProjectGuid>
         <OutputType>Exe</OutputType>
         <AppDesignerFolder>Properties</AppDesignerFolder>
-        <RootNamespace>StepByStepSimulation</RootNamespace>
-        <AssemblyName>StepByStepSimulation</AssemblyName>
-        <TargetFrameworkVersion>v9.0</TargetFrameworkVersion>
+        <RootNamespace>Strategy</RootNamespace>
+        <AssemblyName>Strategy</AssemblyName>
+        <TargetFrameworkVersion>v4.8.1</TargetFrameworkVersion>
         <FileAlignment>512</FileAlignment>
         <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
-        <LangVersion>13</LangVersion>
-        <Nullable>enable</Nullable>
     </PropertyGroup>
     <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
         <PlatformTarget>AnyCPU</PlatformTarget>
@@ -42,16 +40,8 @@
         <Reference Include="System.Xml"/>
     </ItemGroup>
     <ItemGroup>
-        <Compile Include="Enums\ForkState.cs" />
-        <Compile Include="Enums\PhilosopherState.cs" />
-        <Compile Include="Models\Philosopher.cs" />
-        <Compile Include="Models\Table.cs" />
-        <Compile Include="PhilosopherInitializer.cs" />
         <Compile Include="Program.cs"/>
         <Compile Include="Properties\AssemblyInfo.cs"/>
-    </ItemGroup>
-    <ItemGroup>
-      <Content Include="Resources\Philosophers.txt" />
     </ItemGroup>
     <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets"/>
     <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
