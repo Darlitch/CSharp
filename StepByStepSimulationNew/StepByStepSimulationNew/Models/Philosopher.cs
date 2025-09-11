@@ -1,4 +1,5 @@
-﻿using StepByStepSimulationNew.Enums;
+﻿using System;
+using StepByStepSimulationNew.Enums;
 
 namespace StepByStepSimulationNew.Models;
 
