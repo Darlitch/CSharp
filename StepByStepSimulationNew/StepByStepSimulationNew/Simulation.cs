@@ -8,8 +8,8 @@ public class Simulation
 {
     private readonly IStrategy _strategy;
     private const int SimulationDuration = 1000000;
-    public List<ForkState> Forks { get; set; }
-    public List<Philosopher> Philosophers { get; set; }
+    private List<ForkState> Forks { get; set; }
+    private List<Philosopher> Philosophers { get; set; }
 
     public Simulation(IStrategy strategy)
     {
@@ -31,7 +31,7 @@ public class Simulation
         }
     }
 
-    public void RunStep()
+    private void RunStep()
     {
         for (int i = 0; i < Philosophers.Count; ++i)
         {
@@ -41,6 +41,9 @@ public class Simulation
                 HandleAction(currAction, i);
             }
             Philosophers[i].Update();
+            
+            
+            
             if (Philosophers[i].Action == PhilosopherAction.ReleaseLeftFork)
             {
                 Forks[i] = ForkState.Available;
@@ -50,7 +53,7 @@ public class Simulation
         }
     }
 
-    public void HandleAction(PhilosopherAction action, int philosopherId)
+    private void HandleAction(PhilosopherAction action, int philosopherId)
     {
         switch (action)
         {
@@ -59,14 +62,13 @@ public class Simulation
                 Philosophers[philosopherId].TakeLeftFork();
                 break;
             case PhilosopherAction.TakeRightFork:
-                if (Philosophers[philosopherId].Action == PhilosopherAction.TakeLeftFork &&
-                    Philosophers[philosopherId].CurrentActionDuration == 0)
-                {
-                    Philosophers[philosopherId].TakeRightFork();
-                    Forks[(philosopherId + 1) % Forks.Count] = ForkState.InUse;
-                } 
+                Philosophers[philosopherId].TakeRightFork();
+                Forks[(philosopherId + 1) % Forks.Count] = ForkState.InUse;
                 break;
             case PhilosopherAction.None:
+            case PhilosopherAction.ReleaseRightFork:
+            case PhilosopherAction.ReleaseLeftFork: // тут немного чудит райдер с подсказками, поэтому вопрос в реализации
+            default:
                 break;
         }
     }

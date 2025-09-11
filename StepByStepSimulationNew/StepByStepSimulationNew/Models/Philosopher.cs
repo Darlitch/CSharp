@@ -80,6 +80,8 @@ public class Philosopher
                     StartEating();
                 }
                 break;
+            default:
+                break;
         }
 
         if (Action is PhilosopherAction.TakeLeftFork or PhilosopherAction.TakeRightFork)
