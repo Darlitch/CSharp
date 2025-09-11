@@ -1,15 +1,20 @@
-﻿namespace Strategy.Strategies;
+﻿using StepByStepSimulationNew.Enums;
+
+namespace Strategy.Strategies;
 
 public class NaiveStrategy : IStrategy
 {
     
-    public void TryToStartEating(int philosopherId)
+    public PhilosopherAction TryToStartEating(ForkState leftFork, ForkState rightFork)
     {
-        
-    }
-
-    public void ReleaseFork(int philosopherId)
-    {
-        
+        if (leftFork == ForkState.Available)
+        {
+            return PhilosopherAction.TakeLeftFork;
+        }
+        if (rightFork == ForkState.Available)
+        {
+            return PhilosopherAction.TakeRightFork;
+        }
+        return PhilosopherAction.None;
     }
 }

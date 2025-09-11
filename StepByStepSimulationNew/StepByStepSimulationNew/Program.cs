@@ -12,5 +12,6 @@ internal class Program
     {
         IStrategy strategy = new NaiveStrategy();
         Simulation simulation = new Simulation(strategy);
+        simulation.Run();
     }
 }
