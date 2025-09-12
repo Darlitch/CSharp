@@ -1,6 +1,6 @@
 ﻿using StepByStepSimulationNew.Enums;
 
-namespace Strategy;
+namespace StrategyInterface;
 
 public interface IStrategy
 {

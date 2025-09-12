@@ -11,7 +11,8 @@ public class PhilosopherInitializer
     public static List<Philosopher> InitPhilosophers()
     {
         var philosophers = new List<Philosopher>();
-        string file = "Resources/Philosophers.txt";
+        // string file = "Resources/Philosophers.txt";
+        string file = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources", "Philosophers.txt");
         if (!File.Exists(file))
         {
             throw new FileNotFoundException($"Could not find {file}", file);

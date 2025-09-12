@@ -8,7 +8,11 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\StrategyInterface\StrategyInterface.csproj" />
       <ProjectReference Include="..\Strategy\Strategy.csproj" />
+        <None Update="Resources\Philosophers.txt">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
     </ItemGroup>
 
 </Project>

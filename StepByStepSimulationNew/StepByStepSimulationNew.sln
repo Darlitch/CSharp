@@ -4,6 +4,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StepByStepSimulationNew", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Strategy", "Strategy\Strategy.csproj", "{0B9A7E41-7A69-465A-8639-B71944B6CFCA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StrategyInterface", "StrategyInterface\StrategyInterface.csproj", "{E9365892-37ED-4AC5-8A89-4556E20D001A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +20,9 @@ Global
 		{0B9A7E41-7A69-465A-8639-B71944B6CFCA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0B9A7E41-7A69-465A-8639-B71944B6CFCA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0B9A7E41-7A69-465A-8639-B71944B6CFCA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E9365892-37ED-4AC5-8A89-4556E20D001A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E9365892-37ED-4AC5-8A89-4556E20D001A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E9365892-37ED-4AC5-8A89-4556E20D001A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E9365892-37ED-4AC5-8A89-4556E20D001A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

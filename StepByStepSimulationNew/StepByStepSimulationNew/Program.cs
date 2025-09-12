@@ -3,6 +3,7 @@
 using StepByStepSimulationNew.Models;
 using Strategy;
 using Strategy.Strategies;
+using StrategyInterface;
 
 namespace StepByStepSimulationNew;
 

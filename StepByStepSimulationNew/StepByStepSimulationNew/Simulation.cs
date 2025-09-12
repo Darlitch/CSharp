@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using StepByStepSimulationNew.Enums;
+﻿using StepByStepSimulationNew.Enums;
 using StepByStepSimulationNew.Models;
-using Strategy;
+using StrategyInterface;
 
 namespace StepByStepSimulationNew;
 
@@ -68,9 +65,6 @@ public class Simulation
                 Philosophers[philosopherId].TakeRightFork();
                 Forks[(philosopherId + 1) % Forks.Count] = ForkState.InUse;
                 break;
-            case PhilosopherAction.None:
-            case PhilosopherAction.ReleaseRightFork:
-            case PhilosopherAction.ReleaseLeftFork: // тут немного чудит райдер с подсказками, поэтому вопрос в реализации
             default:
                 break;
         }

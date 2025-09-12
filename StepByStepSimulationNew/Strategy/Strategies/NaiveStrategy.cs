@@ -1,4 +1,5 @@
 ﻿using StepByStepSimulationNew.Enums;
+using StrategyInterface;
 
 namespace Strategy.Strategies;
 
