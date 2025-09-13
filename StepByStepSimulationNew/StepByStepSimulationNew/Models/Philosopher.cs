@@ -7,7 +7,8 @@ public class Philosopher
 {
     public string Name { get; }
     public int Eaten { get; private set; }
-    public int CurrentActionDuration { get; set; }
+    public int WaitingTime { get; private set; }
+    public int CurrentActionDuration { get; private set; }
     public PhilosopherState State { get; private set; }
     public PhilosopherAction Action { get; private set; }
     public ForkState LeftForkState { get; private set; }
@@ -25,7 +26,8 @@ public class Philosopher
     {
         State = PhilosopherState.Thinking;
         CurrentActionDuration = new Random().Next(3, 10);
-        Action = PhilosopherAction.ReleaseLeftFork;
+        // CurrentActionDuration = 5;
+        Action = PhilosopherAction.ReleaseForks;
         LeftForkState = ForkState.Available;
         RightForkState = ForkState.Available;
     }
@@ -80,6 +82,8 @@ public class Philosopher
                 {
                     StartEating();
                 }
+
+                WaitingTime++;
                 break;
             default:
                 break;

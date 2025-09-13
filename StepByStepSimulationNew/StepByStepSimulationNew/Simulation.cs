@@ -1,5 +1,6 @@
 ﻿using StepByStepSimulationNew.Enums;
 using StepByStepSimulationNew.Models;
+using StepByStepSimulationNew.Models.DTO;
 using StrategyInterface;
 
 namespace StepByStepSimulationNew;
@@ -13,8 +14,8 @@ public class Simulation
 
     public Simulation(IStrategy strategy)
     {
-        Forks = Enumerable.Repeat(ForkState.Available, 5).ToList();
         Philosophers = PhilosopherInitializer.InitPhilosophers();
+        Forks = Enumerable.Repeat(ForkState.Available, Philosophers.Count).ToList();
         _strategy = strategy;
     }
 
@@ -23,28 +24,34 @@ public class Simulation
         for (int i = 0; i < SimulationDuration; ++i)
         {
             RunStep();
-            if (Philosophers.All(p => p.IsHungry) && Forks.All(f => f == ForkState.InUse))
+            if (i % 1 == 1000 && i != 0)
             {
+                Metrics.PrintMetrics(new MetricDto(Philosophers, Forks, i));
+            }
+            if (Philosophers.All(p => p is { IsHungry: true, Action: PhilosopherAction.None }) && Forks.All(f => f == ForkState.InUse))
+            {
+                Metrics.PrintFinalMetrics(new MetricDto(Philosophers, Forks, i));
                 Console.WriteLine($"Deadlock at step {i}!");
-                break;
+                return;
             }
         }
+        Metrics.PrintMetrics(new MetricDto(Philosophers, Forks, SimulationDuration));
     }
 
     private void RunStep()
     {
         for (int i = 0; i < Philosophers.Count; ++i)
         {
+            Philosophers[i].Update();
             if (Philosophers[i].IsHungry && Philosophers[i].Action == PhilosopherAction.None)
             {
                 PhilosopherAction currAction = _strategy.TryToStartEating(Forks[i], Forks[(i + 1) % Forks.Count]);
                 HandleAction(currAction, i);
             }
-            Philosophers[i].Update();
             
             
             
-            if (Philosophers[i].Action == PhilosopherAction.ReleaseLeftFork)
+            if (Philosophers[i].Action == PhilosopherAction.ReleaseForks)
             {
                 Forks[i] = ForkState.Available;
                 Forks[(i + 1) % Forks.Count] = ForkState.Available;
