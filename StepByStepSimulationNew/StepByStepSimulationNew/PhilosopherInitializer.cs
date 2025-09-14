@@ -1,16 +1,21 @@
-﻿using System.Collections.Generic;
-using System.IO;
-using StepByStepSimulationNew.Models;
+﻿
+using Model;
 
 namespace StepByStepSimulationNew;
 
-public class PhilosopherInitializer
+public static class PhilosopherInitializer
 {
     private const int PhilosopherCount = 5;
 
     public static List<Philosopher> InitPhilosophers()
     {
         var philosophers = new List<Philosopher>();
+        // var forks = Enumerable.Repeat(new Fork(), PhilosopherCount).ToList();
+        var forks = new List<Fork>();
+        for (int i = 0; i < PhilosopherCount; ++i)
+        {
+            forks.Add(new Fork());
+        }
         // string file = "Resources/Philosophers.txt";
         string file = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources", "Philosophers.txt");
         if (!File.Exists(file))
@@ -21,12 +26,13 @@ public class PhilosopherInitializer
         try
         {
             using var reader = new StreamReader(file);
-            string? line;
-            while ((line = reader.ReadLine()) != null && philosophers.Count < PhilosopherCount)
+            int ind = 0;
+            while (reader.ReadLine() is { } line && philosophers.Count < PhilosopherCount)
             {
                 if (!string.IsNullOrWhiteSpace(line))
                 {
-                    philosophers.Add(new Philosopher(line.Trim()));
+                    philosophers.Add(new Philosopher(line.Trim(), forks[ind], forks[(ind + 1) % PhilosopherCount]));
+                    ind++;
                 }
             }
 

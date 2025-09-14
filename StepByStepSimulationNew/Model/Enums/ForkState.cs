@@ -1,4 +1,4 @@
-﻿namespace StepByStepSimulationNew.Enums;
+﻿namespace Model.Enums;
 
 public enum ForkState
 {

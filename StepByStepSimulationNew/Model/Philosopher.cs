@@ -1,7 +1,6 @@
-﻿using System;
-using StepByStepSimulationNew.Enums;
+﻿using Model.Enums;
 
-namespace StepByStepSimulationNew.Models;
+namespace Model;
 
 public class Philosopher
 {
@@ -11,34 +10,35 @@ public class Philosopher
     public int CurrentActionDuration { get; private set; }
     public PhilosopherState State { get; private set; }
     public PhilosopherAction Action { get; private set; }
-    public ForkState LeftForkState { get; private set; }
-    public ForkState RightForkState { get; private set; }
+    public Fork LeftFork { get; }
+    public Fork RightFork { get; }
 
-    public Philosopher(string name)
+    public Philosopher(string name, Fork leftFork, Fork rightFork)
     {
         Name = name;
         Eaten = 0;
+        LeftFork = leftFork;
+        RightFork = rightFork;
         StartThinking();
         Action = PhilosopherAction.None;
     }
 
-    public void StartThinking()
+    private void StartThinking()
     {
         State = PhilosopherState.Thinking;
         CurrentActionDuration = new Random().Next(3, 10);
         // CurrentActionDuration = 5;
-        Action = PhilosopherAction.ReleaseForks;
-        LeftForkState = ForkState.Available;
-        RightForkState = ForkState.Available;
+        // Action = PhilosopherAction.ReleaseForks;
+        Action = PhilosopherAction.None;
     }
 
-    public void SetHungry()
+    private void SetHungry()
     {
         State = PhilosopherState.Hungry;
         CurrentActionDuration = 0;
     }
 
-    public void StartEating()
+    private void StartEating()
     {
         State = PhilosopherState.Eating;
         CurrentActionDuration = new Random().Next(4, 5);
@@ -49,20 +49,21 @@ public class Philosopher
     public void TakeLeftFork()
     {
         Action = PhilosopherAction.TakeLeftFork;
-        LeftForkState = ForkState.InUse;
+        LeftFork.TakeFork(Name);
         CurrentActionDuration = 2;
     }
     
     public void TakeRightFork()
     {
         Action = PhilosopherAction.TakeRightFork;
-        RightForkState = ForkState.InUse;
+        RightFork.TakeFork(Name);
         CurrentActionDuration = 2;
     }
 
-    public void ReleaseFork()
+    public void ReleaseForks()
     {
-        Action = PhilosopherAction.None;
+        LeftFork.ReleaseFork();
+        RightFork.ReleaseFork();
     }
 
     public void Update()
@@ -76,9 +77,10 @@ public class Philosopher
                 break;
             case PhilosopherState.Eating:
                 StartThinking();
+                ReleaseForks();
                 break;
             case PhilosopherState.Hungry:
-                if (LeftForkState == ForkState.InUse && RightForkState == ForkState.InUse)
+                if (LeftFork.Owner == Name && RightFork.Owner == Name)
                 {
                     StartEating();
                 }

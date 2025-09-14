@@ -2,7 +2,7 @@
 
 namespace Strategy.Strategies;
 
-public class CoordinatorStrategy : IStrategy
+public class CoordinatorStrategy 
 {
     
 }

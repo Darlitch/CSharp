@@ -1,4 +1,5 @@
-﻿using StepByStepSimulationNew.Enums;
+﻿using Model;
+using Model.Enums;
 using StrategyInterface;
 
 namespace Strategy.Strategies;
@@ -6,13 +7,13 @@ namespace Strategy.Strategies;
 public class NaiveStrategy : IStrategy
 {
     
-    public PhilosopherAction TryToStartEating(ForkState leftFork, ForkState rightFork)
+    public PhilosopherAction TryToStartEating(Fork leftFork, Fork rightFork, string name)
     {
-        if (leftFork == ForkState.Available)
+        if (leftFork.State == ForkState.Available)
         {
             return PhilosopherAction.TakeLeftFork;
         }
-        if (rightFork == ForkState.Available)
+        if (rightFork.State == ForkState.Available && leftFork.Owner == name)
         {
             return PhilosopherAction.TakeRightFork;
         }

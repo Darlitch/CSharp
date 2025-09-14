@@ -1,6 +1,5 @@
-﻿using StepByStepSimulationNew.Enums;
-using StepByStepSimulationNew.Models;
-using StepByStepSimulationNew.Models.DTO;
+﻿using Model.Enums;
+using StepByStepSimulationNew.DTO;
 
 namespace StepByStepSimulationNew;
 
@@ -20,18 +19,26 @@ public class Metrics
         Console.WriteLine("Вилки:");
         for (int i = 0; i < metricDto.Forks.Count; ++i)
         {
-            switch (metricDto.Forks[i])
+            if (metricDto.Forks[i].State == ForkState.InUse)
             {
-                case ForkState.InUse when metricDto.Philosophers[i].LeftForkState == ForkState.InUse:
-                    Console.WriteLine($"Fork-{i+1}: {metricDto.Forks[i]} ({metricDto.Philosophers[i].Name})");
-                    break;
-                case ForkState.InUse:
-                    Console.WriteLine($"Fork-{i+1}: {metricDto.Forks[i]} ({metricDto.Philosophers[(i-1 + metricDto.Philosophers.Count) % metricDto.Philosophers.Count].Name})");
-                    break;
-                default:
-                    Console.WriteLine($"Fork-{i+1}: {metricDto.Forks[i]}");
-                    break;
+                Console.WriteLine($"Fork-{i+1}: {metricDto.Forks[i].State} ({metricDto.Forks[i].Owner})");
             }
+            else
+            {
+                Console.WriteLine($"Fork-{i + 1}: {metricDto.Forks[i].State}");
+            }
+            // switch (metricDto.Forks[i].State)
+            // {
+            //     case ForkState.InUse when metricDto.Philosophers[i].LeftFork.State == ForkState.InUse:
+            //         Console.WriteLine($"Fork-{i+1}: {metricDto.Forks[i]} ({metricDto.Philosophers[i].Name})");
+            //         break;
+            //     case ForkState.InUse:
+            //         Console.WriteLine($"Fork-{i+1}: {metricDto.Forks[i]} ({metricDto.Philosophers[(i-1 + metricDto.Philosophers.Count) % metricDto.Philosophers.Count].Name})");
+            //         break;
+            //     default:
+            //         Console.WriteLine($"Fork-{i+1}: {metricDto.Forks[i]}");
+            //         break;
+            // }
         }
         Console.WriteLine("Пропускная способность:");
         foreach (var philosopher in metricDto.Philosophers)
