@@ -24,7 +24,7 @@ public class Simulation
         for (int i = 0; i < SimulationDuration; ++i)
         {
             RunStep();
-            if (i % 1 == 1000 && i != 0)
+            if (i % 1000 == 0 && i != 0)
             {
                 Metrics.PrintMetrics(new MetricDto(Philosophers, Forks, i));
             }
