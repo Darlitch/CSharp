@@ -7,7 +7,7 @@ namespace Strategy.Strategies;
 public class NaiveStrategy : IStrategy
 {
     
-    public PhilosopherAction TryToStartEating(Fork leftFork, Fork rightFork, string name)
+    public PhilosopherAction SelectAction(string name, Fork leftFork, Fork rightFork)
     {
         if (leftFork.State == ForkState.Available)
         {

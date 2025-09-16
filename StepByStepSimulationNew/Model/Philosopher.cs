@@ -12,7 +12,7 @@ public class Philosopher
     public PhilosopherAction Action { get; private set; }
     public Fork LeftFork { get; }
     public Fork RightFork { get; }
-    public event Action OnHungry;
+    public event Action<Philosopher> OnHungry;
 
     public Philosopher(string name, Fork leftFork, Fork rightFork)
     {
@@ -37,7 +37,7 @@ public class Philosopher
     {
         State = PhilosopherState.Hungry;
         CurrentActionDuration = 0;
-        OnHungry?.Invoke();
+        OnHungry?.Invoke(this);
     }
 
     private void StartEating()

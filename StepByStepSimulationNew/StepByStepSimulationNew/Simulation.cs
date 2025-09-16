@@ -12,9 +12,9 @@ public class Simulation
     private List<Fork> Forks { get; set; }
     private List<Philosopher> Philosophers { get; set; }
 
-    public Simulation(IStrategy strategy)
+    public Simulation(IStrategy strategy, List<Philosopher> philosophers)
     {
-        Philosophers = PhilosopherInitializer.InitPhilosophers();
+        Philosophers = philosophers;
         Forks = Philosophers.Select(p => p.LeftFork).ToList();
         // Forks = Enumerable.Repeat(ForkState.Available, Philosophers.Count).ToList();
         _strategy = strategy;
@@ -46,7 +46,7 @@ public class Simulation
             Philosophers[i].Update();
             if (Philosophers[i].IsHungry && Philosophers[i].Action == PhilosopherAction.None)
             {
-                HandleAction(_strategy.TryToStartEating(Forks[i], Forks[(i + 1) % Forks.Count], Philosophers[i].Name), i);
+                HandleAction(_strategy.SelectAction(Philosophers[i].Name, Forks[i], Forks[(i + 1) % Forks.Count]), i);
             }
         }
     }
