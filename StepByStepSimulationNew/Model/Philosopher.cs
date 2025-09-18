@@ -99,5 +99,27 @@ public class Philosopher
         }
     }
 
+    public void HandleOnAction(PhilosopherAction action)
+    {
+        if (!IsHungry) return;
+        HandleAction(action);
+    }
+    
+    public void HandleAction(PhilosopherAction action)
+    {
+        switch (action)
+        {
+            case PhilosopherAction.TakeLeftFork:
+                TakeLeftFork();
+                break;
+            case PhilosopherAction.TakeRightFork:
+                TakeRightFork();
+                break;
+            default:
+                break;
+        }
+    }
+
+
     public bool IsHungry => State == PhilosopherState.Hungry;
 }

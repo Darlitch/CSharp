@@ -16,7 +16,7 @@ public class CoordinatorStrategy(Coordinator coordinator) : IStrategy
         }
         if (rightFork.State == ForkState.Available && leftFork.Owner == name)
         {
-            return PhilosopherAction.TakeRightFork;
+            return coordinator.Update();
         }
         return PhilosopherAction.None;
     }
