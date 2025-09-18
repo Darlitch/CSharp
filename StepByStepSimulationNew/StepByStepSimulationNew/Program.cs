@@ -18,9 +18,9 @@ internal class Program
         Simulation simulation = new Simulation(strategy, philosophers);
         simulation.Run();
         
-        // Coordinator coordinator = new Coordinator(philosophers, forks);
-        // IStrategy strategy2 = new CoordinatorStrategy(coordinator);
-        // Simulation simulation2 = new Simulation(strategy2, philosophers);
-        // simulation2.Run();
+        Coordinator coordinator = new Coordinator(philosophers, forks);
+        IStrategy strategy2 = new CoordinatorStrategy(coordinator);
+        Simulation simulation2 = new Simulation(strategy2, philosophers);
+        simulation2.Run();
     }
 }

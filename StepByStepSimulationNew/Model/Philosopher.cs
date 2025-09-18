@@ -91,7 +91,11 @@ public class Philosopher
                 {
                     StartEating();
                 }
-                WaitingTime++;
+
+                // if (Action == PhilosopherAction.None)
+                // {
+                    WaitingTime++;
+                // }
                 break;
             default:
                 break;
