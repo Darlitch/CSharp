@@ -12,11 +12,11 @@ public class CoordinatorStrategy(Coordinator coordinator) : IStrategy
     {
         if (leftFork.State == ForkState.Available)
         {
-            return PhilosopherAction.TakeLeftFork;
+            coordinator.TakeLeftFork(name);
         }
-        if (rightFork.State == ForkState.Available && leftFork.Owner == name)
+        else
         {
-            return coordinator.Update();
+            coordinator.Update();
         }
         return PhilosopherAction.None;
     }

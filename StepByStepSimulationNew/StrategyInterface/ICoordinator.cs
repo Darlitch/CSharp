@@ -4,5 +4,5 @@ namespace StrategyInterface;
 
 public interface ICoordinator
 {
-    public PhilosopherAction Update();
+    public void Update();
 }

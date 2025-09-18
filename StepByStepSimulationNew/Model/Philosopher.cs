@@ -68,6 +68,11 @@ public class Philosopher
         RightFork.ReleaseFork();
     }
 
+    public void ReleaseLeftFork()
+    {
+        LeftFork.ReleaseFork();
+    }
+
     public void Update()
     {
         CurrentActionDuration--;
@@ -86,7 +91,6 @@ public class Philosopher
                 {
                     StartEating();
                 }
-
                 WaitingTime++;
                 break;
             default:
@@ -98,10 +102,10 @@ public class Philosopher
             Action = PhilosopherAction.None;
         }
     }
-
-    public void HandleOnAction(PhilosopherAction action)
-    {
-        if (!IsHungry) return;
+    
+    public void HandleOnAction(Philosopher philosopher, PhilosopherAction action)
+    { 
+        if (!IsHungry || this != philosopher) return;
         HandleAction(action);
     }
     
@@ -114,6 +118,11 @@ public class Philosopher
                 break;
             case PhilosopherAction.TakeRightFork:
                 TakeRightFork();
+                break;
+            case PhilosopherAction.ReleaseLeftFork:
+                ReleaseLeftFork();
+                Action = PhilosopherAction.None;
+                CurrentActionDuration = 0;
                 break;
             default:
                 break;

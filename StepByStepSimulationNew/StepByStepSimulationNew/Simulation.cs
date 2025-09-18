@@ -9,6 +9,7 @@ public class Simulation
 {
     private readonly IStrategy _strategy;
     private const int SimulationDuration = 1000000;
+    // private const int SimulationDuration = 300;
     private List<Fork> Forks { get; set; }
     private List<Philosopher> Philosophers { get; set; }
 
