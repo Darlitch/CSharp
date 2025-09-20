@@ -1,8 +1,9 @@
-﻿using StepByStepSimulationNew.Enums;
+﻿using Model;
+using Model.Enums;
 
 namespace StrategyInterface;
 
 public interface IStrategy
 {
-    public PhilosopherAction TryToStartEating(ForkState leftFork, ForkState rightFork);
+    public PhilosopherAction SelectAction(string name, Fork leftFork, Fork rightFork);
 }

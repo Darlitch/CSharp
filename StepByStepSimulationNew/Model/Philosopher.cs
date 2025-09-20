@@ -1,7 +1,6 @@
-﻿using System;
-using StepByStepSimulationNew.Enums;
+﻿using Model.Enums;
 
-namespace StepByStepSimulationNew.Models;
+namespace Model;
 
 public class Philosopher
 {
@@ -11,34 +10,36 @@ public class Philosopher
     public int CurrentActionDuration { get; private set; }
     public PhilosopherState State { get; private set; }
     public PhilosopherAction Action { get; private set; }
-    public ForkState LeftForkState { get; private set; }
-    public ForkState RightForkState { get; private set; }
+    public Fork LeftFork { get; }
+    public Fork RightFork { get; }
+    public event Action<Philosopher>? OnHungry;
 
-    public Philosopher(string name)
+    public Philosopher(string name, Fork leftFork, Fork rightFork)
     {
         Name = name;
         Eaten = 0;
+        LeftFork = leftFork;
+        RightFork = rightFork;
         StartThinking();
         Action = PhilosopherAction.None;
     }
 
-    public void StartThinking()
+    private void StartThinking()
     {
         State = PhilosopherState.Thinking;
-        CurrentActionDuration = new Random().Next(3, 10);
+        CurrentActionDuration = new Random().Next(2, 10);
         // CurrentActionDuration = 5;
-        Action = PhilosopherAction.ReleaseForks;
-        LeftForkState = ForkState.Available;
-        RightForkState = ForkState.Available;
+        Action = PhilosopherAction.None;
     }
 
-    public void SetHungry()
+    private void SetHungry()
     {
         State = PhilosopherState.Hungry;
         CurrentActionDuration = 0;
+        OnHungry?.Invoke(this);
     }
 
-    public void StartEating()
+    private void StartEating()
     {
         State = PhilosopherState.Eating;
         CurrentActionDuration = new Random().Next(4, 5);
@@ -46,23 +47,29 @@ public class Philosopher
         Eaten++;
     }
 
-    public void TakeLeftFork()
+    private void TakeLeftFork()
     {
         Action = PhilosopherAction.TakeLeftFork;
-        LeftForkState = ForkState.InUse;
+        LeftFork.TakeFork(Name);
         CurrentActionDuration = 2;
     }
     
-    public void TakeRightFork()
+    private void TakeRightFork()
     {
         Action = PhilosopherAction.TakeRightFork;
-        RightForkState = ForkState.InUse;
+        RightFork.TakeFork(Name);
         CurrentActionDuration = 2;
     }
 
-    public void ReleaseFork()
+    private void ReleaseForks()
     {
-        Action = PhilosopherAction.None;
+        LeftFork.ReleaseFork();
+        RightFork.ReleaseFork();
+    }
+
+    private void ReleaseLeftFork()
+    {
+        LeftFork.ReleaseFork();
     }
 
     public void Update()
@@ -76,17 +83,17 @@ public class Philosopher
                 break;
             case PhilosopherState.Eating:
                 StartThinking();
+                ReleaseForks();
                 break;
             case PhilosopherState.Hungry:
-                if (LeftForkState == ForkState.InUse && RightForkState == ForkState.InUse)
+                if (LeftFork.Owner == Name && RightFork.Owner == Name)
                 {
                     StartEating();
                 }
-
                 WaitingTime++;
                 break;
             default:
-                break;
+                throw new InvalidOperationException($"Неизвестное состояние философа: {State}");
         }
 
         if (Action is PhilosopherAction.TakeLeftFork or PhilosopherAction.TakeRightFork)
@@ -94,6 +101,34 @@ public class Philosopher
             Action = PhilosopherAction.None;
         }
     }
-
+    
+    public void HandleOnAction(Philosopher philosopher, PhilosopherAction action)
+    { 
+        if (!IsHungry || this != philosopher) return;
+        HandleAction(action);
+    }
+    
+    public void HandleAction(PhilosopherAction action)
+    {
+        switch (action)
+        {
+            case PhilosopherAction.TakeLeftFork:
+                TakeLeftFork();
+                break;
+            case PhilosopherAction.TakeRightFork:
+                TakeRightFork();
+                break;
+            case PhilosopherAction.ReleaseLeftFork:
+                ReleaseLeftFork();
+                Action = PhilosopherAction.None;
+                CurrentActionDuration = 0;
+                break;
+            case PhilosopherAction.None:
+                break;
+            default:
+                throw new InvalidOperationException($"Неизвестное действие философа: {action}");
+        }
+    }
+    
     public bool IsHungry => State == PhilosopherState.Hungry;
 }

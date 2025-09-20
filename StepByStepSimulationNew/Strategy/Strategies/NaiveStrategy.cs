@@ -1,18 +1,18 @@
-﻿using StepByStepSimulationNew.Enums;
+﻿using Model;
+using Model.Enums;
 using StrategyInterface;
 
 namespace Strategy.Strategies;
 
 public class NaiveStrategy : IStrategy
 {
-    
-    public PhilosopherAction TryToStartEating(ForkState leftFork, ForkState rightFork)
+    public PhilosopherAction SelectAction(string name, Fork leftFork, Fork rightFork)
     {
-        if (leftFork == ForkState.Available)
+        if (leftFork.State == ForkState.Available)
         {
             return PhilosopherAction.TakeLeftFork;
         }
-        if (rightFork == ForkState.Available)
+        if (rightFork.State == ForkState.Available && leftFork.Owner == name)
         {
             return PhilosopherAction.TakeRightFork;
         }

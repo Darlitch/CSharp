@@ -1,6 +1,6 @@
-﻿using StepByStepSimulationNew.Enums;
-using StepByStepSimulationNew.Models;
-using StepByStepSimulationNew.Models.DTO;
+﻿using Model;
+using Model.Enums;
+using StepByStepSimulationNew.DTO;
 using StrategyInterface;
 
 namespace StepByStepSimulationNew;
@@ -9,26 +9,27 @@ public class Simulation
 {
     private readonly IStrategy _strategy;
     private const int SimulationDuration = 1000000;
-    private List<ForkState> Forks { get; set; }
+    // private const int SimulationDuration = 300;
+    private List<Fork> Forks { get; set; }
     private List<Philosopher> Philosophers { get; set; }
 
-    public Simulation(IStrategy strategy)
+    public Simulation(IStrategy strategy, List<Philosopher> philosophers)
     {
-        Philosophers = PhilosopherInitializer.InitPhilosophers();
-        Forks = Enumerable.Repeat(ForkState.Available, Philosophers.Count).ToList();
+        Philosophers = philosophers;
+        Forks = Philosophers.Select(p => p.LeftFork).ToList();
         _strategy = strategy;
     }
 
     public void Run()
     {
-        for (int i = 0; i < SimulationDuration; ++i)
+        for (var i = 0; i < SimulationDuration; ++i)
         {
             RunStep();
             if (i % 1000 == 0 && i != 0)
             {
                 Metrics.PrintMetrics(new MetricDto(Philosophers, Forks, i));
             }
-            if (Philosophers.All(p => p is { IsHungry: true, Action: PhilosopherAction.None }) && Forks.All(f => f == ForkState.InUse))
+            if (Philosophers.All(p => p is { IsHungry: true, Action: PhilosopherAction.None }) && Forks.All(f => f.State == ForkState.InUse))
             {
                 Metrics.PrintFinalMetrics(new MetricDto(Philosophers, Forks, i));
                 Console.WriteLine($"Deadlock at step {i}!");
@@ -40,42 +41,13 @@ public class Simulation
 
     private void RunStep()
     {
-        for (int i = 0; i < Philosophers.Count; ++i)
+        for (var i = 0; i < Philosophers.Count; ++i)
         {
             Philosophers[i].Update();
             if (Philosophers[i].IsHungry && Philosophers[i].Action == PhilosopherAction.None)
             {
-                PhilosopherAction currAction = _strategy.TryToStartEating(Forks[i], Forks[(i + 1) % Forks.Count]);
-                HandleAction(currAction, i);
-            }
-            
-            
-            
-            if (Philosophers[i].Action == PhilosopherAction.ReleaseForks)
-            {
-                Forks[i] = ForkState.Available;
-                Forks[(i + 1) % Forks.Count] = ForkState.Available;
-                Philosophers[i].ReleaseFork();
+                Philosophers[i].HandleAction(_strategy.SelectAction(Philosophers[i].Name, Forks[i], Forks[(i + 1) % Forks.Count]));
             }
         }
     }
-
-    private void HandleAction(PhilosopherAction action, int philosopherId)
-    {
-        switch (action)
-        {
-            case PhilosopherAction.TakeLeftFork:
-                Forks[philosopherId] = ForkState.InUse;
-                Philosophers[philosopherId].TakeLeftFork();
-                break;
-            case PhilosopherAction.TakeRightFork:
-                Philosophers[philosopherId].TakeRightFork();
-                Forks[(philosopherId + 1) % Forks.Count] = ForkState.InUse;
-                break;
-            default:
-                break;
-        }
-    }
-
-    
 }

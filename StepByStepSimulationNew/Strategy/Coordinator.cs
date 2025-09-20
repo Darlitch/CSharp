@@ -1,8 +1,71 @@
-﻿using StrategyInterface;
+﻿using Model;
+using Model.Enums;
+using StrategyInterface;
 
 namespace Strategy;
 
-public class Coordinator : ICoordinator
+public class Coordinator: ICoordinator
 {
-    
+    private readonly List<Philosopher> _philosophers;
+    private readonly List<Fork> _forks;
+    private readonly Queue<int> _waiting;
+    public event Action<Philosopher, PhilosopherAction> OnAction = delegate { };
+
+    public Coordinator(List<Philosopher> philosophers, List<Fork> forks)
+    {
+        _philosophers = philosophers;
+        _forks = forks;
+        _waiting = new Queue<int>();
+        foreach (var philosopher in _philosophers)
+        {
+            philosopher.OnHungry += HandleOnHungry;
+            OnAction += philosopher.HandleOnAction;
+        }
+    }
+
+    private void HandleOnHungry(Philosopher philosopher)
+    {
+        var index = _philosophers.IndexOf(philosopher);
+        if (index >= 0 && !_waiting.Contains(index))
+        {
+            _waiting.Enqueue(index);
+        }
+    }
+
+    public void TakeLeftFork(string name)
+    {
+        var philosopher = _philosophers.FirstOrDefault(p => p.Name == name);
+        if (philosopher != null)
+        {
+            OnAction.Invoke(philosopher, PhilosopherAction.TakeLeftFork);
+        }
+    }
+
+    public void Update()
+    {
+        var count = _waiting.Count;
+        for (var i = 0; i < count && _waiting.TryDequeue(out int index); ++i)
+        {
+            if (_forks[index].State == ForkState.InUse && _forks[index].Owner == _philosophers[index].Name && _philosophers[index].Action == PhilosopherAction.None)
+            {
+                switch (_philosophers[(index+1) % _philosophers.Count].State)
+                {
+                    case PhilosopherState.Thinking:
+                        OnAction.Invoke(_philosophers[index], PhilosopherAction.TakeRightFork);
+                        return;
+                    case PhilosopherState.Hungry:
+                        if (_philosophers[(index + 1) % _philosophers.Count].Action != PhilosopherAction.TakeRightFork)
+                        {
+                            OnAction.Invoke(_philosophers[(index+1) % _philosophers.Count], PhilosopherAction.ReleaseLeftFork);
+                            OnAction.Invoke(_philosophers[index], PhilosopherAction.TakeRightFork);
+                            return;
+                        }
+                        break;
+                    default:
+                        break;
+                }
+            }
+            _waiting.Enqueue(index);
+        }
+    }
 }
