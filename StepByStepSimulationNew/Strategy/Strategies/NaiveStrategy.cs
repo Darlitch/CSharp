@@ -6,7 +6,6 @@ namespace Strategy.Strategies;
 
 public class NaiveStrategy : IStrategy
 {
-    
     public PhilosopherAction SelectAction(string name, Fork leftFork, Fork rightFork)
     {
         if (leftFork.State == ForkState.Available)

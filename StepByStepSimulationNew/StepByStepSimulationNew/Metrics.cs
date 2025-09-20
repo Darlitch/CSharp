@@ -3,7 +3,7 @@ using StepByStepSimulationNew.DTO;
 
 namespace StepByStepSimulationNew;
 
-public class Metrics
+public static class Metrics
 {
     public static void PrintMetrics(MetricDto metricDto)
     {
@@ -17,28 +17,11 @@ public class Metrics
             Console.WriteLine($"{philosopher.Name}: {state}, съедено: {philosopher.Eaten}");
         }
         Console.WriteLine("Вилки:");
-        for (int i = 0; i < metricDto.Forks.Count; ++i)
+        for (var i = 0; i < metricDto.Forks.Count; ++i)
         {
-            if (metricDto.Forks[i].State == ForkState.InUse)
-            {
-                Console.WriteLine($"Fork-{i+1}: {metricDto.Forks[i].State} ({metricDto.Forks[i].Owner})");
-            }
-            else
-            {
-                Console.WriteLine($"Fork-{i + 1}: {metricDto.Forks[i].State}");
-            }
-            // switch (metricDto.Forks[i].State)
-            // {
-            //     case ForkState.InUse when metricDto.Philosophers[i].LeftFork.State == ForkState.InUse:
-            //         Console.WriteLine($"Fork-{i+1}: {metricDto.Forks[i]} ({metricDto.Philosophers[i].Name})");
-            //         break;
-            //     case ForkState.InUse:
-            //         Console.WriteLine($"Fork-{i+1}: {metricDto.Forks[i]} ({metricDto.Philosophers[(i-1 + metricDto.Philosophers.Count) % metricDto.Philosophers.Count].Name})");
-            //         break;
-            //     default:
-            //         Console.WriteLine($"Fork-{i+1}: {metricDto.Forks[i]}");
-            //         break;
-            // }
+            Console.WriteLine(metricDto.Forks[i].State == ForkState.InUse
+                ? $"Fork-{i + 1}: {metricDto.Forks[i].State} ({metricDto.Forks[i].Owner})"
+                : $"Fork-{i + 1}: {metricDto.Forks[i].State}");
         }
         Console.WriteLine("Пропускная способность:");
         foreach (var philosopher in metricDto.Philosophers)
@@ -46,9 +29,9 @@ public class Metrics
             Console.WriteLine($"{philosopher.Name}: {((double)philosopher.Eaten / metricDto.Steps * 1000):F2}");
         }
         Console.WriteLine("Время ожидания:");
-        int sum = 0;
-        int max = 0;
-        string maxName = "";
+        var sum = 0;
+        var max = 0;
+        var maxName = "";
         foreach (var philosopher in metricDto.Philosophers)
         {
             Console.WriteLine($"{philosopher.Name}: {philosopher.WaitingTime}");

@@ -12,7 +12,7 @@ public class Philosopher
     public PhilosopherAction Action { get; private set; }
     public Fork LeftFork { get; }
     public Fork RightFork { get; }
-    public event Action<Philosopher> OnHungry;
+    public event Action<Philosopher>? OnHungry;
 
     public Philosopher(string name, Fork leftFork, Fork rightFork)
     {
@@ -27,9 +27,8 @@ public class Philosopher
     private void StartThinking()
     {
         State = PhilosopherState.Thinking;
-        CurrentActionDuration = new Random().Next(3, 10);
+        CurrentActionDuration = new Random().Next(2, 10);
         // CurrentActionDuration = 5;
-        // Action = PhilosopherAction.ReleaseForks;
         Action = PhilosopherAction.None;
     }
 
@@ -48,27 +47,27 @@ public class Philosopher
         Eaten++;
     }
 
-    public void TakeLeftFork()
+    private void TakeLeftFork()
     {
         Action = PhilosopherAction.TakeLeftFork;
         LeftFork.TakeFork(Name);
         CurrentActionDuration = 2;
     }
     
-    public void TakeRightFork()
+    private void TakeRightFork()
     {
         Action = PhilosopherAction.TakeRightFork;
         RightFork.TakeFork(Name);
         CurrentActionDuration = 2;
     }
 
-    public void ReleaseForks()
+    private void ReleaseForks()
     {
         LeftFork.ReleaseFork();
         RightFork.ReleaseFork();
     }
 
-    public void ReleaseLeftFork()
+    private void ReleaseLeftFork()
     {
         LeftFork.ReleaseFork();
     }
@@ -91,14 +90,10 @@ public class Philosopher
                 {
                     StartEating();
                 }
-
-                // if (Action == PhilosopherAction.None)
-                // {
-                    WaitingTime++;
-                // }
+                WaitingTime++;
                 break;
             default:
-                break;
+                throw new InvalidOperationException($"Неизвестное состояние философа: {State}");
         }
 
         if (Action is PhilosopherAction.TakeLeftFork or PhilosopherAction.TakeRightFork)
@@ -128,11 +123,12 @@ public class Philosopher
                 Action = PhilosopherAction.None;
                 CurrentActionDuration = 0;
                 break;
-            default:
+            case PhilosopherAction.None:
                 break;
+            default:
+                throw new InvalidOperationException($"Неизвестное действие философа: {action}");
         }
     }
-
-
+    
     public bool IsHungry => State == PhilosopherState.Hungry;
 }

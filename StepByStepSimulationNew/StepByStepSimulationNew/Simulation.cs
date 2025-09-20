@@ -17,13 +17,12 @@ public class Simulation
     {
         Philosophers = philosophers;
         Forks = Philosophers.Select(p => p.LeftFork).ToList();
-        // Forks = Enumerable.Repeat(ForkState.Available, Philosophers.Count).ToList();
         _strategy = strategy;
     }
 
     public void Run()
     {
-        for (int i = 0; i < SimulationDuration; ++i)
+        for (var i = 0; i < SimulationDuration; ++i)
         {
             RunStep();
             if (i % 1000 == 0 && i != 0)
@@ -42,31 +41,13 @@ public class Simulation
 
     private void RunStep()
     {
-        for (int i = 0; i < Philosophers.Count; ++i)
+        for (var i = 0; i < Philosophers.Count; ++i)
         {
             Philosophers[i].Update();
             if (Philosophers[i].IsHungry && Philosophers[i].Action == PhilosopherAction.None)
             {
-                // HandleAction(_strategy.SelectAction(Philosophers[i].Name, Forks[i], Forks[(i + 1) % Forks.Count]), i);
                 Philosophers[i].HandleAction(_strategy.SelectAction(Philosophers[i].Name, Forks[i], Forks[(i + 1) % Forks.Count]));
             }
         }
     }
-
-    // private void HandleAction(PhilosopherAction action, int philosopherId)
-    // {
-    //     switch (action)
-    //     {
-    //         case PhilosopherAction.TakeLeftFork:
-    //             Philosophers[philosopherId].TakeLeftFork();
-    //             break;
-    //         case PhilosopherAction.TakeRightFork:
-    //             Philosophers[philosopherId].TakeRightFork();
-    //             break;
-    //         default:
-    //             break;
-    //     }
-    // }
-
-    
 }

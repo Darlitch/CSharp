@@ -1,5 +1,4 @@
-﻿using System.Linq.Expressions;
-using Model;
+﻿using Model;
 using Model.Enums;
 using StrategyInterface;
 
@@ -10,7 +9,7 @@ public class Coordinator: ICoordinator
     private readonly List<Philosopher> _philosophers;
     private readonly List<Fork> _forks;
     private readonly Queue<int> _waiting;
-    public event Action<Philosopher, PhilosopherAction> OnAction;
+    public event Action<Philosopher, PhilosopherAction> OnAction = delegate { };
 
     public Coordinator(List<Philosopher> philosophers, List<Fork> forks)
     {
@@ -44,14 +43,8 @@ public class Coordinator: ICoordinator
 
     public void Update()
     {
-        // if (IsDeadLock())
-        // {
-        //     OnAction.Invoke(_philosophers[_waiting.Last()], PhilosopherAction.ReleaseForks);
-        // }
-        
-        int count = _waiting.Count;
-        
-        for (int i = 0; i < count && _waiting.TryDequeue(out int index); ++i)
+        var count = _waiting.Count;
+        for (var i = 0; i < count && _waiting.TryDequeue(out int index); ++i)
         {
             if (_forks[index].State == ForkState.InUse && _forks[index].Owner == _philosophers[index].Name && _philosophers[index].Action == PhilosopherAction.None)
             {
@@ -75,31 +68,4 @@ public class Coordinator: ICoordinator
             _waiting.Enqueue(index);
         }
     }
-
-    // private bool IsDeadLock()
-    // {
-    //     return _philosophers.All(p => p is { IsHungry: true, Action: PhilosopherAction.None }) &&
-    //            _forks.All(f => f.State == ForkState.InUse);
-    // }
-
-    // public PhilosopherAction Update()
-    // {
-    //     foreach (var index in _waiting.Where(ind => _forks[ind].State == ForkState.InUse && _forks[ind].Owner == _philosophers[ind].Name))
-    //     {
-    //         switch (_philosophers[(index+1) % _philosophers.Count].State)
-    //         {
-    //             case PhilosopherState.Thinking:
-    //                 _waiting.Remove(index);
-    //                 return PhilosopherAction.TakeRightFork;
-    //             case PhilosopherState.Hungry:
-    //                 _philosophers[(index+1) % _philosophers.Count].ReleaseForks();
-    //                 _waiting.Remove(index);
-    //                 return PhilosopherAction.TakeRightFork;
-    //             default:
-    //                 break;
-    //         }
-    //     }
-    //
-    //     return PhilosopherAction.None;
-    // }
 }
