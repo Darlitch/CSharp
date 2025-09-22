@@ -6,6 +6,8 @@ public class Fork
 {
     public string? Owner { get; private set; }
     public ForkState State { get; private set; } = ForkState.Available;
+    public int FreeTime { get; set; }
+    public int EatingTime { get; set; }
 
     public void TakeFork(string owner)
     {

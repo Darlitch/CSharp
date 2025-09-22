@@ -5,60 +5,57 @@ namespace Model;
 public class Philosopher
 {
     public string Name { get; }
-    public int Eaten { get; private set; }
-    public int WaitingTime { get; private set; }
+    public PhilosopherMetrics Metrics { get; }
     public int CurrentActionDuration { get; private set; }
     public PhilosopherState State { get; private set; }
     public PhilosopherAction Action { get; private set; }
     public Fork LeftFork { get; }
     public Fork RightFork { get; }
-    public event Action<Philosopher>? OnHungry;
 
     public Philosopher(string name, Fork leftFork, Fork rightFork)
     {
         Name = name;
-        Eaten = 0;
+        Metrics = new PhilosopherMetrics();
         LeftFork = leftFork;
         RightFork = rightFork;
         StartThinking();
+    }
+
+    private void SetState(PhilosopherState state, int duration)
+    {
+        State = state;
+        CurrentActionDuration = duration;
         Action = PhilosopherAction.None;
     }
 
     private void StartThinking()
     {
-        State = PhilosopherState.Thinking;
-        CurrentActionDuration = new Random().Next(2, 10);
-        // CurrentActionDuration = 5;
-        Action = PhilosopherAction.None;
+        SetState(PhilosopherState.Thinking, new Random().Next(30, 100));
     }
 
     private void SetHungry()
     {
-        State = PhilosopherState.Hungry;
-        CurrentActionDuration = 0;
-        OnHungry?.Invoke(this);
+        SetState(PhilosopherState.Hungry, 0);
     }
 
     private void StartEating()
     {
-        State = PhilosopherState.Eating;
-        CurrentActionDuration = new Random().Next(4, 5);
-        Action = PhilosopherAction.None;
-        Eaten++;
+        SetState(PhilosopherState.Eating, new Random().Next(40, 50));
+        Metrics.IncrementEaten();
     }
 
     private void TakeLeftFork()
     {
         Action = PhilosopherAction.TakeLeftFork;
         LeftFork.TakeFork(Name);
-        CurrentActionDuration = 2;
+        CurrentActionDuration = 20;
     }
     
     private void TakeRightFork()
     {
         Action = PhilosopherAction.TakeRightFork;
         RightFork.TakeFork(Name);
-        CurrentActionDuration = 2;
+        CurrentActionDuration = 20;
     }
 
     private void ReleaseForks()
@@ -90,7 +87,7 @@ public class Philosopher
                 {
                     StartEating();
                 }
-                WaitingTime++;
+                Metrics.WaitingTime++;
                 break;
             default:
                 throw new InvalidOperationException($"Неизвестное состояние философа: {State}");
@@ -100,12 +97,6 @@ public class Philosopher
         {
             Action = PhilosopherAction.None;
         }
-    }
-    
-    public void HandleOnAction(Philosopher philosopher, PhilosopherAction action)
-    { 
-        if (!IsHungry || this != philosopher) return;
-        HandleAction(action);
     }
     
     public void HandleAction(PhilosopherAction action)

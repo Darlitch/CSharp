@@ -14,7 +14,7 @@ public static class Metrics
             string state = philosopher.State == PhilosopherState.Hungry
                 ? $"{philosopher.State} (Action = {philosopher.Action})"
                 : $"{philosopher.State} ({philosopher.CurrentActionDuration} steps left)";
-            Console.WriteLine($"{philosopher.Name}: {state}, съедено: {philosopher.Eaten}");
+            Console.WriteLine($"{philosopher.Name}: {state}, съедено: {philosopher.Metrics.Eaten}");
         }
         Console.WriteLine("Вилки:");
         for (var i = 0; i < metricDto.Forks.Count; ++i)
@@ -26,7 +26,7 @@ public static class Metrics
         Console.WriteLine("Пропускная способность:");
         foreach (var philosopher in metricDto.Philosophers)
         {
-            Console.WriteLine($"{philosopher.Name}: {((double)philosopher.Eaten / metricDto.Steps * 1000):F2}");
+            Console.WriteLine($"{philosopher.Name}: {((double)philosopher.Metrics.Eaten / metricDto.Steps * 1000):F2}");
         }
         Console.WriteLine("Время ожидания:");
         var sum = 0;
@@ -34,11 +34,11 @@ public static class Metrics
         var maxName = "";
         foreach (var philosopher in metricDto.Philosophers)
         {
-            Console.WriteLine($"{philosopher.Name}: {philosopher.WaitingTime}");
-            sum += philosopher.WaitingTime;
-            if (philosopher.WaitingTime > max)
+            Console.WriteLine($"{philosopher.Name}: {philosopher.Metrics.WaitingTime}");
+            sum += philosopher.Metrics.WaitingTime;
+            if (philosopher.Metrics.WaitingTime > max)
             {
-                max = philosopher.WaitingTime;
+                max = philosopher.Metrics.WaitingTime;
                 maxName = philosopher.Name;
             }
         }
@@ -48,7 +48,7 @@ public static class Metrics
 
     public static void PrintFinalMetrics(MetricDto metricDto)
     {
-        Console.WriteLine($"Всего съедено: {metricDto.Philosophers.Sum(philosopher => philosopher.Eaten)}");
+        Console.WriteLine($"Всего съедено: {metricDto.Philosophers.Sum(philosopher => philosopher.Metrics.Eaten)}");
         PrintMetrics(metricDto);
     }
 }
