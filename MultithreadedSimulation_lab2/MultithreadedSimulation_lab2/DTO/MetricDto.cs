@@ -2,9 +2,9 @@
 
 namespace MultithreadedSimulation_lab2.DTO;
 
-public class MetricDto(List<Philosopher> philosophers, List<Fork> forks, int steps)
+public class MetricDto(List<Philosopher> philosophers, List<Fork> forks, long currTime)
 {
     public List<Philosopher> Philosophers { get; } = philosophers;
     public List<Fork> Forks { get; } = forks;
-    public int Steps { get; } = steps;
+    public long CurrTime { get; } = currTime;
 }

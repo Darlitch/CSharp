@@ -7,7 +7,7 @@ public static class Metrics
 {
     public static void PrintMetrics(MetricDto metricDto)
     {
-        Console.WriteLine($"==== ШАГ {metricDto.Steps} ====");
+        Console.WriteLine($"==== ВРЕМЯ {metricDto.CurrTime} МС ====");
         Console.WriteLine("Философы:");
         foreach (var philosopher in metricDto.Philosophers)
         {
@@ -26,11 +26,11 @@ public static class Metrics
         Console.WriteLine("Пропускная способность:");
         foreach (var philosopher in metricDto.Philosophers)
         {
-            Console.WriteLine($"{philosopher.Name}: {((double)philosopher.Metrics.Eaten / metricDto.Steps * 1000):F2}");
+            Console.WriteLine($"{philosopher.Name}: {((double)philosopher.Metrics.Eaten / metricDto.CurrTime * 1000):F2}");
         }
         Console.WriteLine("Время ожидания:");
-        var sum = 0;
-        var max = 0;
+        long sum = 0;
+        long max = 0;
         var maxName = "";
         foreach (var philosopher in metricDto.Philosophers)
         {

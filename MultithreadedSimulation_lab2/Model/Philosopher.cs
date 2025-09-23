@@ -1,4 +1,5 @@
-﻿using Model.Enums;
+﻿using System.Diagnostics;
+using Model.Enums;
 
 namespace Model;
 
@@ -11,6 +12,8 @@ public class Philosopher
     public PhilosopherAction Action { get; private set; }
     public Fork LeftFork { get; }
     public Fork RightFork { get; }
+    
+    private readonly Stopwatch _stopwatch;
 
     public Philosopher(string name, Fork leftFork, Fork rightFork)
     {
@@ -18,6 +21,7 @@ public class Philosopher
         Metrics = new PhilosopherMetrics();
         LeftFork = leftFork;
         RightFork = rightFork;
+        _stopwatch = new Stopwatch();
         StartThinking();
     }
 
@@ -36,10 +40,13 @@ public class Philosopher
     private void SetHungry()
     {
         SetState(PhilosopherState.Hungry, 0);
+        _stopwatch.Restart();
     }
 
     private void StartEating()
     {
+        _stopwatch.Stop();
+        Metrics.WaitingTime += _stopwatch.ElapsedMilliseconds;
         SetState(PhilosopherState.Eating, new Random().Next(40, 50));
         Metrics.IncrementEaten();
     }
