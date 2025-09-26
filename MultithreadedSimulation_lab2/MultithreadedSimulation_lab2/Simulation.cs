@@ -9,7 +9,7 @@ namespace MultithreadedSimulation_lab2;
 public class Simulation
 {
     private readonly IStrategy _strategy;
-    private const long SimulationDuration = 1000000;
+    private const long SimulationDuration = 10000;
     private List<Fork> Forks { get; set; }
     private List<Philosopher> Philosophers { get; set; }
     private readonly Stopwatch _stopwatch; 
@@ -19,11 +19,18 @@ public class Simulation
         Philosophers = philosophers;
         Forks = Philosophers.Select(p => p.LeftFork).ToList();
         _strategy = strategy;
-        _stopwatch = Stopwatch.StartNew();
+        _stopwatch = new Stopwatch();
     }
 
     public void Run()
     {
+        _stopwatch.Start();
+        Task[] tasks = new Task[Philosophers.Count];
+        for (var i = 0; i < Philosophers.Count; ++i)
+        {
+            var index = i;
+            tasks[index] = Task.Factory.StartNew(() => RunPhilosopher(Philosophers[index]), TaskCreationOptions.LongRunning);
+        }
         while (_stopwatch.ElapsedMilliseconds < SimulationDuration)
         {
             if (_stopwatch.ElapsedMilliseconds % 200 == 0)
@@ -40,34 +47,18 @@ public class Simulation
                     return;
                 }
             }
-            Metrics.PrintMetrics(new MetricDto(Philosophers, Forks, SimulationDuration));
         }
-        
-        for (var i = 0; i < SimulationDuration; ++i)
-        {
-            RunStep();
-            if (i % 1000 == 0 && i != 0)
-            {
-                Metrics.PrintMetrics(new MetricDto(Philosophers, Forks, i));
-            }
-            if (Philosophers.All(p => p is { IsHungry: true, Action: PhilosopherAction.None }) && Forks.All(f => f.State == ForkState.InUse))
-            {
-                Metrics.PrintFinalMetrics(new MetricDto(Philosophers, Forks, i));
-                Console.WriteLine($"Deadlock at step {i}!");
-                return;
-            }
-        }
-        Metrics.PrintMetrics(new MetricDto(Philosophers, Forks, SimulationDuration));
+        Metrics.PrintFinalMetrics(new MetricDto(Philosophers, Forks, SimulationDuration));
     }
 
-    private void RunStep()
+    private void RunPhilosopher(Philosopher philosopher)
     {
-        for (var i = 0; i < Philosophers.Count; ++i)
+        while (_stopwatch.ElapsedMilliseconds < SimulationDuration)
         {
-            Philosophers[i].Update();
-            if (Philosophers[i].IsHungry && Philosophers[i].Action == PhilosopherAction.None)
+            philosopher.Update();
+            if (philosopher is { IsHungry: true, Action: PhilosopherAction.None })
             {
-                Philosophers[i].HandleAction(_strategy.SelectAction(Philosophers[i].Name, Forks[i], Forks[(i + 1) % Forks.Count]));
+                philosopher.HandleAction(_strategy.SelectAction(philosopher.Name, philosopher.LeftFork, philosopher.RightFork));
             }
         }
     }

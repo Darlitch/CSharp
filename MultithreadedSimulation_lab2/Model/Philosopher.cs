@@ -12,7 +12,7 @@ public class Philosopher
     public PhilosopherAction Action { get; private set; }
     public Fork LeftFork { get; }
     public Fork RightFork { get; }
-    
+    private readonly Stopwatch _stopwatchWait;
     private readonly Stopwatch _stopwatch;
 
     public Philosopher(string name, Fork leftFork, Fork rightFork)
@@ -21,7 +21,8 @@ public class Philosopher
         Metrics = new PhilosopherMetrics();
         LeftFork = leftFork;
         RightFork = rightFork;
-        _stopwatch = new Stopwatch();
+        _stopwatchWait = new Stopwatch();
+        _stopwatch = Stopwatch.StartNew();
         StartThinking();
     }
 
@@ -40,13 +41,13 @@ public class Philosopher
     private void SetHungry()
     {
         SetState(PhilosopherState.Hungry, 0);
-        _stopwatch.Restart();
+        _stopwatchWait.Restart();
     }
 
     private void StartEating()
     {
-        _stopwatch.Stop();
-        Metrics.WaitingTime += _stopwatch.ElapsedMilliseconds;
+        _stopwatchWait.Stop();
+        Metrics.WaitingTime += _stopwatchWait.ElapsedMilliseconds;
         SetState(PhilosopherState.Eating, new Random().Next(40, 50));
         Metrics.IncrementEaten();
     }
@@ -78,8 +79,7 @@ public class Philosopher
 
     public void Update()
     {
-        CurrentActionDuration--;
-        if (CurrentActionDuration != 0) return;
+        if (_stopwatch.ElapsedMilliseconds < CurrentActionDuration) return;
         switch (State)
         {
             case PhilosopherState.Thinking:
@@ -94,7 +94,6 @@ public class Philosopher
                 {
                     StartEating();
                 }
-                Metrics.WaitingTime++;
                 break;
             default:
                 throw new InvalidOperationException($"Неизвестное состояние философа: {State}");
@@ -104,6 +103,7 @@ public class Philosopher
         {
             Action = PhilosopherAction.None;
         }
+        _stopwatch.Restart();
     }
     
     public void HandleAction(PhilosopherAction action)

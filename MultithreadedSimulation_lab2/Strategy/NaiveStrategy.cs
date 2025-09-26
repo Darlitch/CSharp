@@ -8,11 +8,11 @@ public class NaiveStrategy : IStrategy
 {
     public PhilosopherAction SelectAction(string name, Fork leftFork, Fork rightFork)
     {
-        if (leftFork.State == ForkState.Available)
+        if (leftFork.IsAvailable())
         {
             return PhilosopherAction.TakeLeftFork;
         }
-        if (rightFork.State == ForkState.Available && leftFork.Owner == name)
+        if (rightFork.IsAvailable() && leftFork.IsOwner(name))
         {
             return PhilosopherAction.TakeRightFork;
         }
