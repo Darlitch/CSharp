@@ -37,6 +37,7 @@ public class Philosopher
     private void StartThinking()
     {
         SetState(PhilosopherState.Thinking, new Random().Next(30, 100));
+        // SetState(PhilosopherState.Thinking, 100);
     }
 
     private void SetHungry()

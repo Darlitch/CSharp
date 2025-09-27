@@ -9,7 +9,7 @@ namespace MultithreadedSimulation_lab2;
 public class Simulation
 {
     private readonly IStrategy _strategy;
-    private const long SimulationDuration = 1000;
+    private const long SimulationDuration = 100000;
     private List<Fork> Forks { get; set; }
     private List<Philosopher> Philosophers { get; set; }
     private readonly Stopwatch _stopwatch; 
@@ -33,7 +33,7 @@ public class Simulation
         }
         while (_stopwatch.ElapsedMilliseconds < SimulationDuration)
         {
-            if (_stopwatch.ElapsedMilliseconds % 20 == 0)
+            if (_stopwatch.ElapsedMilliseconds % 200 == 0)
             {
                 long currTime = _stopwatch.ElapsedMilliseconds;
                 if (Philosophers.All(p => p is { IsHungry: true, Action: PhilosopherAction.None }) && Forks.All(f => f.State == ForkState.InUse))
