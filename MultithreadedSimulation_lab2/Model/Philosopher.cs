@@ -31,6 +31,7 @@ public class Philosopher
         State = state;
         CurrentActionDuration = duration;
         Action = PhilosopherAction.None;
+        _stopwatch.Restart();
     }
 
     private void StartThinking()
@@ -57,6 +58,7 @@ public class Philosopher
         Action = PhilosopherAction.TakeLeftFork;
         LeftFork.TakeFork(Name);
         CurrentActionDuration = 20;
+        _stopwatch.Restart();
     }
     
     private void TakeRightFork()
@@ -64,6 +66,7 @@ public class Philosopher
         Action = PhilosopherAction.TakeRightFork;
         RightFork.TakeFork(Name);
         CurrentActionDuration = 20;
+        _stopwatch.Restart();
     }
 
     private void ReleaseForks()
@@ -103,7 +106,6 @@ public class Philosopher
         {
             Action = PhilosopherAction.None;
         }
-        _stopwatch.Restart();
     }
     
     public void HandleAction(PhilosopherAction action)
