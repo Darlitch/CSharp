@@ -1,7 +1,9 @@
-﻿namespace IModel;
+﻿using Model;
+
+namespace IServices;
 
 public interface ITableManager
 {
-    IFork GetFork(int index);
+    Fork GetFork(int index);
     int PhilosophersCount { get; }
 }

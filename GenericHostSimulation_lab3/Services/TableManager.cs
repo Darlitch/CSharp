@@ -1,4 +1,4 @@
-﻿using IModel;
+﻿using IServices;
 
 namespace Model;
 
@@ -15,7 +15,7 @@ public class TableManager : ITableManager
         }
     }
 
-    public IFork GetFork(int index) => _forks[(index + 1) % _forks.Count];
+    public Fork GetFork(int index) => _forks[(index + 1) % _forks.Count];
     
     public int PhilosophersCount => _forks.Count;
 }

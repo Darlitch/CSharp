@@ -7,7 +7,34 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bdd21a84-722b-4fc1-a95f-9ef79ea00a1d" name="Changes" comment="" />
+    <list default="true" id="bdd21a84-722b-4fc1-a95f-9ef79ea00a1d" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/Services/Philosophers/Aristotle.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Services/Philosophers/Decartes.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Services/Philosophers/Kant.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Services/Philosophers/Platoo.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Services/Philosophers/Socrates.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.GenericHostSimulation_lab3/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.GenericHostSimulation_lab3/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GenericHostSimulation_lab3.sln" beforeDir="false" afterPath="$PROJECT_DIR$/GenericHostSimulation_lab3.sln" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GenericHostSimulation_lab3/DTO/MetricDto.cs" beforeDir="false" afterPath="$PROJECT_DIR$/GenericHostSimulation_lab3/DTO/MetricDto.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GenericHostSimulation_lab3/GenericHostSimulation_lab3.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/GenericHostSimulation_lab3/GenericHostSimulation_lab3.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GenericHostSimulation_lab3/PhilosopherInitializer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GenericHostSimulation_lab3/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/GenericHostSimulation_lab3/Program.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GenericHostSimulation_lab3/Simulation.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Services/Simulation.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IModel/IFork.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/IModel/IModel.csproj" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/IModel/ITableManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/IServices/ITableManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Model/Fork.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Model/Fork.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Model/Model.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Model/Model.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Model/SimulationOptions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Services/SimulationOptions.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Model/TableManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Services/TableManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PhilosopherService/PhilosopherHostedService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Services/PhilosopherHostedService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PhilosopherService/PhilosopherService.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Services/Services.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PhilosopherService/Philosophers/Aristotle.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PhilosopherService/Philosophers/Decartes.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PhilosopherService/Philosophers/Kant.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PhilosopherService/Philosophers/Platoo.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PhilosopherService/Philosophers/Socrates.cs" beforeDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -16,38 +43,46 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "Darlitch"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;Darlitch&quot;
   }
-}]]></component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/Darlitch/CSharp.git",
-    "accountId": "b945c078-77c1-49f2-b0d9-fb00b42d3284"
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/Darlitch/CSharp.git&quot;,
+    &quot;accountId&quot;: &quot;65675527-8389-4f71-b372-cc48f39b2b8e&quot;
   }
-}]]></component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 2
-}]]></component>
+}</component>
+  <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="true" />
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 2
+}</component>
   <component name="ProjectId" id="33XQe1pDUqK3PsapLEotD8Kr1by" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "GenericHostSimulation__lab3",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;GenericHostSimulation__lab3&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager">
     <configuration name="GenericHostSimulation_lab3" type="DotNetProject" factoryName=".NET Project">
       <option name="EXE_PATH" value="" />
@@ -77,14 +112,39 @@
       <option name="presentableId" value="Default" />
       <updated>1759461029932</updated>
       <workItem from="1759461031557" duration="537000" />
+      <workItem from="1759741595506" duration="12865000" />
+      <workItem from="1759765548032" duration="485000" />
     </task>
+    <task id="LOCAL-00001" summary="ver 0.2 add ITable, Table, IFork, PhilosopherHostedService and SimulationOption">
+      <option name="closed" value="true" />
+      <created>1759763606262</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1759763606262</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
+  <component name="UnityCheckinConfiguration" checkUnsavedScenes="true" />
   <component name="UnityProjectConfiguration" hasMinimizedUI="false" />
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
+    <MESSAGE value="ver 0.2 add ITable, Table, IFork, PhilosopherHostedService and SimulationOption" />
+    <option name="LAST_COMMIT_MESSAGE" value="ver 0.2 add ITable, Table, IFork, PhilosopherHostedService and SimulationOption" />
   </component>
 </project>

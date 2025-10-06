@@ -6,4 +6,9 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\IServices\IServices.csproj" />
+      <ProjectReference Include="..\StrategyInterface\StrategyInterface.csproj" />
+    </ItemGroup>
+
 </Project>

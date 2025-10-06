@@ -1,5 +1,5 @@
 ﻿using Model;
-using PhilosopherService;
+using Services;
 
 namespace GenericHostSimulation_lab3.DTO;
 

@@ -1,14 +1,16 @@
 ﻿using System.Diagnostics;
+using IServices;
 using Microsoft.Extensions.Hosting;
 using Model;
 using Model.Enums;
 using StrategyInterface;
 
-namespace PhilosopherService;
+namespace Services;
 
 public abstract class PhilosopherHostedService : BackgroundService
 {
-    public string Name { get; protected init; }
+    private int index;
+    public string Name { get; }
     public PhilosopherMetrics Metrics { get; }
     public int CurrentActionDuration { get; private set; }
     public PhilosopherState State { get; private set; }
@@ -19,11 +21,12 @@ public abstract class PhilosopherHostedService : BackgroundService
     private readonly Stopwatch _stopwatch;
     private readonly IPhilosopherStrategy _strategy;
 
-    public PhilosopherHostedService(IPhilosopherStrategy strategy, Fork leftFork, Fork rightFork, string name)
+    public PhilosopherHostedService(IPhilosopherStrategy strategy, ITableManager tableManager, int ind, string name)
     {
+        index = ind;
         Metrics = new PhilosopherMetrics();
-        LeftFork = leftFork;
-        RightFork = rightFork;
+        LeftFork = tableManager.GetFork(ind);
+        RightFork = tableManager.GetFork(ind);
         Name = name;
         _strategy = strategy;
         _stopwatchWait = new Stopwatch();

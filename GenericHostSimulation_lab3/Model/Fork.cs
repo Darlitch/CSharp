@@ -1,11 +1,9 @@
 ﻿using System.Diagnostics;
 using Model.Enums;
-using System.Threading;
-using IModel;
 
 namespace Model;
 
-public class Fork : IFork
+public class Fork
 {
     public string? Owner { get; private set; }
     public ForkState State { get; private set; } = ForkState.Available;
