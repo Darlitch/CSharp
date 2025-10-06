@@ -1,24 +1,25 @@
 ﻿using System.Diagnostics;
+using GenericHostSimulation_lab3.DTO;
 using Model;
 using Model.Enums;
-using MultithreadedSimulation_lab2.DTO;
+using PhilosopherService;
 using StrategyInterface;
 
-namespace MultithreadedSimulation_lab2;
+namespace GenericHostSimulation_lab3;
 
 public class Simulation
 {
-    private readonly IStrategy _strategy;
+    private readonly IPhilosopherStrategy _philosopherStrategy;
     private const long SimulationDuration = 100000;
     private List<Fork> Forks { get; set; }
-    private List<Philosopher> Philosophers { get; set; }
+    private List<PhilosopherHostedService> Philosophers { get; set; }
     private readonly Stopwatch _stopwatch; 
 
-    public Simulation(IStrategy strategy, List<Philosopher> philosophers)
+    public Simulation(IPhilosopherStrategy philosopherStrategy, List<PhilosopherHostedService> philosophers)
     {
         Philosophers = philosophers;
         Forks = Philosophers.Select(p => p.LeftFork).ToList();
-        _strategy = strategy;
+        _philosopherStrategy = philosopherStrategy;
         _stopwatch = new Stopwatch();
     }
 
@@ -51,14 +52,14 @@ public class Simulation
         Metrics.PrintFinalMetrics(new MetricDto(Philosophers, Forks, SimulationDuration));
     }
 
-    private void RunPhilosopher(Philosopher philosopher)
+    private void RunPhilosopher(PhilosopherHostedService philosopherHostedService)
     {
         while (_stopwatch.ElapsedMilliseconds < SimulationDuration)
         {
-            philosopher.Update();
-            if (philosopher is { IsHungry: true, Action: PhilosopherAction.None })
+            philosopherHostedService.Update();
+            if (philosopherHostedService is { IsHungry: true, Action: PhilosopherAction.None })
             {
-                philosopher.HandleAction(_strategy.SelectAction(philosopher.Name, philosopher.LeftFork, philosopher.RightFork));
+                philosopherHostedService.HandleAction(_philosopherStrategy.SelectAction(philosopherHostedService.Name, philosopherHostedService.LeftFork, philosopherHostedService.RightFork));
             }
         }
     }

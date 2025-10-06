@@ -1,15 +1,16 @@
 ﻿
 using Model;
+using PhilosopherService;
 
-namespace MultithreadedSimulation_lab2;
+namespace GenericHostSimulation_lab3;
 
 public static class PhilosopherInitializer
 {
     private const int PhilosopherCount = 5;
 
-    public static List<Philosopher> InitPhilosophers()
+    public static List<PhilosopherHostedService> InitPhilosophers()
     {
-        var philosophers = new List<Philosopher>();
+        var philosophers = new List<PhilosopherHostedService>();
         var forks = new List<Fork>();
         for (var i = 0; i < PhilosopherCount; ++i)
         {
@@ -27,7 +28,7 @@ public static class PhilosopherInitializer
             while (reader.ReadLine() is { } line && philosophers.Count < PhilosopherCount)
             {
                 if (string.IsNullOrWhiteSpace(line)) continue;
-                philosophers.Add(new Philosopher(line.Trim(), forks[ind], forks[(ind + 1) % PhilosopherCount]));
+                philosophers.Add(new PhilosopherHostedService(line.Trim(), forks[ind], forks[(ind + 1) % PhilosopherCount]));
                 ind++;
             }
             if (philosophers.Count < PhilosopherCount)

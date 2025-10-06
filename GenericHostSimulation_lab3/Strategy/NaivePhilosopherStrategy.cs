@@ -4,7 +4,7 @@ using StrategyInterface;
 
 namespace Strategy;
 
-public class NaiveStrategy : IStrategy
+public class NaivePhilosopherStrategy : IPhilosopherStrategy
 {
     public PhilosopherAction SelectAction(string name, Fork leftFork, Fork rightFork)
     {

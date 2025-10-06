@@ -1,10 +1,11 @@
 ﻿using Model;
+using PhilosopherService;
 
-namespace MultithreadedSimulation_lab2.DTO;
+namespace GenericHostSimulation_lab3.DTO;
 
-public class MetricDto(List<Philosopher> philosophers, List<Fork> forks, long currTime)
+public class MetricDto(List<PhilosopherHostedService> philosophers, List<Fork> forks, long currTime)
 {
-    public List<Philosopher> Philosophers { get; } = philosophers;
+    public List<PhilosopherHostedService> Philosophers { get; } = philosophers;
     public List<Fork> Forks { get; } = forks;
     public long CurrTime { get; } = currTime;
 }

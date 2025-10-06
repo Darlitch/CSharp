@@ -1,7 +1,7 @@
-﻿using Model.Enums;
-using MultithreadedSimulation_lab2.DTO;
+﻿using GenericHostSimulation_lab3.DTO;
+using Model.Enums;
 
-namespace MultithreadedSimulation_lab2;
+namespace GenericHostSimulation_lab3;
 
 public static class Metrics
 {

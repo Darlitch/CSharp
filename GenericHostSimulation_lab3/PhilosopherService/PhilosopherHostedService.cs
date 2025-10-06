@@ -1,11 +1,14 @@
 ﻿using System.Diagnostics;
+using Microsoft.Extensions.Hosting;
+using Model;
 using Model.Enums;
+using StrategyInterface;
 
-namespace Model;
+namespace PhilosopherService;
 
-public class Philosopher
+public abstract class PhilosopherHostedService : BackgroundService
 {
-    public string Name { get; }
+    public string Name { get; protected init; }
     public PhilosopherMetrics Metrics { get; }
     public int CurrentActionDuration { get; private set; }
     public PhilosopherState State { get; private set; }
@@ -14,13 +17,15 @@ public class Philosopher
     public Fork RightFork { get; }
     private readonly Stopwatch _stopwatchWait;
     private readonly Stopwatch _stopwatch;
+    private readonly IPhilosopherStrategy _strategy;
 
-    public Philosopher(string name, Fork leftFork, Fork rightFork)
+    public PhilosopherHostedService(IPhilosopherStrategy strategy, Fork leftFork, Fork rightFork, string name)
     {
-        Name = name;
         Metrics = new PhilosopherMetrics();
         LeftFork = leftFork;
         RightFork = rightFork;
+        Name = name;
+        _strategy = strategy;
         _stopwatchWait = new Stopwatch();
         _stopwatch = Stopwatch.StartNew();
         StartThinking();
@@ -132,4 +137,17 @@ public class Philosopher
     }
     
     public bool IsHungry => State == PhilosopherState.Hungry;
+
+    protected override async Task ExecuteAsync(CancellationToken stoppingToken)
+    {
+        while (!stoppingToken.IsCancellationRequested)
+        {
+            Update();
+            if (IsHungry && Action == PhilosopherAction.None)
+            {
+                HandleAction(_strategy.SelectAction(Name, LeftFork, RightFork));
+            }
+            await Task.Delay(10, stoppingToken);
+        }
+    }
 }
