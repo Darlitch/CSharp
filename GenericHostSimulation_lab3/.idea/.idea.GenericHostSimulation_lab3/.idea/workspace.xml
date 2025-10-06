@@ -7,34 +7,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bdd21a84-722b-4fc1-a95f-9ef79ea00a1d" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Services/Philosophers/Aristotle.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Services/Philosophers/Decartes.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Services/Philosophers/Kant.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Services/Philosophers/Platoo.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Services/Philosophers/Socrates.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.GenericHostSimulation_lab3/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.GenericHostSimulation_lab3/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GenericHostSimulation_lab3.sln" beforeDir="false" afterPath="$PROJECT_DIR$/GenericHostSimulation_lab3.sln" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GenericHostSimulation_lab3/DTO/MetricDto.cs" beforeDir="false" afterPath="$PROJECT_DIR$/GenericHostSimulation_lab3/DTO/MetricDto.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GenericHostSimulation_lab3/GenericHostSimulation_lab3.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/GenericHostSimulation_lab3/GenericHostSimulation_lab3.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GenericHostSimulation_lab3/PhilosopherInitializer.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/GenericHostSimulation_lab3/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/GenericHostSimulation_lab3/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GenericHostSimulation_lab3/Simulation.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Services/Simulation.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/IModel/IFork.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/IModel/IModel.csproj" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/IModel/ITableManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/IServices/ITableManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Model/Fork.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Model/Fork.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Model/Model.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Model/Model.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Model/SimulationOptions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Services/SimulationOptions.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Model/TableManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Services/TableManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PhilosopherService/PhilosopherHostedService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Services/PhilosopherHostedService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PhilosopherService/PhilosopherService.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Services/Services.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PhilosopherService/Philosophers/Aristotle.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/PhilosopherService/Philosophers/Decartes.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/PhilosopherService/Philosophers/Kant.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/PhilosopherService/Philosophers/Platoo.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/PhilosopherService/Philosophers/Socrates.cs" beforeDir="false" />
-    </list>
+    <list default="true" id="bdd21a84-722b-4fc1-a95f-9ef79ea00a1d" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -113,7 +86,7 @@
       <updated>1759461029932</updated>
       <workItem from="1759461031557" duration="537000" />
       <workItem from="1759741595506" duration="12865000" />
-      <workItem from="1759765548032" duration="485000" />
+      <workItem from="1759765548032" duration="1358000" />
     </task>
     <task id="LOCAL-00001" summary="ver 0.2 add ITable, Table, IFork, PhilosopherHostedService and SimulationOption">
       <option name="closed" value="true" />
@@ -123,7 +96,15 @@
       <option name="project" value="LOCAL" />
       <updated>1759763606262</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="ver 0.3 change structure of project, update simulation, create IServices">
+      <option name="closed" value="true" />
+      <created>1759766308618</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1759766308618</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -145,6 +126,7 @@
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
     <MESSAGE value="ver 0.2 add ITable, Table, IFork, PhilosopherHostedService and SimulationOption" />
-    <option name="LAST_COMMIT_MESSAGE" value="ver 0.2 add ITable, Table, IFork, PhilosopherHostedService and SimulationOption" />
+    <MESSAGE value="ver 0.3 change structure of project, update simulation, create IServices" />
+    <option name="LAST_COMMIT_MESSAGE" value="ver 0.3 change structure of project, update simulation, create IServices" />
   </component>
 </project>
