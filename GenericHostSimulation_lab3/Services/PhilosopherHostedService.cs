@@ -15,20 +15,22 @@ public abstract class PhilosopherHostedService : BackgroundService
     public int CurrentActionDuration { get; private set; }
     public PhilosopherState State { get; private set; }
     public PhilosopherAction Action { get; private set; }
-    public Fork LeftFork { get; }
-    public Fork RightFork { get; }
+    private Fork LeftFork { get; }
+    private Fork RightFork { get; }
     private readonly Stopwatch _stopwatchWait;
     private readonly Stopwatch _stopwatch;
     private readonly IPhilosopherStrategy _strategy;
+    private readonly SimulationOptions _options;
 
-    public PhilosopherHostedService(IPhilosopherStrategy strategy, ITableManager tableManager, int ind, string name)
+    protected PhilosopherHostedService(IPhilosopherStrategy strategy, ITableManager tableManager, int ind, string name, SimulationOptions options)
     {
         index = ind;
+        Name = name;
         Metrics = new PhilosopherMetrics();
         LeftFork = tableManager.GetFork(ind);
-        RightFork = tableManager.GetFork(ind);
-        Name = name;
+        RightFork = tableManager.GetFork(ind + 1);
         _strategy = strategy;
+        _options = options;
         _stopwatchWait = new Stopwatch();
         _stopwatch = Stopwatch.StartNew();
         StartThinking();
@@ -44,7 +46,7 @@ public abstract class PhilosopherHostedService : BackgroundService
 
     private void StartThinking()
     {
-        SetState(PhilosopherState.Thinking, new Random().Next(30, 100));
+        SetState(PhilosopherState.Thinking, new Random().Next(_options.ThinkingTimeMin, _options.ThinkingTimeMax));
         // SetState(PhilosopherState.Thinking, 100);
     }
 
@@ -58,7 +60,7 @@ public abstract class PhilosopherHostedService : BackgroundService
     {
         _stopwatchWait.Stop();
         Metrics.WaitingTime += _stopwatchWait.ElapsedMilliseconds;
-        SetState(PhilosopherState.Eating, new Random().Next(40, 50));
+        SetState(PhilosopherState.Eating, new Random().Next(_options.EatingTimeMin,_options.EatingTimeMax));
         Metrics.IncrementEaten();
     }
 
@@ -66,7 +68,7 @@ public abstract class PhilosopherHostedService : BackgroundService
     {
         Action = PhilosopherAction.TakeLeftFork;
         LeftFork.TakeFork(Name);
-        CurrentActionDuration = 20;
+        CurrentActionDuration = _options.ForkAcquisitionTime;
         _stopwatch.Restart();
     }
     
@@ -74,7 +76,7 @@ public abstract class PhilosopherHostedService : BackgroundService
     {
         Action = PhilosopherAction.TakeRightFork;
         RightFork.TakeFork(Name);
-        CurrentActionDuration = 20;
+        CurrentActionDuration = _options.ForkAcquisitionTime;
         _stopwatch.Restart();
     }
 
@@ -89,7 +91,7 @@ public abstract class PhilosopherHostedService : BackgroundService
         LeftFork.ReleaseFork();
     }
 
-    public void Update()
+    private void Update()
     {
         if (_stopwatch.ElapsedMilliseconds < CurrentActionDuration) return;
         switch (State)
@@ -117,7 +119,7 @@ public abstract class PhilosopherHostedService : BackgroundService
         }
     }
     
-    public void HandleAction(PhilosopherAction action)
+    private void HandleAction(PhilosopherAction action)
     {
         switch (action)
         {
@@ -139,7 +141,7 @@ public abstract class PhilosopherHostedService : BackgroundService
         }
     }
     
-    public bool IsHungry => State == PhilosopherState.Hungry;
+    private bool IsHungry => State == PhilosopherState.Hungry;
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {

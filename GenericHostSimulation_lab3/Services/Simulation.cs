@@ -1,8 +1,7 @@
 ﻿using System.Diagnostics;
 using IServices;
-using Model;
 
-namespace GenericHostSimulation_lab3;
+namespace Services;
 
 public class Simulation(SimulationOptions options, ITableManager tableManager)
 {

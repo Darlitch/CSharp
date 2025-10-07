@@ -1,20 +1,36 @@
-﻿namespace GenericHostSimulation_lab3;
+﻿using IServices;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Services;
+using Services.Philosophers;
+using Strategy;
+using StrategyInterface;
+
+namespace GenericHostSimulation_lab3;
 
 internal static class Program
 {
-    public static void Main(string[] args)
+    public static async Task Main(string[] args)
     {
-        
-        // List<PhilosopherHostedService> philosophers = PhilosopherInitializer.InitPhilosophers();
-        // List<Fork> forks = philosophers.Select(p => p.LeftFork).ToList();
-        //
-        // IPhilosopherStrategy philosopherStrategy = new NaivePhilosopherStrategy();
-        // Simulation simulation = new Simulation(philosopherStrategy, philosophers);
-        // simulation.Run();
-        
-        // ICoordinator coordinator = new Coordinator(philosophers, forks);
-        // IPhilosopherStrategy strategy2 = new CoordinatorStrategy(coordinator);
-        // Simulation simulation2 = new Simulation(strategy2, philosophers);
-        // simulation2.Run();
+        var builder = Host.CreateDefaultBuilder(args)
+            .ConfigureAppConfiguration((context, config) =>
+            {
+                config.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
+            })
+            .ConfigureServices((context, services) =>
+            {
+                services.AddSingleton<ITableManager, TableManager>();
+                services.AddSingleton<IPhilosopherStrategy, NaivePhilosopherStrategy>();
+
+                services.AddHostedService<Platoo>();
+                services.AddHostedService<Aristotle>();
+                services.AddHostedService<Decartes>();
+                services.AddHostedService<Kant>();
+                services.AddHostedService<Socrates>();
+                
+                services.Configure<SimulationOptions>(context.Configuration.GetSection("Simulation"));
+            });
+        await builder.Build().RunAsync();
     }
 }

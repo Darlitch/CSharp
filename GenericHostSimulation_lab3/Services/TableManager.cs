@@ -1,6 +1,7 @@
 ﻿using IServices;
+using Model;
 
-namespace Model;
+namespace Services;
 
 public class TableManager : ITableManager
 {

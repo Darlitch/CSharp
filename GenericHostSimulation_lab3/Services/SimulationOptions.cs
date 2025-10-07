@@ -1,4 +1,4 @@
-﻿namespace Model;
+﻿namespace Services;
 
 public class SimulationOptions
 {
