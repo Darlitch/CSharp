@@ -7,19 +7,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bdd21a84-722b-4fc1-a95f-9ef79ea00a1d" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.GenericHostSimulation_lab3/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.GenericHostSimulation_lab3/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GenericHostSimulation_lab3/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/GenericHostSimulation_lab3/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Services/PhilosopherHostedService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Services/PhilosopherHostedService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Services/Philosophers/Aristotle.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Services/Philosophers/Aristotle.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Services/Philosophers/Decartes.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Services/Philosophers/Decartes.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Services/Philosophers/Kant.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Services/Philosophers/Kant.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Services/Philosophers/Platoo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Services/Philosophers/Platoo.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Services/Philosophers/Socrates.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Services/Philosophers/Socrates.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Services/Simulation.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Services/Simulation.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Services/SimulationOptions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Services/SimulationOptions.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Services/TableManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Services/TableManager.cs" afterDir="false" />
-    </list>
+    <list default="true" id="bdd21a84-722b-4fc1-a95f-9ef79ea00a1d" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -99,7 +87,7 @@
       <workItem from="1759461031557" duration="537000" />
       <workItem from="1759741595506" duration="12865000" />
       <workItem from="1759765548032" duration="1358000" />
-      <workItem from="1759816085233" duration="2587000" />
+      <workItem from="1759816085233" duration="2711000" />
     </task>
     <task id="LOCAL-00001" summary="ver 0.2 add ITable, Table, IFork, PhilosopherHostedService and SimulationOption">
       <option name="closed" value="true" />
@@ -117,7 +105,15 @@
       <option name="project" value="LOCAL" />
       <updated>1759766308618</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="ver 0.31 Add Options in PhilosopherHostedService and create Program">
+      <option name="closed" value="true" />
+      <created>1759820063351</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1759820063351</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -140,6 +136,7 @@
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
     <MESSAGE value="ver 0.2 add ITable, Table, IFork, PhilosopherHostedService and SimulationOption" />
     <MESSAGE value="ver 0.3 change structure of project, update simulation, create IServices" />
-    <option name="LAST_COMMIT_MESSAGE" value="ver 0.3 change structure of project, update simulation, create IServices" />
+    <MESSAGE value="ver 0.31 Add Options in PhilosopherHostedService and create Program" />
+    <option name="LAST_COMMIT_MESSAGE" value="ver 0.31 Add Options in PhilosopherHostedService and create Program" />
   </component>
 </project>

@@ -141,7 +141,7 @@ public abstract class PhilosopherHostedService : BackgroundService
         }
     }
     
-    private bool IsHungry => State == PhilosopherState.Hungry;
+    public bool IsHungry => State == PhilosopherState.Hungry;
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {

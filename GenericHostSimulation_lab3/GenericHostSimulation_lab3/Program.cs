@@ -22,6 +22,8 @@ internal static class Program
             {
                 services.AddSingleton<ITableManager, TableManager>();
                 services.AddSingleton<IPhilosopherStrategy, NaivePhilosopherStrategy>();
+                services.AddSingleton<IMetricsCollector, MetricsCollector>();
+                services.AddSingleton<ISimulation, Simulation>();
 
                 services.AddHostedService<Platoo>();
                 services.AddHostedService<Aristotle>();
@@ -31,6 +33,9 @@ internal static class Program
                 
                 services.Configure<SimulationOptions>(context.Configuration.GetSection("Simulation"));
             });
-        await builder.Build().RunAsync();
+        var host = builder.Build();
+        await host.StartAsync();
+        host.Services.GetRequiredService<Simulation>().Run();
+        await host.StopAsync();
     }
 }

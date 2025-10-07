@@ -1,5 +1,6 @@
 ﻿using IServices;
 using Model;
+using Model.Enums;
 
 namespace Services;
 
@@ -17,6 +18,11 @@ public class TableManager : ITableManager
     }
 
     public Fork GetFork(int index) => _forks[(index + 1) % _forks.Count];
-    
+
+    public bool AllInUse()
+    {
+        return _forks.All(t => t.State == ForkState.InUse);
+    }
+
     public int PhilosophersCount => _forks.Count;
 }
