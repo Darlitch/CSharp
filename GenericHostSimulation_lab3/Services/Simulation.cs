@@ -1,14 +1,15 @@
 ﻿using System.Diagnostics;
 using IServices;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Options;
 using Model.Enums;
 
 namespace Services;
 
-public class Simulation(SimulationOptions options, IEnumerable<IHostedService> philosophers, IMetricsCollector metricsCollector, ITableManager tableManager) : ISimulation
+public class Simulation(IOptions<SimulationOptions> options, IEnumerable<IHostedService> philosophers, IMetricsCollector metricsCollector, ITableManager tableManager) : ISimulation
 {
-    private readonly long _simulationDuration = options.DurationSeconds * 1000;
-    private readonly int _displayUpdateInterval = options.DisplayUpdateInterval;
+    private readonly long _simulationDuration = options.Value.DurationSeconds * 1000;
+    private readonly int _displayUpdateInterval = options.Value.DisplayUpdateInterval;
     private readonly Stopwatch _stopwatch = new();
 
     public void Run()

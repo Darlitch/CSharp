@@ -44,7 +44,7 @@ internal static class Program
         await host.StartAsync();
         await startedSource.Task;
         
-        host.Services.GetRequiredService<Simulation>().Run();
+        host.Services.GetRequiredService<ISimulation>().Run();
         await host.StopAsync();
     }
 }

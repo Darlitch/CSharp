@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics;
 using IServices;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Options;
 using Model;
 using Model.Enums;
 using StrategyInterface;
@@ -20,9 +21,9 @@ public abstract class PhilosopherHostedService : BackgroundService
     private readonly Stopwatch _stopwatchWait;
     private readonly Stopwatch _stopwatch;
     private readonly IPhilosopherStrategy _strategy;
-    private readonly SimulationOptions _options;
+    private readonly IOptions<SimulationOptions> _options;
 
-    protected PhilosopherHostedService(IPhilosopherStrategy strategy, ITableManager tableManager, int ind, string name, SimulationOptions options)
+    protected PhilosopherHostedService(IPhilosopherStrategy strategy, ITableManager tableManager, int ind, string name, IOptions<SimulationOptions> options)
     {
         index = ind;
         Name = name;
@@ -46,7 +47,7 @@ public abstract class PhilosopherHostedService : BackgroundService
 
     private void StartThinking()
     {
-        SetState(PhilosopherState.Thinking, new Random().Next(_options.ThinkingTimeMin, _options.ThinkingTimeMax));
+        SetState(PhilosopherState.Thinking, new Random().Next(_options.Value.ThinkingTimeMin, _options.Value.ThinkingTimeMax));
         // SetState(PhilosopherState.Thinking, 100);
     }
 
@@ -60,7 +61,7 @@ public abstract class PhilosopherHostedService : BackgroundService
     {
         _stopwatchWait.Stop();
         Metrics.WaitingTime += _stopwatchWait.ElapsedMilliseconds;
-        SetState(PhilosopherState.Eating, new Random().Next(_options.EatingTimeMin,_options.EatingTimeMax));
+        SetState(PhilosopherState.Eating, new Random().Next(_options.Value.EatingTimeMin,_options.Value.EatingTimeMax));
         Metrics.IncrementEaten();
     }
 
@@ -68,7 +69,7 @@ public abstract class PhilosopherHostedService : BackgroundService
     {
         Action = PhilosopherAction.TakeLeftFork;
         LeftFork.TakeFork(Name);
-        CurrentActionDuration = _options.ForkAcquisitionTime;
+        CurrentActionDuration = _options.Value.ForkAcquisitionTime;
         _stopwatch.Restart();
     }
     
@@ -76,7 +77,7 @@ public abstract class PhilosopherHostedService : BackgroundService
     {
         Action = PhilosopherAction.TakeRightFork;
         RightFork.TakeFork(Name);
-        CurrentActionDuration = _options.ForkAcquisitionTime;
+        CurrentActionDuration = _options.Value.ForkAcquisitionTime;
         _stopwatch.Restart();
     }
 
