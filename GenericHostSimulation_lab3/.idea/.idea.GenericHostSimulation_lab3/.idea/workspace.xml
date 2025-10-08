@@ -88,6 +88,7 @@
       <workItem from="1759741595506" duration="12865000" />
       <workItem from="1759765548032" duration="1358000" />
       <workItem from="1759816085233" duration="2711000" />
+      <workItem from="1759842686158" duration="9095000" />
     </task>
     <task id="LOCAL-00001" summary="ver 0.2 add ITable, Table, IFork, PhilosopherHostedService and SimulationOption">
       <option name="closed" value="true" />
@@ -113,7 +114,15 @@
       <option name="project" value="LOCAL" />
       <updated>1759820063351</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="ver 0.4 add Simulation, ISimulation, done MetricsCollector.cs and IMetricsCollector.cs">
+      <option name="closed" value="true" />
+      <created>1759854677461</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1759854677461</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -137,6 +146,7 @@
     <MESSAGE value="ver 0.2 add ITable, Table, IFork, PhilosopherHostedService and SimulationOption" />
     <MESSAGE value="ver 0.3 change structure of project, update simulation, create IServices" />
     <MESSAGE value="ver 0.31 Add Options in PhilosopherHostedService and create Program" />
-    <option name="LAST_COMMIT_MESSAGE" value="ver 0.31 Add Options in PhilosopherHostedService and create Program" />
+    <MESSAGE value="ver 0.4 add Simulation, ISimulation, done MetricsCollector.cs and IMetricsCollector.cs" />
+    <option name="LAST_COMMIT_MESSAGE" value="ver 0.4 add Simulation, ISimulation, done MetricsCollector.cs and IMetricsCollector.cs" />
   </component>
 </project>

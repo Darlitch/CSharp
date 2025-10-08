@@ -16,7 +16,7 @@ internal static class Program
         var builder = Host.CreateDefaultBuilder(args)
             .ConfigureAppConfiguration((context, config) =>
             {
-                config.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
+                config.AddJsonFile(Path.Combine(AppContext.BaseDirectory, "appsettings.json"), optional: false, reloadOnChange: true);
             })
             .ConfigureServices((context, services) =>
             {
@@ -34,7 +34,16 @@ internal static class Program
                 services.Configure<SimulationOptions>(context.Configuration.GetSection("Simulation"));
             });
         var host = builder.Build();
+        var lifetime = host.Services.GetRequiredService<IHostApplicationLifetime>();
+        var startedSource = new TaskCompletionSource();
+        lifetime.ApplicationStarted.Register(() =>
+        {
+            startedSource.TrySetResult();
+        });
+        
         await host.StartAsync();
+        await startedSource.Task;
+        
         host.Services.GetRequiredService<Simulation>().Run();
         await host.StopAsync();
     }

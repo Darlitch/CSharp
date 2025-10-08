@@ -8,7 +8,7 @@ public class TableManager : ITableManager
 {
     private readonly List<Fork> _forks;
 
-    public TableManager(int philosophersCount)
+    public TableManager(int philosophersCount = 5)
     {
         _forks = new List<Fork>();
         for (var i = 0; i < philosophersCount; ++i)
