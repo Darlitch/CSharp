@@ -20,7 +20,8 @@ internal static class Program
             })
             .ConfigureServices((context, services) =>
             {
-                services.AddSingleton<ITableManager>(sp => ActivatorUtilities.CreateInstance<TableManager>(sp, 5));
+                // services.AddSingleton<ITableManager>(sp => ActivatorUtilities.CreateInstance<TableManager>(sp, 5));
+                services.AddSingleton<ITableManager, TableManager>();
                 services.AddSingleton<IPhilosopherStrategy, NaivePhilosopherStrategy>();
                 services.AddSingleton<IMetricsCollector, MetricsCollector>();
                 services.AddSingleton<ISimulation, Simulation>();

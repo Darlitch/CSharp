@@ -9,4 +9,5 @@ public class SimulationOptions
     public int EatingTimeMax { get; set; }
     public int ForkAcquisitionTime { get; set; }
     public int DisplayUpdateInterval { get; set; }
+    public int PhilosophersCount { get; set; }
 }

@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 using IServices;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using Model;
@@ -36,6 +37,15 @@ public abstract class PhilosopherHostedService : BackgroundService
         _stopwatch = Stopwatch.StartNew();
         StartThinking();
     }
+
+    // public static T Create<T>(IServiceProvider sp, int index, string name) where T : PhilosopherHostedService
+    // {
+    //     return ActivatorUtilities.CreateInstance<T>(sp,
+    //         sp.GetRequiredService<IPhilosopherStrategy>(),
+    //         sp.GetRequiredService<ITableManager>(),
+    //         sp.GetRequiredService<IOptions<SimulationOptions>>(),
+    //         index, name);
+    // }
 
     private void SetState(PhilosopherState state, int duration)
     {

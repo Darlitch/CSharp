@@ -7,17 +7,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bdd21a84-722b-4fc1-a95f-9ef79ea00a1d" name="Changes" comment="">
+    <list default="true" id="bdd21a84-722b-4fc1-a95f-9ef79ea00a1d" name="Changes" comment="ver 0.6 add fabrics in Simulation">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.GenericHostSimulation_lab3/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.GenericHostSimulation_lab3/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GenericHostSimulation_lab3/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/GenericHostSimulation_lab3/Program.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GenericHostSimulation_lab3/appsettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/GenericHostSimulation_lab3/appsettings.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Services/MetricsCollector.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Services/MetricsCollector.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Services/PhilosopherHostedService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Services/PhilosopherHostedService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Services/Philosophers/Aristotle.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Services/Philosophers/Aristotle.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Services/Philosophers/Decartes.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Services/Philosophers/Decartes.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Services/Philosophers/Kant.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Services/Philosophers/Kant.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Services/Philosophers/Platoo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Services/Philosophers/Platoo.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Services/Philosophers/Socrates.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Services/Philosophers/Socrates.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Services/SimulationOptions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Services/SimulationOptions.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Services/TableManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Services/TableManager.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -46,6 +41,7 @@
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/ba03229b8197450d925e741b560ee852e8e920/1a/5f21ad9e/List`1.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/1b81cb3be224213a6a73519b6e340a628d9a1fb8629c351a186a26f6376669/List.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="mock://R:/Repositories/CSharp/GenericHostSimulation_lab3/GenericHostSimulation_lab3/appsettings.json" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Services/SimulationOptions.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="true" />
@@ -112,7 +108,7 @@
       <workItem from="1759842686158" duration="9095000" />
       <workItem from="1759898659584" duration="8405000" />
       <workItem from="1759992576241" duration="3454000" />
-      <workItem from="1759996089139" duration="2306000" />
+      <workItem from="1759996089139" duration="6106000" />
     </task>
     <task id="LOCAL-00001" summary="ver 0.2 add ITable, Table, IFork, PhilosopherHostedService and SimulationOption">
       <option name="closed" value="true" />
@@ -162,7 +158,15 @@
       <option name="project" value="LOCAL" />
       <updated>1759903273338</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="ver 0.6 add fabrics in Simulation">
+      <option name="closed" value="true" />
+      <created>1760003048439</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1760003048439</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -189,7 +193,8 @@
     <MESSAGE value="ver 0.4 add Simulation, ISimulation, done MetricsCollector.cs and IMetricsCollector.cs" />
     <MESSAGE value="ver 0.5 first version of program" />
     <MESSAGE value="ver 0.51 fix bug with Options" />
-    <option name="LAST_COMMIT_MESSAGE" value="ver 0.51 fix bug with Options" />
+    <MESSAGE value="ver 0.6 add fabrics in Simulation" />
+    <option name="LAST_COMMIT_MESSAGE" value="ver 0.6 add fabrics in Simulation" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
