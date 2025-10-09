@@ -7,13 +7,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bdd21a84-722b-4fc1-a95f-9ef79ea00a1d" name="Changes" comment="ver 0.6 add fabrics in Simulation">
+    <list default="true" id="bdd21a84-722b-4fc1-a95f-9ef79ea00a1d" name="Changes" comment="ver 0.61 fix TableManager.cs: add PhilosopherCount to Options">
+      <change afterPath="$PROJECT_DIR$/IServices/IPhilosopher.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.GenericHostSimulation_lab3/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.GenericHostSimulation_lab3/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GenericHostSimulation_lab3/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/GenericHostSimulation_lab3/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GenericHostSimulation_lab3/appsettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/GenericHostSimulation_lab3/appsettings.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Services/MetricsCollector.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Services/MetricsCollector.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Services/PhilosopherHostedService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Services/PhilosopherHostedService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Services/SimulationOptions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Services/SimulationOptions.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Services/TableManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Services/TableManager.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -108,7 +107,7 @@
       <workItem from="1759842686158" duration="9095000" />
       <workItem from="1759898659584" duration="8405000" />
       <workItem from="1759992576241" duration="3454000" />
-      <workItem from="1759996089139" duration="6106000" />
+      <workItem from="1759996089139" duration="7670000" />
     </task>
     <task id="LOCAL-00001" summary="ver 0.2 add ITable, Table, IFork, PhilosopherHostedService and SimulationOption">
       <option name="closed" value="true" />
@@ -166,7 +165,15 @@
       <option name="project" value="LOCAL" />
       <updated>1760003048439</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="ver 0.61 fix TableManager.cs: add PhilosopherCount to Options">
+      <option name="closed" value="true" />
+      <created>1760006803580</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1760006803580</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -194,20 +201,21 @@
     <MESSAGE value="ver 0.5 first version of program" />
     <MESSAGE value="ver 0.51 fix bug with Options" />
     <MESSAGE value="ver 0.6 add fabrics in Simulation" />
-    <option name="LAST_COMMIT_MESSAGE" value="ver 0.6 add fabrics in Simulation" />
+    <MESSAGE value="ver 0.61 fix TableManager.cs: add PhilosopherCount to Options" />
+    <option name="LAST_COMMIT_MESSAGE" value="ver 0.61 fix TableManager.cs: add PhilosopherCount to Options" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Services/MetricsCollector.cs</url>
-          <line>26</line>
+          <line>27</line>
           <properties documentPath="R:\Repositories\CSharp\GenericHostSimulation_lab3\Services\MetricsCollector.cs" containingFunctionPresentation="Method 'PrintMetrics'">
             <startOffsets>
-              <option value="1166" />
+              <option value="1265" />
             </startOffsets>
             <endOffsets>
-              <option value="1222" />
+              <option value="1321" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="2" />

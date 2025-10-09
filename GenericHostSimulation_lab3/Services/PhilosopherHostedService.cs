@@ -9,7 +9,7 @@ using StrategyInterface;
 
 namespace Services;
 
-public abstract class PhilosopherHostedService : BackgroundService
+public abstract class PhilosopherHostedService : BackgroundService, IPhilosopher
 {
     public int Index { get; }
     public string Name { get; }

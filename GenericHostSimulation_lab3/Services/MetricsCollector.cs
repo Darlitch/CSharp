@@ -9,13 +9,14 @@ public class MetricsCollector(ITableManager tableManager, IEnumerable<IHostedSer
     // private readonly ITableManager tableManager = tableManager;
     // private readonly IEnumerable<IHostedService> philosophers = philosophers;
     // ИДЕ их не использует, видимо из-за оптимизации. Можно ли сделать так?
+    private readonly IEnumerable<PhilosopherHostedService> _philosophers = philosophers.OfType<PhilosopherHostedService>().ToList();
     
     public void PrintMetrics(long currTime)
     {
         if (currTime == 0) return;
         Console.WriteLine($"==== ВРЕМЯ {currTime} МС ====");
         Console.WriteLine("Философы:");
-        foreach (var philosopher in philosophers.OfType<PhilosopherHostedService>())
+        foreach (var philosopher in _philosophers)
         {
             var state = philosopher.State == PhilosopherState.Hungry
                 ? $"{philosopher.State} (Action = {philosopher.Action})"
@@ -32,7 +33,7 @@ public class MetricsCollector(ITableManager tableManager, IEnumerable<IHostedSer
         }
         Console.WriteLine("");
         Console.WriteLine("Пропускная способность:");
-        foreach (var philosopher in philosophers.OfType<PhilosopherHostedService>())
+        foreach (var philosopher in _philosophers)
         {
             Console.WriteLine($"{philosopher.Name}: {((double)philosopher.Metrics.Eaten / currTime):F7} ед/мс");
         }
@@ -41,7 +42,7 @@ public class MetricsCollector(ITableManager tableManager, IEnumerable<IHostedSer
         long sum = 0;
         long max = 0;
         var maxName = "";
-        foreach (var philosopher in philosophers.OfType<PhilosopherHostedService>())
+        foreach (var philosopher in _philosophers)
         {
             Console.WriteLine($"{philosopher.Name}: {philosopher.Metrics.WaitingTime}");
             sum += philosopher.Metrics.WaitingTime;
@@ -64,6 +65,6 @@ public class MetricsCollector(ITableManager tableManager, IEnumerable<IHostedSer
     public void PrintFinalMetrics(long currTime)
     {
         PrintMetrics(currTime);
-        Console.WriteLine($"Всего съедено: {philosophers.OfType<PhilosopherHostedService>().Sum(philosopher => philosopher.Metrics.Eaten)}");
+        Console.WriteLine($"Всего съедено: {_philosophers.Sum(philosopher => philosopher.Metrics.Eaten)}");
     }
 }
