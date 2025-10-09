@@ -4,5 +4,5 @@ using StrategyInterface;
 
 namespace Services.Philosophers;
 
-public class Aristotle(IPhilosopherStrategy strategy, ITableManager tableManager, IOptions<SimulationOptions> options)
-    : PhilosopherHostedService(strategy, tableManager, 1, "Аристотель", options);
+public class Aristotle(IPhilosopherStrategy strategy, ITableManager tableManager, IOptions<SimulationOptions> options, int index)
+    : PhilosopherHostedService(strategy, tableManager, options, index, "Аристотель");

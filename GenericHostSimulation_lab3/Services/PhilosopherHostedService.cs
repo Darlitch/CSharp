@@ -10,7 +10,7 @@ namespace Services;
 
 public abstract class PhilosopherHostedService : BackgroundService
 {
-    private int index;
+    public int Index { get; }
     public string Name { get; }
     public PhilosopherMetrics Metrics { get; }
     public int CurrentActionDuration { get; private set; }
@@ -23,9 +23,9 @@ public abstract class PhilosopherHostedService : BackgroundService
     private readonly IPhilosopherStrategy _strategy;
     private readonly IOptions<SimulationOptions> _options;
 
-    protected PhilosopherHostedService(IPhilosopherStrategy strategy, ITableManager tableManager, int ind, string name, IOptions<SimulationOptions> options)
+    protected PhilosopherHostedService(IPhilosopherStrategy strategy, ITableManager tableManager, IOptions<SimulationOptions> options, int ind, string name)
     {
-        index = ind;
+        Index = ind;
         Name = name;
         Metrics = new PhilosopherMetrics();
         LeftFork = tableManager.GetFork(ind);

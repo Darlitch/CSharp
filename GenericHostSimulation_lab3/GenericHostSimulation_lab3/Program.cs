@@ -20,16 +20,16 @@ internal static class Program
             })
             .ConfigureServices((context, services) =>
             {
-                services.AddSingleton<ITableManager, TableManager>();
+                services.AddSingleton<ITableManager>(sp => ActivatorUtilities.CreateInstance<TableManager>(sp, 5));
                 services.AddSingleton<IPhilosopherStrategy, NaivePhilosopherStrategy>();
                 services.AddSingleton<IMetricsCollector, MetricsCollector>();
                 services.AddSingleton<ISimulation, Simulation>();
 
-                services.AddHostedService<Platoo>();
-                services.AddHostedService<Aristotle>();
-                services.AddHostedService<Decartes>();
-                services.AddHostedService<Kant>();
-                services.AddHostedService<Socrates>();
+                services.AddHostedService(sp => ActivatorUtilities.CreateInstance<Platoo>(sp, 1));
+                services.AddHostedService(sp => ActivatorUtilities.CreateInstance<Aristotle>(sp, 2));
+                services.AddHostedService(sp => ActivatorUtilities.CreateInstance<Decartes>(sp, 3));
+                services.AddHostedService(sp => ActivatorUtilities.CreateInstance<Kant>(sp, 4));
+                services.AddHostedService(sp => ActivatorUtilities.CreateInstance<Socrates>(sp, 5));
                 
                 services.Configure<SimulationOptions>(context.Configuration.GetSection("Simulation"));
             });

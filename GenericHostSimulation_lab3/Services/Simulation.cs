@@ -11,6 +11,7 @@ public class Simulation(IOptions<SimulationOptions> options, IEnumerable<IHosted
     private readonly long _simulationDuration = options.Value.DurationSeconds * 1000;
     private readonly int _displayUpdateInterval = options.Value.DisplayUpdateInterval;
     private readonly Stopwatch _stopwatch = new();
+    private readonly IEnumerable<PhilosopherHostedService> _philosophers = philosophers.OfType<PhilosopherHostedService>().ToList();
 
     public void Run()
     {
@@ -20,7 +21,7 @@ public class Simulation(IOptions<SimulationOptions> options, IEnumerable<IHosted
             if (_stopwatch.ElapsedMilliseconds % _displayUpdateInterval == 0)
             {
                var currTime = _stopwatch.ElapsedMilliseconds;
-                if (philosophers.OfType<PhilosopherHostedService>().All(p => p is { IsHungry: true, Action: PhilosopherAction.None }) && tableManager.AllInUse())
+                if (_philosophers.All(p => p is { IsHungry: true, Action: PhilosopherAction.None }) && tableManager.AllInUse())
                 {
                     metricsCollector.PrintFinalMetrics(currTime);
                     Console.WriteLine($"Deadlock at {currTime} ms!");

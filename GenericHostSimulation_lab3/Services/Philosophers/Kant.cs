@@ -4,5 +4,5 @@ using StrategyInterface;
 
 namespace Services.Philosophers;
 
-public class Kant(IPhilosopherStrategy strategy, ITableManager tableManager, IOptions<SimulationOptions> options)
-    : PhilosopherHostedService(strategy, tableManager, 3, "Кант", options);
+public class Kant(IPhilosopherStrategy strategy, ITableManager tableManager, IOptions<SimulationOptions> options, int index)
+    : PhilosopherHostedService(strategy, tableManager, options, index, "Кант");

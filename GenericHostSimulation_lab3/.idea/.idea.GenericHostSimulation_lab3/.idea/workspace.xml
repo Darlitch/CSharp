@@ -7,11 +7,26 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bdd21a84-722b-4fc1-a95f-9ef79ea00a1d" name="Changes" comment="" />
+    <list default="true" id="bdd21a84-722b-4fc1-a95f-9ef79ea00a1d" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.GenericHostSimulation_lab3/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.GenericHostSimulation_lab3/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GenericHostSimulation_lab3/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/GenericHostSimulation_lab3/Program.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GenericHostSimulation_lab3/appsettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/GenericHostSimulation_lab3/appsettings.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Services/MetricsCollector.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Services/MetricsCollector.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Services/PhilosopherHostedService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Services/PhilosopherHostedService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Services/Philosophers/Aristotle.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Services/Philosophers/Aristotle.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Services/Philosophers/Decartes.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Services/Philosophers/Decartes.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Services/Philosophers/Kant.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Services/Philosophers/Kant.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Services/Philosophers/Platoo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Services/Philosophers/Platoo.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Services/Philosophers/Socrates.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Services/Philosophers/Socrates.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Services/TableManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Services/TableManager.cs" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="DpaMonitoringSettings">
+    <option name="autoShow" value="false" />
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
@@ -28,6 +43,11 @@
     &quot;accountId&quot;: &quot;65675527-8389-4f71-b372-cc48f39b2b8e&quot;
   }
 }</component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/ba03229b8197450d925e741b560ee852e8e920/1a/5f21ad9e/List`1.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/1b81cb3be224213a6a73519b6e340a628d9a1fb8629c351a186a26f6376669/List.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Services/SimulationOptions.cs" root0="FORCE_HIGHLIGHTING" />
+  </component>
   <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="true" />
   <component name="ProblemsViewState">
     <option name="selectedTabId" value="CurrentFile" />
@@ -43,19 +63,20 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;GenericHostSimulation__lab3&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    ".NET Project.GenericHostSimulation_lab3.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "GenericHostSimulation__lab3",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "preferences.lookFeel",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RunManager">
     <configuration name="GenericHostSimulation_lab3" type="DotNetProject" factoryName=".NET Project">
       <option name="EXE_PATH" value="" />
@@ -89,6 +110,9 @@
       <workItem from="1759765548032" duration="1358000" />
       <workItem from="1759816085233" duration="2711000" />
       <workItem from="1759842686158" duration="9095000" />
+      <workItem from="1759898659584" duration="8405000" />
+      <workItem from="1759992576241" duration="3454000" />
+      <workItem from="1759996089139" duration="2306000" />
     </task>
     <task id="LOCAL-00001" summary="ver 0.2 add ITable, Table, IFork, PhilosopherHostedService and SimulationOption">
       <option name="closed" value="true" />
@@ -122,7 +146,23 @@
       <option name="project" value="LOCAL" />
       <updated>1759854677461</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="ver 0.5 first version of program">
+      <option name="closed" value="true" />
+      <created>1759902122720</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1759902122721</updated>
+    </task>
+    <task id="LOCAL-00006" summary="ver 0.51 fix bug with Options">
+      <option name="closed" value="true" />
+      <created>1759903273338</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1759903273338</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -147,6 +187,27 @@
     <MESSAGE value="ver 0.3 change structure of project, update simulation, create IServices" />
     <MESSAGE value="ver 0.31 Add Options in PhilosopherHostedService and create Program" />
     <MESSAGE value="ver 0.4 add Simulation, ISimulation, done MetricsCollector.cs and IMetricsCollector.cs" />
-    <option name="LAST_COMMIT_MESSAGE" value="ver 0.4 add Simulation, ISimulation, done MetricsCollector.cs and IMetricsCollector.cs" />
+    <MESSAGE value="ver 0.5 first version of program" />
+    <MESSAGE value="ver 0.51 fix bug with Options" />
+    <option name="LAST_COMMIT_MESSAGE" value="ver 0.51 fix bug with Options" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Services/MetricsCollector.cs</url>
+          <line>26</line>
+          <properties documentPath="R:\Repositories\CSharp\GenericHostSimulation_lab3\Services\MetricsCollector.cs" containingFunctionPresentation="Method 'PrintMetrics'">
+            <startOffsets>
+              <option value="1166" />
+            </startOffsets>
+            <endOffsets>
+              <option value="1222" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

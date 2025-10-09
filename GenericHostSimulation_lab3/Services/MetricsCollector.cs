@@ -12,6 +12,7 @@ public class MetricsCollector(ITableManager tableManager, IEnumerable<IHostedSer
     
     public void PrintMetrics(long currTime)
     {
+        if (currTime == 0) return;
         Console.WriteLine($"==== ВРЕМЯ {currTime} МС ====");
         Console.WriteLine("Философы:");
         foreach (var philosopher in philosophers.OfType<PhilosopherHostedService>())
@@ -19,7 +20,7 @@ public class MetricsCollector(ITableManager tableManager, IEnumerable<IHostedSer
             var state = philosopher.State == PhilosopherState.Hungry
                 ? $"{philosopher.State} (Action = {philosopher.Action})"
                 : $"{philosopher.State} ({philosopher.CurrentActionDuration} ms left)";
-            Console.WriteLine($"{philosopher.Name}: {state}, съедено: {philosopher.Metrics.Eaten}");
+            Console.WriteLine($"({philosopher.Index}) {philosopher.Name}: {state}, съедено: {philosopher.Metrics.Eaten}");
         }
         Console.WriteLine("");
         Console.WriteLine("Вилки:");

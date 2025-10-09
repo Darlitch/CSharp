@@ -1,4 +1,5 @@
-﻿using IServices;
+﻿using System.Xml;
+using IServices;
 using Model;
 using Model.Enums;
 
@@ -8,7 +9,7 @@ public class TableManager : ITableManager
 {
     private readonly List<Fork> _forks;
 
-    public TableManager(int philosophersCount = 5)
+    public TableManager(int philosophersCount)
     {
         _forks = new List<Fork>();
         for (var i = 0; i < philosophersCount; ++i)
@@ -17,7 +18,11 @@ public class TableManager : ITableManager
         }
     }
 
-    public Fork GetFork(int index) => _forks[(index + 1) % _forks.Count];
+    public Fork GetFork(int index)
+    {
+        // Console.WriteLine($"{index} : {index % _forks.Count}");
+        return _forks[index % PhilosophersCount];
+    }
 
     public bool AllInUse()
     {
