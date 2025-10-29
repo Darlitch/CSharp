@@ -12,10 +12,11 @@ public class Fork
     private readonly Stopwatch _stopwatch = Stopwatch.StartNew();
     private readonly Lock _lock = new Lock();
 
-    public void TakeFork(string owner)
+    public void TryTakeFork(string owner)
     {
         using (_lock.EnterScope())
         {
+            if (State != ForkState.Available) return;
             _stopwatch.Stop();
             FreeTime += _stopwatch.ElapsedMilliseconds;
             Owner = owner;

@@ -38,15 +38,6 @@ public abstract class PhilosopherHostedService : BackgroundService, IPhilosopher
         StartThinking();
     }
 
-    // public static T Create<T>(IServiceProvider sp, int index, string name) where T : PhilosopherHostedService
-    // {
-    //     return ActivatorUtilities.CreateInstance<T>(sp,
-    //         sp.GetRequiredService<IPhilosopherStrategy>(),
-    //         sp.GetRequiredService<ITableManager>(),
-    //         sp.GetRequiredService<IOptions<SimulationOptions>>(),
-    //         index, name);
-    // }
-
     private void SetState(PhilosopherState state, int duration)
     {
         State = state;
@@ -78,7 +69,7 @@ public abstract class PhilosopherHostedService : BackgroundService, IPhilosopher
     private void TakeLeftFork()
     {
         Action = PhilosopherAction.TakeLeftFork;
-        LeftFork.TakeFork(Name);
+        LeftFork.TryTakeFork(Name);
         CurrentActionDuration = _options.Value.ForkAcquisitionTime;
         _stopwatch.Restart();
     }
@@ -86,7 +77,7 @@ public abstract class PhilosopherHostedService : BackgroundService, IPhilosopher
     private void TakeRightFork()
     {
         Action = PhilosopherAction.TakeRightFork;
-        RightFork.TakeFork(Name);
+        RightFork.TryTakeFork(Name);
         CurrentActionDuration = _options.Value.ForkAcquisitionTime;
         _stopwatch.Restart();
     }

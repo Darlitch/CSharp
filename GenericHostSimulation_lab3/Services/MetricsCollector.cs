@@ -6,9 +6,6 @@ namespace Services;
 
 public class MetricsCollector(ITableManager tableManager, IEnumerable<IHostedService> philosophers) : IMetricsCollector
 {
-    // private readonly ITableManager tableManager = tableManager;
-    // private readonly IEnumerable<IHostedService> philosophers = philosophers;
-    // ИДЕ их не использует, видимо из-за оптимизации. Можно ли сделать так?
     private readonly IEnumerable<PhilosopherHostedService> _philosophers = philosophers.OfType<PhilosopherHostedService>().ToList();
     
     public void PrintMetrics(long currTime)
