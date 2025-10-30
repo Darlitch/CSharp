@@ -9,22 +9,22 @@ using StrategyInterface;
 
 namespace Services;
 
-public abstract class PhilosopherHostedService : BackgroundService, IPhilosopher
+public class PhilosopherHostedService : BackgroundService, IPhilosopher
 {
     public int Index { get; }
     public string Name { get; }
     public PhilosopherMetrics Metrics { get; }
     public int CurrentActionDuration { get; private set; }
-    public PhilosopherState State { get; private set; }
-    public PhilosopherAction Action { get; private set; }
-    private Fork LeftFork { get; }
-    private Fork RightFork { get; }
+    public PhilosopherState State { get; internal set; }
+    public PhilosopherAction Action { get; internal set; }
+    internal Fork LeftFork { get; }
+    internal Fork RightFork { get; }
     private readonly Stopwatch _stopwatchWait;
     private readonly Stopwatch _stopwatch;
     private readonly IPhilosopherStrategy _strategy;
     private readonly IOptions<SimulationOptions> _options;
 
-    protected PhilosopherHostedService(IPhilosopherStrategy strategy, ITableManager tableManager, IOptions<SimulationOptions> options, int ind, string name)
+    public PhilosopherHostedService(IPhilosopherStrategy strategy, ITableManager tableManager, IOptions<SimulationOptions> options, int ind, string name)
     {
         Index = ind;
         Name = name;
@@ -46,19 +46,19 @@ public abstract class PhilosopherHostedService : BackgroundService, IPhilosopher
         _stopwatch.Restart();
     }
 
-    private void StartThinking()
+    internal void StartThinking()
     {
         SetState(PhilosopherState.Thinking, new Random().Next(_options.Value.ThinkingTimeMin, _options.Value.ThinkingTimeMax));
         // SetState(PhilosopherState.Thinking, 100);
     }
 
-    private void SetHungry()
+    internal void SetHungry()
     {
         SetState(PhilosopherState.Hungry, 0);
         _stopwatchWait.Restart();
     }
 
-    private void StartEating()
+    internal void StartEating()
     {
         _stopwatchWait.Stop();
         Metrics.WaitingTime += _stopwatchWait.ElapsedMilliseconds;
@@ -93,7 +93,7 @@ public abstract class PhilosopherHostedService : BackgroundService, IPhilosopher
         LeftFork.ReleaseFork();
     }
 
-    private void Update()
+    internal void Update()
     {
         if (_stopwatch.ElapsedMilliseconds < CurrentActionDuration) return;
         switch (State)
@@ -121,7 +121,7 @@ public abstract class PhilosopherHostedService : BackgroundService, IPhilosopher
         }
     }
     
-    private void HandleAction(PhilosopherAction action)
+    internal void HandleAction(PhilosopherAction action)
     {
         switch (action)
         {
