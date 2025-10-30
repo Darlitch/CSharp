@@ -22,4 +22,8 @@
         <Using Include="Xunit"/>
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\UnitTesting_lab4\UnitTesting_lab4.csproj" />
+    </ItemGroup>
+
 </Project>
