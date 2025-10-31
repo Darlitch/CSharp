@@ -8,6 +8,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="bdd21a84-722b-4fc1-a95f-9ef79ea00a1d" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/../.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/../.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.GenericHostSimulation_lab3/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.GenericHostSimulation_lab3/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -54,20 +55,20 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    ".NET Project.GenericHostSimulation_lab3.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "GenericHostSimulation__lab3",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "preferences.lookFeel",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;.NET Project.GenericHostSimulation_lab3.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;UnitTesting__lab4&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager">
     <configuration name="GenericHostSimulation_lab3" type="DotNetProject" factoryName=".NET Project">
       <option name="EXE_PATH" value="" />
@@ -104,6 +105,9 @@
       <workItem from="1759898659584" duration="8405000" />
       <workItem from="1759992576241" duration="3454000" />
       <workItem from="1759996089139" duration="9565000" />
+      <workItem from="1761738811683" duration="1906000" />
+      <workItem from="1761740734522" duration="398000" />
+      <workItem from="1761741201940" duration="26000" />
     </task>
     <task id="LOCAL-00001" summary="ver 0.2 add ITable, Table, IFork, PhilosopherHostedService and SimulationOption">
       <option name="closed" value="true" />
@@ -177,7 +181,15 @@
       <option name="project" value="LOCAL" />
       <updated>1760008359848</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="ver 0.7 some change + add TryTakeFork">
+      <option name="closed" value="true" />
+      <created>1761740050893</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1761740050893</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -207,25 +219,7 @@
     <MESSAGE value="ver 0.6 add fabrics in Simulation" />
     <MESSAGE value="ver 0.61 fix TableManager.cs: add PhilosopherCount to Options" />
     <MESSAGE value="ver 0.62 last fixes" />
-    <option name="LAST_COMMIT_MESSAGE" value="ver 0.62 last fixes" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Services/MetricsCollector.cs</url>
-          <line>27</line>
-          <properties documentPath="R:\Repositories\CSharp\GenericHostSimulation_lab3\Services\MetricsCollector.cs" containingFunctionPresentation="Method 'PrintMetrics'">
-            <startOffsets>
-              <option value="1265" />
-            </startOffsets>
-            <endOffsets>
-              <option value="1321" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="2" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
+    <MESSAGE value="ver 0.7 some change + add TryTakeFork" />
+    <option name="LAST_COMMIT_MESSAGE" value="ver 0.7 some change + add TryTakeFork" />
   </component>
 </project>
