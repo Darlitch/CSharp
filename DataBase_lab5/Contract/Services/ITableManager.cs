@@ -1,6 +1,6 @@
 ﻿using Model;
 
-namespace IServices;
+namespace Contract.Services;
 
 public interface ITableManager
 {

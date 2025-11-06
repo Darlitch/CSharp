@@ -1,6 +1,5 @@
 ﻿using System.Diagnostics;
-using IServices;
-using Microsoft.Extensions.DependencyInjection;
+using Contract.Services;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using Model;

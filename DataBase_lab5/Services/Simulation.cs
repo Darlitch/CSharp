@@ -1,5 +1,5 @@
 ﻿using System.Diagnostics;
-using IServices;
+using Contract.Services;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using Model.Enums;

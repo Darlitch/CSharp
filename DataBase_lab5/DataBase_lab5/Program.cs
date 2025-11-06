@@ -1,4 +1,4 @@
-﻿using IServices;
+﻿using Contract.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;

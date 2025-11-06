@@ -1,4 +1,4 @@
-﻿namespace IServices;
+﻿namespace Contract.Services;
 
 public interface IMetricsCollector
 {

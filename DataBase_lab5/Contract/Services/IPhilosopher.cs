@@ -1,7 +1,7 @@
 ﻿using Model;
 using Model.Enums;
 
-namespace IServices;
+namespace Contract.Services;
 
 public interface IPhilosopher
 {

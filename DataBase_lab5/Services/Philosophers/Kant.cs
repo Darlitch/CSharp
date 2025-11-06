@@ -1,4 +1,4 @@
-﻿using IServices;
+﻿using Contract.Services;
 using Microsoft.Extensions.Options;
 using StrategyInterface;
 
