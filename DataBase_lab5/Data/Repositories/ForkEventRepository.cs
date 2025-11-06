@@ -15,6 +15,7 @@ public class ForkEventRepository(DataBaseContext context) : IForkEventRepository
     public async Task<ForkEvent?> GetAsync(long runId, long timestampMs, int index, CancellationToken ct = default)
     {
         return await context.ForkEvents
+            .AsNoTracking()
             .Where(e => e.Index == index && e.RunId == runId && e.TimestampMs <= timestampMs)
             .OrderByDescending(e => e.TimestampMs)
             .FirstOrDefaultAsync(ct);

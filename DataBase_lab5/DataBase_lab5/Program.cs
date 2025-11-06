@@ -24,6 +24,7 @@ internal static class Program
                 services.AddSingleton<IPhilosopherStrategy, NaivePhilosopherStrategy>();
                 services.AddSingleton<IMetricsCollector, MetricsCollector>();
                 services.AddSingleton<ISimulation, Simulation>();
+                services.AddSingleton<ISimulationTime, SimulationTime>();
 
                 services.AddHostedService(sp => ActivatorUtilities.CreateInstance<Platoo>(sp, 1));
                 services.AddHostedService(sp => ActivatorUtilities.CreateInstance<Aristotle>(sp, 2));

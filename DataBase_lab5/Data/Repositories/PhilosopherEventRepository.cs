@@ -16,6 +16,7 @@ public class PhilosopherEventRepository(DataBaseContext context) : IPhilosopherE
         CancellationToken ct = default)
     {
         return await context.PhilosopherEvents
+            .AsNoTracking()
             .Where(e => e.RunId == runId && e.TimestampMs <= timestampMs && e.Index == index)
             .OrderByDescending(e => e.TimestampMs)
             .FirstOrDefaultAsync(ct);

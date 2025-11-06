@@ -8,7 +8,7 @@ using StrategyInterface;
 
 namespace Services;
 
-public class PhilosopherHostedService : BackgroundService, IPhilosopher
+public class PhilosopherHostedService : BackgroundService
 {
     public int Index { get; }
     public string Name { get; }
