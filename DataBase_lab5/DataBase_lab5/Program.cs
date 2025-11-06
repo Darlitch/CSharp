@@ -3,7 +3,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Services;
-using Services.Philosophers;
 using Strategy;
 using StrategyInterface;
 
@@ -26,11 +25,11 @@ internal static class Program
                 services.AddSingleton<ISimulation, Simulation>();
                 services.AddSingleton<ISimulationTime, SimulationTime>();
 
-                services.AddHostedService(sp => ActivatorUtilities.CreateInstance<Platoo>(sp, 1));
-                services.AddHostedService(sp => ActivatorUtilities.CreateInstance<Aristotle>(sp, 2));
-                services.AddHostedService(sp => ActivatorUtilities.CreateInstance<Decartes>(sp, 3));
-                services.AddHostedService(sp => ActivatorUtilities.CreateInstance<Kant>(sp, 4));
-                services.AddHostedService(sp => ActivatorUtilities.CreateInstance<Socrates>(sp, 5));
+                services.AddHostedService(sp => ActivatorUtilities.CreateInstance<PhilosopherHostedService>(sp, 1, "Платон"));
+                services.AddHostedService(sp => ActivatorUtilities.CreateInstance<PhilosopherHostedService>(sp, 2, "Аристотель"));
+                services.AddHostedService(sp => ActivatorUtilities.CreateInstance<PhilosopherHostedService>(sp, 3, "Декарт"));
+                services.AddHostedService(sp => ActivatorUtilities.CreateInstance<PhilosopherHostedService>(sp, 4, "Кант"));
+                services.AddHostedService(sp => ActivatorUtilities.CreateInstance<PhilosopherHostedService>(sp, 5, "Сократ"));
                 
                 services.Configure<SimulationOptions>(context.Configuration.GetSection("Simulation"));
             });

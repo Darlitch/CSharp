@@ -14,16 +14,18 @@ public class PhilosopherHostedService : BackgroundService
     public string Name { get; }
     public PhilosopherMetrics Metrics { get; }
     public int CurrentActionDuration { get; private set; }
-    public PhilosopherState State { get; internal set; }
-    public PhilosopherAction Action { get; internal set; }
+    public PhilosopherState State { get; private set; }
+    public PhilosopherAction Action { get; private set; }
     internal Fork LeftFork { get; }
     internal Fork RightFork { get; }
+    private readonly ISimulationTime _simulationTime;
     private readonly Stopwatch _stopwatchWait;
     private readonly Stopwatch _stopwatch;
     private readonly IPhilosopherStrategy _strategy;
     private readonly IOptions<SimulationOptions> _options;
 
-    public PhilosopherHostedService(IPhilosopherStrategy strategy, ITableManager tableManager, IOptions<SimulationOptions> options, int ind, string name)
+    public PhilosopherHostedService(IPhilosopherStrategy strategy, ITableManager tableManager, IOptions<SimulationOptions> options,
+        ISimulationTime simulationTime, int ind, string name)
     {
         Index = ind;
         Name = name;
@@ -32,6 +34,7 @@ public class PhilosopherHostedService : BackgroundService
         RightFork = tableManager.GetFork(ind + 1);
         _strategy = strategy;
         _options = options;
+        _simulationTime = simulationTime;
         _stopwatchWait = new Stopwatch();
         _stopwatch = Stopwatch.StartNew();
         StartThinking();
@@ -45,7 +48,7 @@ public class PhilosopherHostedService : BackgroundService
         _stopwatch.Restart();
     }
 
-    internal void StartThinking()
+    private void StartThinking()
     {
         SetState(PhilosopherState.Thinking, new Random().Next(_options.Value.ThinkingTimeMin, _options.Value.ThinkingTimeMax));
         // SetState(PhilosopherState.Thinking, 100);
