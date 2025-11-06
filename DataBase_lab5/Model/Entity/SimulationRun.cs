@@ -3,15 +3,15 @@
 public class SimulationRun
 {
     public long RunId { get; private set; }
-    public long Duration { get; private set; }
+    public long DurationMs { get; private set; }
     
     public int PhilosophersCount { get; private set; }
 
     private SimulationRun() {}
 
-    public SimulationRun(long duration, int philosophersCount)
+    public SimulationRun(long durationMs, int philosophersCount)
     {
-        Duration = duration;
+        DurationMs = durationMs;
         PhilosophersCount = philosophersCount;
     }
 }

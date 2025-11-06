@@ -16,8 +16,8 @@ public class SimulationRunConfiguration : IEntityTypeConfiguration<SimulationRun
             .HasColumnType("bigint")
             .ValueGeneratedOnAdd();
         
-        builder.Property(s => s.Duration)
-            .HasColumnName("duration")
+        builder.Property(s => s.DurationMs)
+            .HasColumnName("duration_ms")
             .HasColumnType("bigint");
         
         builder.Property(s => s.PhilosophersCount)

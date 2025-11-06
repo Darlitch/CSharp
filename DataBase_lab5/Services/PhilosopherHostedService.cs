@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using Contract.Repositories;
 using Contract.Services;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
@@ -8,37 +9,25 @@ using StrategyInterface;
 
 namespace Services;
 
-public class PhilosopherHostedService : BackgroundService
+public class PhilosopherHostedService(
+    IPhilosopherStrategy strategy,
+    ITableManager tableManager,
+    IOptions<SimulationOptions> options,
+    IObserver observer,
+    int ind,
+    string name)
+    : BackgroundService
 {
-    public int Index { get; }
-    public string Name { get; }
-    public PhilosopherMetrics Metrics { get; }
+    public int Index { get; } = ind;
+    public string Name { get; } = name;
+    public PhilosopherMetrics Metrics { get; } = new();
     public int CurrentActionDuration { get; private set; }
     public PhilosopherState State { get; private set; }
     public PhilosopherAction Action { get; private set; }
-    internal Fork LeftFork { get; }
-    internal Fork RightFork { get; }
-    private readonly ISimulationTime _simulationTime;
-    private readonly Stopwatch _stopwatchWait;
-    private readonly Stopwatch _stopwatch;
-    private readonly IPhilosopherStrategy _strategy;
-    private readonly IOptions<SimulationOptions> _options;
-
-    public PhilosopherHostedService(IPhilosopherStrategy strategy, ITableManager tableManager, IOptions<SimulationOptions> options,
-        ISimulationTime simulationTime, int ind, string name)
-    {
-        Index = ind;
-        Name = name;
-        Metrics = new PhilosopherMetrics();
-        LeftFork = tableManager.GetFork(ind);
-        RightFork = tableManager.GetFork(ind + 1);
-        _strategy = strategy;
-        _options = options;
-        _simulationTime = simulationTime;
-        _stopwatchWait = new Stopwatch();
-        _stopwatch = Stopwatch.StartNew();
-        StartThinking();
-    }
+    internal Fork LeftFork { get; } = tableManager.GetFork(ind);
+    internal Fork RightFork { get; } = tableManager.GetFork(ind + 1);
+    private readonly Stopwatch _stopwatchWait = new();
+    private readonly Stopwatch _stopwatch = Stopwatch.StartNew();
 
     private void SetState(PhilosopherState state, int duration)
     {
@@ -50,7 +39,7 @@ public class PhilosopherHostedService : BackgroundService
 
     private void StartThinking()
     {
-        SetState(PhilosopherState.Thinking, new Random().Next(_options.Value.ThinkingTimeMin, _options.Value.ThinkingTimeMax));
+        SetState(PhilosopherState.Thinking, new Random().Next(options.Value.ThinkingTimeMin, options.Value.ThinkingTimeMax));
         // SetState(PhilosopherState.Thinking, 100);
     }
 
@@ -64,7 +53,7 @@ public class PhilosopherHostedService : BackgroundService
     {
         _stopwatchWait.Stop();
         Metrics.WaitingTime += _stopwatchWait.ElapsedMilliseconds;
-        SetState(PhilosopherState.Eating, new Random().Next(_options.Value.EatingTimeMin,_options.Value.EatingTimeMax));
+        SetState(PhilosopherState.Eating, new Random().Next(options.Value.EatingTimeMin,options.Value.EatingTimeMax));
         Metrics.IncrementEaten();
     }
 
@@ -72,7 +61,7 @@ public class PhilosopherHostedService : BackgroundService
     {
         Action = PhilosopherAction.TakeLeftFork;
         LeftFork.TryTakeFork(Name);
-        CurrentActionDuration = _options.Value.ForkAcquisitionTime;
+        CurrentActionDuration = options.Value.ForkAcquisitionTime;
         _stopwatch.Restart();
     }
     
@@ -80,7 +69,7 @@ public class PhilosopherHostedService : BackgroundService
     {
         Action = PhilosopherAction.TakeRightFork;
         RightFork.TryTakeFork(Name);
-        CurrentActionDuration = _options.Value.ForkAcquisitionTime;
+        CurrentActionDuration = options.Value.ForkAcquisitionTime;
         _stopwatch.Restart();
     }
 
@@ -149,12 +138,17 @@ public class PhilosopherHostedService : BackgroundService
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
+        while (!observer.ReadyToStart)
+        {
+            await Task.Delay(10, stoppingToken);
+        }
+        StartThinking();
         while (!stoppingToken.IsCancellationRequested)
         {
             Update();
             if (IsHungry && Action == PhilosopherAction.None)
             {
-                HandleAction(_strategy.SelectAction(Name, LeftFork, RightFork));
+                HandleAction(strategy.SelectAction(Name, LeftFork, RightFork));
             }
             await Task.Delay(10, stoppingToken);
         }

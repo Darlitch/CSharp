@@ -4,5 +4,5 @@ namespace Contract.Repositories;
 
 public interface ISimulationRunRepository
 {
-    public Task<SimulationRun> AddAsync(SimulationRun simulation, CancellationToken ct = default);
+    public Task<long> AddAsync(SimulationRun simulation, CancellationToken ct = default);
 }
