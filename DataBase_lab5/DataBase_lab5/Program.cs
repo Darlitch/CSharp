@@ -1,4 +1,8 @@
-﻿using Contract.Services;
+﻿using Contract.Repositories;
+using Contract.Services;
+using Data;
+using Data.Repositories;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -19,11 +23,19 @@ internal static class Program
             })
             .ConfigureServices((context, services) =>
             {
+                services.AddDbContext<DataBaseContext>(options =>
+                    options.UseNpgsql(context.Configuration.GetConnectionString("DefaultConnection")));
+                
                 services.AddSingleton<ITableManager, TableManager>();
                 services.AddSingleton<IPhilosopherStrategy, NaivePhilosopherStrategy>();
                 services.AddSingleton<IMetricsCollector, MetricsCollector>();
                 services.AddSingleton<ISimulation, Simulation>();
                 services.AddSingleton<ISimulationTime, SimulationTime>();
+                services.AddSingleton<IObserver, Observer>();
+                
+                services.AddScoped<ISimulationRunRepository, SimulationRunRepository>();
+                services.AddScoped<IForkEventRepository, ForkEventRepository>();
+                services.AddScoped<IPhilosopherEventRepository, PhilosopherEventRepository>();
 
                 services.AddHostedService(sp => ActivatorUtilities.CreateInstance<PhilosopherHostedService>(sp, 1, "Платон"));
                 services.AddHostedService(sp => ActivatorUtilities.CreateInstance<PhilosopherHostedService>(sp, 2, "Аристотель"));
@@ -40,10 +52,14 @@ internal static class Program
         {
             startedSource.TrySetResult();
         });
-        
+        using (var scope = host.Services.CreateScope())
+        {
+            var context = scope.ServiceProvider.GetRequiredService<DataBaseContext>();
+            await context.Database.MigrateAsync(); 
+        }
         await host.StartAsync();
         await startedSource.Task;
-        
+        await host.Services.GetRequiredService<IObserver>().RecordSimulationRun();
         host.Services.GetRequiredService<ISimulation>().Run();
         await host.StopAsync();
     }

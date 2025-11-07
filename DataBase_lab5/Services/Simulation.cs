@@ -7,7 +7,7 @@ using Model.Enums;
 namespace Services;
 
 public class Simulation(IOptions<SimulationOptions> options, IEnumerable<IHostedService> philosophers, IMetricsCollector metricsCollector,
-    ITableManager tableManager, ISimulationTime simulationTime, IObserver observer) : ISimulation
+    ITableManager tableManager, ISimulationTime simulationTime) : ISimulation
 {
     private readonly long _simulationDuration = options.Value.DurationSeconds * 1000;
     private readonly int _displayUpdateInterval = options.Value.DisplayUpdateInterval;
@@ -15,7 +15,6 @@ public class Simulation(IOptions<SimulationOptions> options, IEnumerable<IHosted
 
     public void Run()
     {
-        observer.RecordSimulationRun();
         simulationTime.Start();
         while (simulationTime.CurrentTimeMs < _simulationDuration)
         {
