@@ -5,11 +5,11 @@ namespace Services;
 
 public class SimulationTime : ISimulationTime
 {
+    public SimulationTime()
+    {
+        _stopwatch.Start();
+    }
     private readonly Stopwatch _stopwatch = new();
     
     public long CurrentTimeMs => _stopwatch.ElapsedMilliseconds;
-    
-    public void Start() => _stopwatch.Start();
-    
-    public void Stop() => _stopwatch.Stop();
 }

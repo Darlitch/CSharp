@@ -25,6 +25,7 @@ public class PhilosopherEvent
         Action = action;
         Eaten = eaten;
         WaitingTime = waitingTime;
+        TimestampMs = timestampMs;
         RunId = runId;
     }
 }

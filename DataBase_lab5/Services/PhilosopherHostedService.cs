@@ -4,6 +4,8 @@ using Contract.Services;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using Model;
+using Model.DTO;
+using Model.Entity;
 using Model.Enums;
 using StrategyInterface;
 
@@ -13,7 +15,8 @@ public class PhilosopherHostedService(
     IPhilosopherStrategy strategy,
     ITableManager tableManager,
     IOptions<SimulationOptions> options,
-    IObserver observer,
+    IEventQueue eventQueue,
+    ISimulationTime simulationTime,
     int ind,
     string name)
     : BackgroundService
@@ -35,6 +38,7 @@ public class PhilosopherHostedService(
         CurrentActionDuration = duration;
         Action = PhilosopherAction.None;
         _stopwatch.Restart();
+        RecordPhilosopherEvent(simulationTime.CurrentTimeMs);
     }
 
     private void StartThinking()
@@ -60,28 +64,42 @@ public class PhilosopherHostedService(
     private void TakeLeftFork()
     {
         Action = PhilosopherAction.TakeLeftFork;
-        LeftFork.TryTakeFork(Name);
+        if (!LeftFork.TryTakeFork(Name)) return;
         CurrentActionDuration = options.Value.ForkAcquisitionTime;
         _stopwatch.Restart();
+        RecordLeftForkEvent(simulationTime.CurrentTimeMs);
     }
     
     private void TakeRightFork()
     {
         Action = PhilosopherAction.TakeRightFork;
-        RightFork.TryTakeFork(Name);
+        if (!RightFork.TryTakeFork(Name)) return;
         CurrentActionDuration = options.Value.ForkAcquisitionTime;
         _stopwatch.Restart();
+        RecordRightForkEvent(simulationTime.CurrentTimeMs);
     }
 
     private void ReleaseForks()
     {
-        LeftFork.ReleaseFork();
-        RightFork.ReleaseFork();
+        if (LeftFork.Owner == Name)
+        {
+            LeftFork.ReleaseFork();
+            RecordLeftForkEvent(simulationTime.CurrentTimeMs-1);
+        }
+        if (RightFork.Owner == Name)
+        {
+            RightFork.ReleaseFork();
+            RecordRightForkEvent(simulationTime.CurrentTimeMs-1);
+        }
     }
 
     private void ReleaseLeftFork()
     {
-        LeftFork.ReleaseFork();
+        if (LeftFork.Owner == Name)
+        {
+            LeftFork.ReleaseFork();
+            RecordLeftForkEvent(simulationTime.CurrentTimeMs-1);
+        }
     }
 
     internal void Update()
@@ -138,10 +156,6 @@ public class PhilosopherHostedService(
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
-        while (!observer.ReadyToStart)
-        {
-            await Task.Delay(10, stoppingToken);
-        }
         StartThinking();
         while (!stoppingToken.IsCancellationRequested)
         {
@@ -152,5 +166,20 @@ public class PhilosopherHostedService(
             }
             await Task.Delay(10, stoppingToken);
         }
+    }
+
+    private void RecordPhilosopherEvent(long currentTime)
+    {
+        eventQueue.Enqueue(new PhilosopherEventDto(Index, Name, State, Action, Metrics.Eaten, Metrics.WaitingTime, currentTime));
+    }
+    
+    private void RecordLeftForkEvent(long currentTime)
+    {
+        eventQueue.Enqueue(new ForkEventDto(Index, LeftFork.Owner, LeftFork.State, currentTime));
+    }
+    
+    private void RecordRightForkEvent(long currentTime)
+    {
+        eventQueue.Enqueue(new ForkEventDto((Index + 1) % options.Value.PhilosophersCount, RightFork.Owner, RightFork.State, currentTime));
     }
 }

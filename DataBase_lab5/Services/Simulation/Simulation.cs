@@ -12,10 +12,9 @@ public class Simulation(IOptions<SimulationOptions> options, IEnumerable<IHosted
     private readonly long _simulationDuration = options.Value.DurationSeconds * 1000;
     private readonly int _displayUpdateInterval = options.Value.DisplayUpdateInterval;
     private readonly IEnumerable<PhilosopherHostedService> _philosophers = philosophers.OfType<PhilosopherHostedService>().ToList();
-
+    
     public void Run()
     {
-        simulationTime.Start();
         while (simulationTime.CurrentTimeMs < _simulationDuration)
         {
             if (simulationTime.CurrentTimeMs % _displayUpdateInterval == 0)
@@ -29,7 +28,7 @@ public class Simulation(IOptions<SimulationOptions> options, IEnumerable<IHosted
                 }
                 else
                 {
-                    metricsCollector.PrintMetrics(currTime);
+                    // metricsCollector.PrintMetrics(currTime);
                 }
             }
         }

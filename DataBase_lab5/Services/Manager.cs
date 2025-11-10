@@ -2,12 +2,13 @@
 using Contract.Services;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
+using Model.DTO;
 using Model.Entity;
 using Model.Enums;
 
 namespace Services;
 
-public class Observer(ISimulationTime simulationTime, IServiceScopeFactory scopeFactory, IOptions<SimulationOptions> options) : IObserver
+public class Manager(IServiceScopeFactory scopeFactory, IOptions<SimulationOptions> options) : IManager
 {
     private long _runId = -1;
     
@@ -22,20 +23,20 @@ public class Observer(ISimulationTime simulationTime, IServiceScopeFactory scope
         Console.WriteLine($"Simulation run id : {_runId}");
     }
     
-    public async Task RecordPhilosopherEvent(int index, string name, PhilosopherState state, PhilosopherAction action,
-        int eaten, long waitingTime)
+    public async Task RecordPhilosopherEvent(PhilosopherEventDto dto)
     {
         using var scope = scopeFactory.CreateScope(); 
         var repository = scope.ServiceProvider.GetRequiredService<IPhilosopherEventRepository>();
-        var evt = new PhilosopherEvent(index, name, state, action, eaten, waitingTime, simulationTime.CurrentTimeMs, _runId);
+        var evt = new PhilosopherEvent(dto.Index, dto.Name, dto.State, dto.Action, dto.Eaten, dto.WaitingTime, dto.CurrentTimeMs, _runId);
         await repository.AddAsync(evt);
     }
 
-    public async Task RecordForkEvent(int index, string? owner, ForkState state)
+    public async Task RecordForkEvent(ForkEventDto dto)
     {
         using var scope = scopeFactory.CreateScope(); 
         var repository = scope.ServiceProvider.GetRequiredService<IForkEventRepository>();
-        var evt = new ForkEvent(index, owner, state, simulationTime.CurrentTimeMs, _runId);
+        Console.WriteLine($"{dto.Index} - {dto.Owner} : {dto.CurrentTimeMs} - {dto.State}");
+        var evt = new ForkEvent(dto.Index, dto.Owner, dto.State, dto.CurrentTimeMs, _runId);
         await repository.AddAsync(evt);
     }
 }
