@@ -4,11 +4,11 @@ using Model.DTO;
 
 namespace Services;
 
-public class EventProcessorHostedService(IEventQueue queue, IManager manager) : BackgroundService
+public class EventProcessorHostedService(IEventQueue queue, IRecordManager recordManager) : BackgroundService
 {
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
-        while (!manager.ReadyToStart)
+        while (!recordManager.ReadyToStart)
         {
             await Task.Delay(10, stoppingToken);
         }
@@ -17,11 +17,14 @@ public class EventProcessorHostedService(IEventQueue queue, IManager manager) : 
             switch (evt)
             {
                 case PhilosopherEventDto dto:
-                    await manager.RecordPhilosopherEvent(dto);
+                    await recordManager.RecordPhilosopherEvent(dto);
                     // Console.WriteLine($"{dto.Index} : {dto.CurrentTimeMs}");
                     break;
                 case ForkEventDto dto:
-                    await manager.RecordForkEvent(dto);
+                    await recordManager.RecordForkEvent(dto);
+                    break;
+                case SimulationRunDto dto:
+                    await recordManager.UpdateSimulationRun(dto);
                     break;
                 default:
                     Console.WriteLine("Unknown event");

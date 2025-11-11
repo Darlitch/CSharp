@@ -8,7 +8,7 @@ using Model.Enums;
 
 namespace Services;
 
-public class Manager(IServiceScopeFactory scopeFactory, IOptions<SimulationOptions> options) : IManager
+public class RecordManager(IServiceScopeFactory scopeFactory, IOptions<SimulationOptions> options) : IRecordManager
 {
     private long _runId = -1;
     
@@ -21,6 +21,13 @@ public class Manager(IServiceScopeFactory scopeFactory, IOptions<SimulationOptio
         var simulation = new SimulationRun(options.Value.DurationSeconds * 1000, options.Value.PhilosophersCount);
         _runId = await repository.AddAsync(simulation);
         Console.WriteLine($"Simulation run id : {_runId}");
+    }
+
+    public async Task UpdateSimulationRun(SimulationRunDto dto)
+    {
+        using var scope = scopeFactory.CreateScope();
+        var repository = scope.ServiceProvider.GetRequiredService<ISimulationRunRepository>();
+        await repository.UpdateAsync(_runId, dto.TimestampMs);
     }
     
     public async Task RecordPhilosopherEvent(PhilosopherEventDto dto)

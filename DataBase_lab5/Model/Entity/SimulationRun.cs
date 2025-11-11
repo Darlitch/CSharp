@@ -14,4 +14,6 @@ public class SimulationRun
         DurationMs = durationMs;
         PhilosophersCount = philosophersCount;
     }
+    
+    public void UpdateDuration(long durationMs) => DurationMs = durationMs;
 }

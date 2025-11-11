@@ -32,7 +32,7 @@ internal static class Program
                 services.AddSingleton<IMetricsCollector, MetricsCollector>();
                 services.AddSingleton<ISimulation, Simulation>();
                 services.AddSingleton<ISimulationTime, SimulationTime>();
-                services.AddSingleton<IManager, Manager>();
+                services.AddSingleton<IRecordManager, RecordManager>();
                 services.AddSingleton<IEventQueue, EventQueue>();
                 
                 services.AddScoped<ISimulationRunRepository, SimulationRunRepository>();
@@ -55,7 +55,7 @@ internal static class Program
             await context.Database.MigrateAsync(); 
         }
         await host.StartAsync();
-        await host.Services.GetRequiredService<IManager>().RecordSimulationRun();
+        await host.Services.GetRequiredService<IRecordManager>().RecordSimulationRun();
         host.Services.GetRequiredService<ISimulation>().Run();
         await host.StopAsync();
     }
