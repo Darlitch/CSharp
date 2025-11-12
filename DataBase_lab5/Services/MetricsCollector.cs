@@ -1,6 +1,7 @@
 ﻿using Contract.Services;
 using Microsoft.Extensions.Hosting;
 using Model.Enums;
+using Services.PhilosopherMain;
 
 namespace Services;
 

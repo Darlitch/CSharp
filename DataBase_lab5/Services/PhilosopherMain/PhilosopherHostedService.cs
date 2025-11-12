@@ -1,22 +1,21 @@
 ﻿using System.Diagnostics;
-using Contract.Repositories;
 using Contract.Services;
+using Contract.Services.Event;
+using Contract.Services.PhilosopherMain;
+using Contract.Services.Simulation;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using Model;
 using Model.DTO;
-using Model.Entity;
 using Model.Enums;
+using Services.Simulation;
 using StrategyInterface;
 
-namespace Services;
+namespace Services.PhilosopherMain;
 
 public class PhilosopherHostedService(
-    IPhilosopherStrategy strategy,
-    ITableManager tableManager,
     IOptions<SimulationOptions> options,
-    IEventQueue eventQueue,
-    ISimulationTime simulationTime,
+    IPhilosopherServiceBundle services,
     int ind,
     string name)
     : BackgroundService
@@ -27,8 +26,8 @@ public class PhilosopherHostedService(
     public int CurrentActionDuration { get; private set; }
     public PhilosopherState State { get; private set; }
     public PhilosopherAction Action { get; private set; }
-    internal Fork LeftFork { get; } = tableManager.GetFork(ind);
-    internal Fork RightFork { get; } = tableManager.GetFork(ind + 1);
+    internal Fork LeftFork { get; } = services.TableManager.GetFork(ind);
+    internal Fork RightFork { get; } = services.TableManager.GetFork(ind + 1);
     private readonly Stopwatch _stopwatchWait = new();
     private readonly Stopwatch _stopwatch = Stopwatch.StartNew();
 
@@ -38,7 +37,7 @@ public class PhilosopherHostedService(
         CurrentActionDuration = duration;
         Action = PhilosopherAction.None;
         _stopwatch.Restart();
-        RecordPhilosopherEvent(simulationTime.CurrentTimeMs);
+        RecordPhilosopherEvent(services.SimulationTime.CurrentTimeMs);
     }
 
     private void StartThinking()
@@ -67,7 +66,7 @@ public class PhilosopherHostedService(
         if (!LeftFork.TryTakeFork(Name)) return;
         CurrentActionDuration = options.Value.ForkAcquisitionTime;
         _stopwatch.Restart();
-        RecordLeftForkEvent(simulationTime.CurrentTimeMs);
+        RecordLeftForkEvent(services.SimulationTime.CurrentTimeMs);
     }
     
     private void TakeRightFork()
@@ -76,7 +75,7 @@ public class PhilosopherHostedService(
         if (!RightFork.TryTakeFork(Name)) return;
         CurrentActionDuration = options.Value.ForkAcquisitionTime;
         _stopwatch.Restart();
-        RecordRightForkEvent(simulationTime.CurrentTimeMs);
+        RecordRightForkEvent(services.SimulationTime.CurrentTimeMs);
     }
 
     private void ReleaseForks()
@@ -84,12 +83,12 @@ public class PhilosopherHostedService(
         if (LeftFork.Owner == Name)
         {
             LeftFork.ReleaseFork();
-            RecordLeftForkEvent(simulationTime.CurrentTimeMs-1);
+            RecordLeftForkEvent(services.SimulationTime.CurrentTimeMs-1);
         }
         if (RightFork.Owner == Name)
         {
             RightFork.ReleaseFork();
-            RecordRightForkEvent(simulationTime.CurrentTimeMs-1);
+            RecordRightForkEvent(services.SimulationTime.CurrentTimeMs-1);
         }
     }
 
@@ -98,7 +97,7 @@ public class PhilosopherHostedService(
         if (LeftFork.Owner == Name)
         {
             LeftFork.ReleaseFork();
-            RecordLeftForkEvent(simulationTime.CurrentTimeMs-1);
+            RecordLeftForkEvent(services.SimulationTime.CurrentTimeMs-1);
         }
     }
 
@@ -162,7 +161,7 @@ public class PhilosopherHostedService(
             Update();
             if (IsHungry && Action == PhilosopherAction.None)
             {
-                HandleAction(strategy.SelectAction(Name, LeftFork, RightFork));
+                HandleAction(services.Strategy.SelectAction(Name, LeftFork, RightFork));
             }
             await Task.Delay(10, stoppingToken);
         }
@@ -170,16 +169,16 @@ public class PhilosopherHostedService(
 
     private void RecordPhilosopherEvent(long currentTime)
     {
-        eventQueue.Enqueue(new PhilosopherEventDto(Index, Name, State, Action, Metrics.Eaten, Metrics.WaitingTime, currentTime));
+        services.EventQueue.Enqueue(new CreatePhilosopherEventDto(Index, Name, State, Action, Metrics.Eaten, Metrics.WaitingTime, currentTime));
     }
     
     private void RecordLeftForkEvent(long currentTime)
     {
-        eventQueue.Enqueue(new ForkEventDto(Index, LeftFork.Owner, LeftFork.State, currentTime));
+        services.EventQueue.Enqueue(new CreateForkEventDto(Index, LeftFork.Owner, LeftFork.State, currentTime));
     }
     
     private void RecordRightForkEvent(long currentTime)
     {
-        eventQueue.Enqueue(new ForkEventDto((Index + 1) % options.Value.PhilosophersCount, RightFork.Owner, RightFork.State, currentTime));
+        services.EventQueue.Enqueue(new CreateForkEventDto((Index + 1) % options.Value.PhilosophersCount, RightFork.Owner, RightFork.State, currentTime));
     }
 }

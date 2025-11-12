@@ -5,6 +5,7 @@ using Microsoft.Extensions.Options;
 using Model.DTO;
 using Model.Entity;
 using Model.Enums;
+using Services.Simulation;
 
 namespace Services;
 
@@ -23,14 +24,14 @@ public class RecordManager(IServiceScopeFactory scopeFactory, IOptions<Simulatio
         Console.WriteLine($"Simulation run id : {_runId}");
     }
 
-    public async Task UpdateSimulationRun(SimulationRunDto dto)
+    public async Task UpdateSimulationRun(UpdateSimulationRunDto dto)
     {
         using var scope = scopeFactory.CreateScope();
         var repository = scope.ServiceProvider.GetRequiredService<ISimulationRunRepository>();
         await repository.UpdateAsync(_runId, dto.TimestampMs);
     }
     
-    public async Task RecordPhilosopherEvent(PhilosopherEventDto dto)
+    public async Task RecordPhilosopherEvent(CreatePhilosopherEventDto dto)
     {
         using var scope = scopeFactory.CreateScope(); 
         var repository = scope.ServiceProvider.GetRequiredService<IPhilosopherEventRepository>();
@@ -38,7 +39,7 @@ public class RecordManager(IServiceScopeFactory scopeFactory, IOptions<Simulatio
         await repository.AddAsync(evt);
     }
 
-    public async Task RecordForkEvent(ForkEventDto dto)
+    public async Task RecordForkEvent(CreateForkEventDto dto)
     {
         using var scope = scopeFactory.CreateScope(); 
         var repository = scope.ServiceProvider.GetRequiredService<IForkEventRepository>();

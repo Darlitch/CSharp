@@ -1,7 +1,7 @@
 ﻿using System.Threading.Channels;
-using Contract.Services;
+using Contract.Services.Event;
 
-namespace Services;
+namespace Services.Event;
 
 public class EventQueue : IEventQueue
 {

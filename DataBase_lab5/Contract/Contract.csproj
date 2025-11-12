@@ -8,6 +8,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\Model\Model.csproj" />
+      <ProjectReference Include="..\StrategyInterface\StrategyInterface.csproj" />
     </ItemGroup>
 
 </Project>

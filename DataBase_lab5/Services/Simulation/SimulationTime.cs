@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics;
-using Contract.Services;
+using Contract.Services.Simulation;
 
-namespace Services;
+namespace Services.Simulation;
 
 public class SimulationTime : ISimulationTime
 {

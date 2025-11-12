@@ -1,6 +1,6 @@
-﻿namespace Contract.Services;
+﻿namespace Contract.Services.Simulation;
 
 public interface ISimulationTime
 {
-    public long CurrentTimeMs { get; }
+    long CurrentTimeMs { get; }
 }

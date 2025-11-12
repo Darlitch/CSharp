@@ -23,6 +23,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "View", "View\View.csproj", "{E6ED6DFE-F93A-4520-BA3D-777274A6EB89}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "View.Contract", "View.Contract\View.Contract.csproj", "{D6A4759D-403B-4354-B9B9-8CE1BB85FA7E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "View.Services", "View.Services\View.Services.csproj", "{6C610DBE-0D7A-40C6-ABC4-B63933D4190E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -65,5 +69,13 @@ Global
 		{E6ED6DFE-F93A-4520-BA3D-777274A6EB89}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E6ED6DFE-F93A-4520-BA3D-777274A6EB89}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E6ED6DFE-F93A-4520-BA3D-777274A6EB89}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D6A4759D-403B-4354-B9B9-8CE1BB85FA7E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D6A4759D-403B-4354-B9B9-8CE1BB85FA7E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D6A4759D-403B-4354-B9B9-8CE1BB85FA7E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D6A4759D-403B-4354-B9B9-8CE1BB85FA7E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6C610DBE-0D7A-40C6-ABC4-B63933D4190E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6C610DBE-0D7A-40C6-ABC4-B63933D4190E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6C610DBE-0D7A-40C6-ABC4-B63933D4190E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6C610DBE-0D7A-40C6-ABC4-B63933D4190E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

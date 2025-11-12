@@ -1,13 +1,15 @@
 ﻿using Contract.Services;
+using Contract.Services.Event;
+using Contract.Services.PhilosopherMain;
+using Contract.Services.Simulation;
 using Microsoft.Extensions.Options;
+using Services.PhilosopherMain;
+using Services.Simulation;
 using StrategyInterface;
 
 namespace Services.Philosophers;
 
 public class Decart(
-    IPhilosopherStrategy strategy,
-    ITableManager tableManager,
     IOptions<SimulationOptions> options,
-    IEventQueue eventQueue,
-    ISimulationTime simulationTime,
-    int ind) : PhilosopherHostedService(strategy, tableManager, options, eventQueue, simulationTime, ind, "Декарт");
+    IPhilosopherServiceBundle services,
+    int ind) : PhilosopherHostedService(options, services, ind, "Декарт");

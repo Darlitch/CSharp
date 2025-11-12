@@ -1,8 +1,9 @@
 ﻿using Contract.Services;
+using Contract.Services.Event;
 using Microsoft.Extensions.Hosting;
 using Model.DTO;
 
-namespace Services;
+namespace Services.Event;
 
 public class EventProcessorHostedService(IEventQueue queue, IRecordManager recordManager) : BackgroundService
 {
@@ -16,14 +17,14 @@ public class EventProcessorHostedService(IEventQueue queue, IRecordManager recor
         {
             switch (evt)
             {
-                case PhilosopherEventDto dto:
+                case CreatePhilosopherEventDto dto:
                     await recordManager.RecordPhilosopherEvent(dto);
                     // Console.WriteLine($"{dto.Index} : {dto.CurrentTimeMs}");
                     break;
-                case ForkEventDto dto:
+                case CreateForkEventDto dto:
                     await recordManager.RecordForkEvent(dto);
                     break;
-                case SimulationRunDto dto:
+                case UpdateSimulationRunDto dto:
                     await recordManager.UpdateSimulationRun(dto);
                     break;
                 default:

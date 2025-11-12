@@ -19,9 +19,9 @@ public class SimulationRunRepository(DataBaseContext context) : ISimulationRunRe
         run?.UpdateDuration(durationMs);
     }
 
-    public async Task<bool> ExistsAsync(long runId, CancellationToken ct = default)
+    public async Task<SimulationRun?> GetAsync(long runId, CancellationToken ct = default)
     {
         var run = await context.Simulations.AsNoTracking().FirstOrDefaultAsync(s => s.RunId == runId, ct);
-        return run != null;
+        return run;
     }
 }

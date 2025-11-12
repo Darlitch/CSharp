@@ -1,5 +1,8 @@
 ﻿using Contract.Repositories;
 using Contract.Services;
+using Contract.Services.Event;
+using Contract.Services.PhilosopherMain;
+using Contract.Services.Simulation;
 using Data;
 using Data.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -7,7 +10,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Services;
+using Services.Event;
+using Services.PhilosopherMain;
 using Services.Philosophers;
+using Services.Simulation;
 using Strategy;
 using StrategyInterface;
 
@@ -34,6 +40,7 @@ internal static class Program
                 services.AddSingleton<ISimulationTime, SimulationTime>();
                 services.AddSingleton<IRecordManager, RecordManager>();
                 services.AddSingleton<IEventQueue, EventQueue>();
+                services.AddSingleton<IPhilosopherServiceBundle, PhilosopherServiceBundle>();
                 
                 services.AddScoped<ISimulationRunRepository, SimulationRunRepository>();
                 services.AddScoped<IForkEventRepository, ForkEventRepository>();

@@ -1,4 +1,4 @@
-﻿namespace Contract.Services;
+﻿namespace Contract.Services.Simulation;
 
 public interface ISimulation
 {

@@ -1,4 +1,4 @@
-﻿namespace Contract.Services;
+﻿namespace Contract.Services.Event;
 
 public interface IEventQueue
 {

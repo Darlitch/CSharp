@@ -1,11 +1,13 @@
-﻿using System.Diagnostics;
-using Contract.Services;
+﻿using Contract.Services;
+using Contract.Services.Event;
+using Contract.Services.Simulation;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using Model.DTO;
 using Model.Enums;
+using Services.PhilosopherMain;
 
-namespace Services;
+namespace Services.Simulation;
 
 public class Simulation(IOptions<SimulationOptions> options, IEnumerable<IHostedService> philosophers, IMetricsCollector metricsCollector,
     ITableManager tableManager, ISimulationTime simulationTime, IEventQueue eventQueue) : ISimulation
@@ -24,13 +26,13 @@ public class Simulation(IOptions<SimulationOptions> options, IEnumerable<IHosted
                 if (_philosophers.All(p => p is { IsHungry: true, Action: PhilosopherAction.None }) && tableManager.AllInUse())
                 {
                     metricsCollector.PrintFinalMetrics(currTime);
-                    eventQueue.Enqueue(new SimulationRunDto(currTime));
+                    eventQueue.Enqueue(new UpdateSimulationRunDto(currTime));
                     Console.WriteLine($"Deadlock at {currTime} ms!");
                     return;
                 }
                 else
                 {
-                    // metricsCollector.PrintMetrics(currTime);
+                    metricsCollector.PrintMetrics(currTime);
                 }
             }
         }

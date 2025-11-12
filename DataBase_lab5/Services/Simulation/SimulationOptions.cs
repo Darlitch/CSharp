@@ -1,4 +1,4 @@
-﻿namespace Services;
+﻿namespace Services.Simulation;
 
 public class SimulationOptions
 {
