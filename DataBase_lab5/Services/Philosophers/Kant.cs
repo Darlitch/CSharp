@@ -1,11 +1,7 @@
-﻿using Contract.Services;
-using Contract.Services.Event;
-using Contract.Services.PhilosopherMain;
-using Contract.Services.Simulation;
+﻿using Contract.Services.PhilosopherMain;
 using Microsoft.Extensions.Options;
 using Services.PhilosopherMain;
 using Services.Simulation;
-using StrategyInterface;
 
 namespace Services.Philosophers;
 

@@ -1,15 +1,11 @@
 ﻿using System.Diagnostics;
-using Contract.Services;
-using Contract.Services.Event;
 using Contract.Services.PhilosopherMain;
-using Contract.Services.Simulation;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using Model;
 using Model.DTO;
 using Model.Enums;
 using Services.Simulation;
-using StrategyInterface;
 
 namespace Services.PhilosopherMain;
 

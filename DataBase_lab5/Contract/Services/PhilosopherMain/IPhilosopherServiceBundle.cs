@@ -1,6 +1,5 @@
 ﻿using Contract.Services.Event;
 using Contract.Services.Simulation;
-using Microsoft.Extensions.Options;
 using StrategyInterface;
 
 namespace Contract.Services.PhilosopherMain;

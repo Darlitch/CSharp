@@ -1,5 +1,4 @@
-﻿using System.Xml;
-using Contract.Services;
+﻿using Contract.Services;
 using Microsoft.Extensions.Options;
 using Model;
 using Model.Enums;

@@ -2,8 +2,6 @@
 using Contract.Services.Event;
 using Contract.Services.PhilosopherMain;
 using Contract.Services.Simulation;
-using Microsoft.Extensions.Options;
-using Services.Simulation;
 using StrategyInterface;
 
 namespace Services.PhilosopherMain;
