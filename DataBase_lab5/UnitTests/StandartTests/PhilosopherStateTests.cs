@@ -1,5 +1,4 @@
-﻿using Contract.Services.PhilosopherMain;
-using Microsoft.Extensions.Options;
+﻿using Microsoft.Extensions.Options;
 using Model.Enums;
 using Moq;
 using Services;
@@ -8,7 +7,7 @@ using Services.PhilosopherMain;
 using Services.Simulation;
 using Strategy;
 
-namespace UnitTests;
+namespace UnitTests.StandartTests;
 
 public class PhilosopherStateTests
 {

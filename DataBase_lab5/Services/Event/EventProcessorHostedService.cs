@@ -22,11 +22,11 @@ public class EventProcessorHostedService(IEventQueue queue, IRecordManager recor
                 {
                     case CreatePhilosopherEventDto dto:
                         await recordManager.RecordPhilosopherEvent(runId, dto);
-                        Console.WriteLine($"{dto.Index} : {dto.CurrentTimeMs}");
+                        // Console.WriteLine($"{dto.Index} : {dto.CurrentTimeMs}");
                         break;
                     case CreateForkEventDto dto:
                         await recordManager.RecordForkEvent(runId, dto);
-                        Console.WriteLine($"{dto.Index} : {dto.CurrentTimeMs}");
+                        // Console.WriteLine($"{dto.Index} : {dto.CurrentTimeMs}");
                         break;
                     case UpdateSimulationRunDto dto:
                         await recordManager.UpdateSimulationRun(runId, dto);

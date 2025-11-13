@@ -15,8 +15,9 @@ public class SimulationRunRepository(DataBaseContext context) : ISimulationRunRe
 
     public async Task UpdateAsync(long runId, long durationMs, CancellationToken ct = default)
     {
-        var run = await context.Simulations.FindAsync(runId, ct);
+        var run = await context.Simulations.FirstOrDefaultAsync(s => s.RunId == runId, ct);
         run?.UpdateDuration(durationMs);
+        await context.SaveChangesAsync(ct);
     }
 
     public async Task<SimulationRun?> GetAsync(long runId, CancellationToken ct = default)

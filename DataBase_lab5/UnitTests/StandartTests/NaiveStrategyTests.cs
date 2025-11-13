@@ -2,7 +2,7 @@
 using Model.Enums;
 using Strategy;
 
-namespace UnitTests;
+namespace UnitTests.StandartTests;
 
 public class NaiveStrategyTests
 {

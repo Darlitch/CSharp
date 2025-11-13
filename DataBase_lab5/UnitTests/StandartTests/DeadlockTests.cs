@@ -1,10 +1,8 @@
-﻿using System.Security.Cryptography;
-using Model;
+﻿using Model;
 using Model.Enums;
-using Services;
 using Strategy;
 
-namespace UnitTests;
+namespace UnitTests.StandartTests;
 
 public class DeadlockTests
 {

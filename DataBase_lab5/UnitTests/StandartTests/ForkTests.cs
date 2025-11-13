@@ -1,7 +1,7 @@
 using Model;
 using Model.Enums;
 
-namespace UnitTests;
+namespace UnitTests.StandartTests;
 
 public class ForkTests
 {
