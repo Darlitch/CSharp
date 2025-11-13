@@ -38,10 +38,10 @@ internal static class Program
                 services.AddSingleton<IMetricsCollector, MetricsCollector>();
                 services.AddSingleton<ISimulation, Simulation>();
                 services.AddSingleton<ISimulationTime, SimulationTime>();
-                services.AddSingleton<IRecordManager, RecordManager>();
                 services.AddSingleton<IEventQueue, EventQueue>();
                 services.AddSingleton<IPhilosopherServiceBundle, PhilosopherServiceBundle>();
                 
+                services.AddScoped<IRecordManager, RecordManager>();
                 services.AddScoped<ISimulationRunRepository, SimulationRunRepository>();
                 services.AddScoped<IForkEventRepository, ForkEventRepository>();
                 services.AddScoped<IPhilosopherEventRepository, PhilosopherEventRepository>();
@@ -62,7 +62,7 @@ internal static class Program
             await context.Database.MigrateAsync(); 
         }
         await host.StartAsync();
-        await host.Services.GetRequiredService<IRecordManager>().RecordSimulationRun();
+        // await host.Services.GetRequiredService<IRecordManager>().RecordSimulationRun();
         host.Services.GetRequiredService<ISimulation>().Run();
         await host.StopAsync();
     }

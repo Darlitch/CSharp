@@ -27,15 +27,17 @@ public class Simulation(IOptions<SimulationOptions> options, IEnumerable<IHosted
                 {
                     metricsCollector.PrintFinalMetrics(currTime);
                     eventQueue.Enqueue(new UpdateSimulationRunDto(currTime));
+                    eventQueue.Complete();
                     Console.WriteLine($"Deadlock at {currTime} ms!");
                     return;
                 }
                 else
                 {
-                    metricsCollector.PrintMetrics(currTime);
+                    // metricsCollector.PrintMetrics(currTime);
                 }
             }
         }
+        eventQueue.Complete();
         metricsCollector.PrintFinalMetrics(simulationTime.CurrentTimeMs);
     }
 }

@@ -9,4 +9,5 @@ public class EventQueue : IEventQueue
     
     public void Enqueue(object evt) => _channel.Writer.TryWrite(evt);
     public IAsyncEnumerable<object> ReadAllAsync() => _channel.Reader.ReadAllAsync();
+    public void Complete() => _channel.Writer.Complete();
 }
