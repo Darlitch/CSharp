@@ -1,0 +1,40 @@
+@startuml DiningPhilosophersErd
+
+hide circle
+skinparam linetype ortho
+
+entity "Симуляция" as simulation_run {
+    * runId : UUID <<PK>>
+    --
+    * duration : BIGINT
+}
+
+entity "Изменение Философа" as philosopher_event {
+    * id : BIGINT <<PK>>
+    --
+    * runId : UUID <<FK>>
+    * index : INT
+    * name : VARCHAR(128)
+    * state : SMALLINT <<1=Thinking, 2=Hungry, 3=Eating>>
+    * action : SMALLINT <<1=TakeRightFork, 2=TakeLeftFork, 3=ReleaseLeftFork, 4=ReleaseRightFork, 5=None>>
+    * eaten : INT
+    * waiting_time : BIGINT
+    * timestamp_ms : BIGINT
+
+}
+
+entity "Изменение Вилки" as fork_event {
+    * id : BIGINT <<PK>>
+    --
+    * runId : UUID <<FK>>
+    * index : INT 
+    owner : VARCHAR(128)
+    * state : SMALLINT <<1=Available, 2=InUse>>
+    * timestamp_ms : BIGINT
+}
+
+simulation_state ||--o{ philosopher_state : run <<ON DELETE CASCADE>>
+simulation_state ||--o{ fork_state : run <<ON DELETE CASCADE>>
+
+
+@enduml
