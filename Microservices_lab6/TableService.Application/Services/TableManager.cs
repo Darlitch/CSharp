@@ -31,25 +31,25 @@ public class TableManager : ITableManager
     public void RegisterPhilosopher(RegisterPhilosopherDto dto)
     {
         using var _ = _lock.EnterScope();
-        if (!_philosophers.ContainsKey(dto.Id))
+        if (!_philosophers.ContainsKey(dto.Index))
         {
-            _philosophers.Add(dto.Id, dto.ToPhilosopherEntry());
+            _philosophers.Add(dto.Index, dto.ToPhilosopherEntry());
         }
     }
 
-    public void UpdatePhilosopherMetrics(int id, PhilosopherMetricsDto metrics)
+    public void UpdatePhilosopherMetrics(int index, PhilosopherMetricsDto metrics)
     {
         using var _ = _lock.EnterScope();
-        if (_philosophers.TryGetValue(id, out var entry))
+        if (_philosophers.TryGetValue(index, out var entry))
         {
             entry.Metrics = metrics;
         }
     }
 
-    public void FinishPhilosopher(int id)
+    public void FinishPhilosopher(int index)
     {
         using var _ = _lock.EnterScope();
-        if (_philosophers.TryGetValue(id, out var entry))
+        if (_philosophers.TryGetValue(index, out var entry))
         {
             entry.IsFinished = true;
         }
@@ -58,7 +58,7 @@ public class TableManager : ITableManager
     public IReadOnlyList<ForkSnapshot> GetForksSnapshots()
     {
         using var _ = _lock.EnterScope();
-        return _forks.Select(f => new ForkSnapshot(f.State, f.Owner, f.FreeTime, f.BlockTime)).ToList();
+        return _forks.Select((f, i) => new ForkSnapshot(i+1, f.State, f.Owner, f.FreeTime, f.BlockTime)).ToList();
     }
 
     public IReadOnlyList<MetricsSnapshot> GetMetricsSnapshots()
@@ -66,11 +66,11 @@ public class TableManager : ITableManager
         using var _ = _lock.EnterScope();
         return _philosophers.Values
             .Where(e => e.Metrics is not null)
-            .OrderBy(e => e.Id)
+            .OrderBy(e => e.Index)
             .Select(e =>
             {
                 var m = e.Metrics!;
-                return new MetricsSnapshot(e.Id, e.Name, m.State, m.Action,
+                return new MetricsSnapshot(e.Index, e.Name, m.State, m.Action,
                     m.CurrentActionDuration, m.Eaten, m.WaitingTime);
             }).ToList();
     }

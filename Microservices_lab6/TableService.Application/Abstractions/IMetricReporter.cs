@@ -4,6 +4,6 @@ namespace Application.Abstractions;
 
 public interface IMetricReporter
 {
-    void PrintMetrics(long currTime, List<PhilosopherMetricsDto> philosophersMetrics);
-    void PrintFinalMetrics(long currTime, List<PhilosopherMetricsDto> philosophersMetrics);
+    void PrintMetrics(long currTime);
+    void PrintFinalMetrics(long currTime);
 }

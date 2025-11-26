@@ -1,5 +1,4 @@
 ﻿using Application.Abstractions;
-using Contract.Dtos;
 using Contract.Enums;
 using TableService.Domain.Enums;
 
@@ -7,8 +6,10 @@ namespace Application.Services;
 
 public class MetricReporter(ITableManager tableManager) : IMetricReporter
 {
-    public void PrintMetrics(long currTime, List<PhilosopherMetricsDto> philosophersMetrics)
+    public void PrintMetrics(long currTime)
     {
+        var philosophersMetrics = tableManager.GetMetricsSnapshots();
+        var forksMetrics = tableManager.GetForksSnapshots();
         if (currTime == 0) return;
         Console.WriteLine($"==== ВРЕМЯ {currTime} МС ====");
         Console.WriteLine("Философы:");
@@ -17,15 +18,15 @@ public class MetricReporter(ITableManager tableManager) : IMetricReporter
             var state = metrics.State == PhilosopherState.Hungry
                 ? $"{metrics.State} (Action = {metrics.Action})"
                 : $"{metrics.State} ({metrics.CurrentActionDuration} ms left)";
-            Console.WriteLine($"{metrics.Name}: {state}, съедено: {metrics.Eaten}");
+            Console.WriteLine($"({metrics.Index}) {metrics.Name}: {state}, съедено: {metrics.Eaten}");
         }
         Console.WriteLine("");
         Console.WriteLine("Вилки:");
-        for (var i = 0; i < tableManager.PhilosophersCount; ++i)
+        foreach (var metrics in forksMetrics)
         {
-            Console.WriteLine(tableManager.GetFork(i).State == ForkState.InUse
-                ? $"Fork-{i + 1}: {tableManager.GetFork(i).State} ({tableManager.GetFork(i).Owner})"
-                : $"Fork-{i + 1}: {tableManager.GetFork(i).State}");
+            Console.WriteLine(metrics.State == ForkState.InUse
+                ? $"Fork-{metrics.Index}: {metrics.State} ({metrics.Owner})"
+                : $"Fork-{metrics.Index}: {metrics.State}");
         }
         Console.WriteLine("");
         Console.WriteLine("Пропускная способность:");
@@ -46,21 +47,21 @@ public class MetricReporter(ITableManager tableManager) : IMetricReporter
             max = metrics.WaitingTime;
             maxName = metrics.Name;
         }
-        Console.WriteLine($"Среднее: {sum / 5} мс; Максимальное: {max} мс у {maxName}");
+        Console.WriteLine($"Среднее: {sum / tableManager.PhilosophersCount} мс; Максимальное: {max} мс у {maxName}");
         Console.WriteLine("");
         Console.WriteLine("Коэффициент утилизации:");
-        for (var i = 0; i < tableManager.PhilosophersCount; ++i)
+        foreach (var metrics in forksMetrics)
         {
-            Console.WriteLine($"Fork-{i + 1}: Вилка свободна {((double)tableManager.GetFork(i).FreeTime / currTime * 100):00.00}%; " +
-                              $"Вилка занята {((double)tableManager.GetFork(i).BlockTime / currTime * 100):00.00}%");
+            Console.WriteLine($"Fork-{metrics.Index}: Вилка свободна {((double)metrics.FreeTime / currTime * 100):00.00}%; " +
+                              $"Вилка занята {((double)metrics.BlockTime / currTime * 100):00.00}%");
         }
         Console.WriteLine("========================");
         Console.WriteLine("");
     }
 
-    public void PrintFinalMetrics(long currTime, List<PhilosopherMetricsDto> philosophersMetrics)
+    public void PrintFinalMetrics(long currTime)
     {
-        PrintMetrics(currTime,  philosophersMetrics);
-        Console.WriteLine($"Всего съедено: {philosophersMetrics.Sum(pM => pM.Eaten)}");
+        PrintMetrics(currTime);
+        Console.WriteLine($"Всего съедено: {tableManager.GetMetricsSnapshots().Sum(philosopher => philosopher.Eaten)}");
     }
 }

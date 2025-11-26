@@ -3,7 +3,7 @@
 namespace Application.Snapshots;
 
 public record MetricsSnapshot(
-    int Id,
+    int Index,
     string Name,
     PhilosopherState State,
     PhilosopherAction Action,

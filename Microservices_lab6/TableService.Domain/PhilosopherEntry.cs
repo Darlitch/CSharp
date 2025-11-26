@@ -4,16 +4,16 @@ namespace TableService.Domain;
 
 public class PhilosopherEntry
 {
-    public int Id { get; }
+    public int Index { get; }
     public string Name { get; }
     public int LeftForkId { get; }
     public int RightForkId { get; }
     public PhilosopherMetricsDto? Metrics { get; set; }
     public bool IsFinished { get; set; }
 
-    public PhilosopherEntry(int id, string name, int leftForkId, int rightForkId)
+    public PhilosopherEntry(int index, string name, int leftForkId, int rightForkId)
     {
-        Id = id;
+        Index = index;
         Name = name;
         LeftForkId = leftForkId;
         RightForkId = rightForkId;
