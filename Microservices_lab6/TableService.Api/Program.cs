@@ -8,6 +8,7 @@ using Microsoft.OpenApi;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
+builder.Services.AddHealthChecks();
 
 builder.Services.Configure<TableServiceOptions>(builder.Configuration.GetSection("Options"));
 
