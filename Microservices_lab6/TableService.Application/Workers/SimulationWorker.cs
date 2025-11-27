@@ -5,7 +5,7 @@ using Microsoft.Extensions.Options;
 
 namespace Application.Workers;
 
-public class SimulationWorker(IOptions<TableServiceOptions> options, ITableManager tableManager, 
+public class SimulationWorker(IOptions<TableOptions> options, ITableManager tableManager, 
     IMetricReporter metricReporter, ISimulationTime simulationTime, IHostApplicationLifetime lifetime) : BackgroundService
 {
     private readonly int _displayUpdateInterval = options.Value.DisplayUpdateInterval;

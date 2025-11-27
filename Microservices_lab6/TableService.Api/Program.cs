@@ -10,7 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddHealthChecks();
 
-builder.Services.Configure<TableServiceOptions>(builder.Configuration.GetSection("Options"));
+builder.Services.Configure<TableOptions>(builder.Configuration.GetSection("Options"));
 
 builder.Services.AddSingleton<ISimulationTime, SimulationTime>();
 builder.Services.AddSingleton<IMetricReporter, MetricReporter>();

@@ -49,5 +49,4 @@ public class TableController(ITableManager tableManager) : ControllerBase
         tableManager.FinishPhilosopher(philosopherId);
         return Ok();
     }
-    
 }

@@ -17,7 +17,7 @@ public class TableManager : ITableManager
     private readonly ISimulationTime _simulationTime;
     public int PhilosophersCount { get; }
 
-    public TableManager(IOptions<TableServiceOptions> options, ISimulationTime simulationTime)
+    public TableManager(IOptions<TableOptions> options, ISimulationTime simulationTime)
     {
         PhilosophersCount = options.Value.PhilosophersCount;
         _forks = new List<Fork>();
