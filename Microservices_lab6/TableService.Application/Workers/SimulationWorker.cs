@@ -1,15 +1,37 @@
 ﻿using Application.Abstractions;
-using Application.Configuration;
+using Application.Configurations;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 
 namespace Application.Workers;
 
-public class SimulationWorker(IOptions<TableServiceOptions> options, ITableManager tableManager,
-    IMetricReporter metricReporter) : BackgroundService
+public class SimulationWorker(IOptions<TableServiceOptions> options, ITableManager tableManager, 
+    IMetricReporter metricReporter, ISimulationTime simulationTime, IHostApplicationLifetime lifetime) : BackgroundService
 {
-    protected override async Task ExecuteAsync(CancellationToken stoppingToken)
+    private readonly int _displayUpdateInterval = options.Value.DisplayUpdateInterval;
+    protected override async Task ExecuteAsync(CancellationToken st)
     {
-        throw new NotImplementedException();
+        while (!tableManager.IsReady())
+        {
+            await Task.Delay(10, st);
+        }
+        simulationTime.Start();
+        await Task.Delay(_displayUpdateInterval, st);
+        while (!tableManager.IsAllFinished())
+        {
+            var currTime = simulationTime.CurrentTimeMs;
+            if (tableManager.IsDeadLock())
+            {
+                Console.WriteLine($"Deadlock at {currTime} ms!");
+                break;
+            }
+            else
+            {
+                metricReporter.PrintMetrics(currTime);
+            }
+            await Task.Delay(_displayUpdateInterval, st);
+        }
+        metricReporter.PrintFinalMetrics(simulationTime.CurrentTimeMs);
+        lifetime.StopApplication();
     }
 }

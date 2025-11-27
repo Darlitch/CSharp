@@ -1,5 +1,5 @@
 ﻿using Application.Abstractions;
-using Application.Configuration;
+using Application.Configurations;
 using Application.Extensions;
 using Application.Snapshots;
 using Contract.Dtos;
@@ -14,9 +14,10 @@ public class TableManager : ITableManager
     private readonly List<Fork> _forks;
     private readonly Dictionary<int, PhilosopherEntry> _philosophers;
     private readonly Lock _lock;
+    private readonly ISimulationTime _simulationTime;
     public int PhilosophersCount { get; }
 
-    public TableManager(IOptions<TableServiceOptions> options)
+    public TableManager(IOptions<TableServiceOptions> options, ISimulationTime simulationTime)
     {
         PhilosophersCount = options.Value.PhilosophersCount;
         _forks = new List<Fork>();
@@ -26,6 +27,7 @@ public class TableManager : ITableManager
         }
         _philosophers = new Dictionary<int, PhilosopherEntry>();
         _lock = new Lock();
+        _simulationTime = simulationTime;
     }
 
     public void RegisterPhilosopher(RegisterPhilosopherDto dto)
@@ -55,6 +57,48 @@ public class TableManager : ITableManager
         }
     }
 
+    public TakeForkResult TryTakeLeftFork(int philosopherId)
+    {
+        using var _ = _lock.EnterScope();
+        return _philosophers.TryGetValue(philosopherId, out var entry) ? 
+            new TakeForkResult(TryTakeFork(entry, entry.LeftForkId - 1)) : new TakeForkResult(false);
+    }
+
+    public TakeForkResult TryTakeRightFork(int philosopherId)
+    {
+        using var _ = _lock.EnterScope();
+        return _philosophers.TryGetValue(philosopherId, out var entry) ?
+            new TakeForkResult(TryTakeFork(entry, entry.RightForkId - 1)) : new TakeForkResult(false);
+    }
+
+    private bool TryTakeFork(PhilosopherEntry entry, int forkId)
+    {
+        if (forkId >= 0 && forkId < PhilosophersCount && _forks[forkId].IsAvailable())
+        {
+            _forks[forkId].TryTakeFork(entry.Name, _simulationTime.CurrentTimeMs);
+            return true;
+        }
+        return false;
+    }
+
+    public void ReleaseForks(int philosopherId)
+    {
+        using var _ = _lock.EnterScope();
+        if (_philosophers.TryGetValue(philosopherId, out var entry))
+        {
+            ReleaseFork(entry, entry.LeftForkId - 1);
+            ReleaseFork(entry, entry.RightForkId - 1);
+        }
+    }
+
+    private void ReleaseFork(PhilosopherEntry entry, int forkId)
+    {
+        if (forkId >= 0 && forkId < PhilosophersCount && _forks[forkId].IsOwner(entry.Name))
+        {
+            _forks[forkId].ReleaseFork(_simulationTime.CurrentTimeMs);
+        }
+    }
+
     public IReadOnlyList<ForkSnapshot> GetForksSnapshots()
     {
         using var _ = _lock.EnterScope();
@@ -73,6 +117,12 @@ public class TableManager : ITableManager
                 return new MetricsSnapshot(e.Index, e.Name, m.State, m.Action,
                     m.CurrentActionDuration, m.Eaten, m.WaitingTime);
             }).ToList();
+    }
+
+    public bool IsReady()
+    {
+        using var _ = _lock.EnterScope();
+        return _philosophers.Count == PhilosophersCount;
     }
     
     public bool IsAllFinished()
