@@ -9,14 +9,14 @@ public class SimulationWorker(IOptions<TableOptions> options, ITableManager tabl
     IMetricReporter metricReporter, ISimulationTime simulationTime, IHostApplicationLifetime lifetime) : BackgroundService
 {
     private readonly int _displayUpdateInterval = options.Value.DisplayUpdateInterval;
-    protected override async Task ExecuteAsync(CancellationToken st)
+    protected override async Task ExecuteAsync(CancellationToken ct)
     {
         while (!tableManager.IsReady())
         {
-            await Task.Delay(10, st);
+            await Task.Delay(10, ct);
         }
         simulationTime.Start();
-        await Task.Delay(_displayUpdateInterval, st);
+        await Task.Delay(_displayUpdateInterval, ct);
         while (!tableManager.IsAllFinished())
         {
             var currTime = simulationTime.CurrentTimeMs;
@@ -29,7 +29,7 @@ public class SimulationWorker(IOptions<TableOptions> options, ITableManager tabl
             {
                 metricReporter.PrintMetrics(currTime);
             }
-            await Task.Delay(_displayUpdateInterval, st);
+            await Task.Delay(_displayUpdateInterval, ct);
         }
         metricReporter.PrintFinalMetrics(simulationTime.CurrentTimeMs);
         lifetime.StopApplication();

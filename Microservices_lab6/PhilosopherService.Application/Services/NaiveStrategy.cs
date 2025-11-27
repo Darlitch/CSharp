@@ -8,14 +8,11 @@ public class NaiveStrategy : IStrategy
 {
     public PhilosopherAction SelectAction(ForkState leftFork, ForkState rightFork)
     {
-        if ((leftFork == ForkState.NotInHand))
+        return leftFork switch
         {
-            return PhilosopherAction.TakeLeftFork;
-        }
-        if ((leftFork == ForkState.InHand) && rightFork == ForkState.NotInHand)
-        {
-            return PhilosopherAction.TakeRightFork;
-        }
-        return PhilosopherAction.None;
+            ForkState.NotInHand => PhilosopherAction.TakeLeftFork,
+            ForkState.InHand when rightFork == ForkState.NotInHand => PhilosopherAction.TakeRightFork,
+            _ => PhilosopherAction.None
+        };
     }
 }
