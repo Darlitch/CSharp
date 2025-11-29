@@ -54,6 +54,7 @@ public class TableManager : ITableManager
         if (_philosophers.TryGetValue(index, out var entry))
         {
             entry.IsFinished = true;
+            ReleaseForks(index);
         }
     }
 

@@ -10,7 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddHealthChecks();
 
-builder.Services.Configure<TableOptions>(builder.Configuration.GetSection("Options"));
+builder.Services.Configure<TableOptions>(builder.Configuration.GetSection("TableOptions"));
 
 builder.Services.AddSingleton<ISimulationTime, SimulationTime>();
 builder.Services.AddSingleton<IMetricReporter, MetricReporter>();
@@ -37,4 +37,5 @@ app.UseSwaggerUI(c =>
 });
 
 app.MapControllers();
+app.MapHealthChecks("/health");
 app.Run();

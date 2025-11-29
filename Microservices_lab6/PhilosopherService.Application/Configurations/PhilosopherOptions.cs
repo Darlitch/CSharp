@@ -6,7 +6,7 @@ public class PhilosopherOptions
     public required string Name { get; set; }
     public int LeftForkId { get; set; }
     public int RightForkId { get; set; }
-    public int DurationMinutes { get; set; }
+    public double DurationMinutes { get; set; }
     
     public int ThinkingTimeMin { get; set; }
     public int ThinkingTimeMax { get; set; }

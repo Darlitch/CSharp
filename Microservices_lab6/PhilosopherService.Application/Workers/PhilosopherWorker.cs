@@ -137,6 +137,7 @@ public class PhilosopherWorker(IStrategy strategy, IOptions<PhilosopherOptions> 
         var lastTime = _simulationTime.ElapsedMilliseconds;
         while (_simulationTime.ElapsedMilliseconds < _options.DurationMinutes * 60 * 1000)
         {
+            Console.WriteLine(_options.DurationMinutes);
             await Update();
             if (_metrics is { State: PhilosopherState.Hungry, Action: PhilosopherAction.None })
             {

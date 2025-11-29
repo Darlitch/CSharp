@@ -28,6 +28,7 @@ public class SimulationWorker(IOptions<TableOptions> options, ITableManager tabl
             else
             {
                 metricReporter.PrintMetrics(currTime);
+                // Console.WriteLine(_displayUpdateInterval);
             }
             await Task.Delay(_displayUpdateInterval, ct);
         }
