@@ -1,0 +1,115 @@
+﻿services:
+  table-service:
+    image: table-service
+    build:
+      context: .
+      dockerfile: TableService.Api/Dockerfile
+      args:
+        APP_UID: 1000
+    ports:
+      - "8080:8080"
+    environment:
+      ASPNETCORE_URLS: http://+:8080
+      TableOptions__PhilosophersCount: 5
+      TableOptions__DisplayUpdateInterval: 20
+    healthcheck:
+      start_period: 3s
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      
+  philosopher-plato:
+    image: philosopher-plato
+    build:
+      context: .
+      dockerfile: PhilosopherService.Host/Dockerfile
+      args:
+        APP_UID: 1000
+    environment:
+      ASPNETCORE_URLS: http://+:8081
+      PhilosopherOptions__Name: Платон
+      PhilosopherOptions__Id: 1
+      PhilosopherOptions__LeftForkId: 1
+      PhilosopherOptions__RightForkId: 2
+      PhilosopherOptions__DurationMinutes: 0.2
+      RequestDomains__TableService: http://table-service:8080
+    depends_on:
+      table-service:
+        condition: service_healthy
+        
+  philosopher-aristotle:
+    image: philosopher-aristotle
+    build:
+      context: .
+      dockerfile: PhilosopherService.Host/Dockerfile
+      args:
+        APP_UID: 1000
+    environment:
+      ASPNETCORE_URLS: http://+:8081
+      PhilosopherOptions__Name: Аристотель
+      PhilosopherOptions__Id: 2
+      PhilosopherOptions__LeftForkId: 2
+      PhilosopherOptions__RightForkId: 3
+      PhilosopherOptions__DurationMinutes: 0.2
+      RequestDomains__TableService: http://table-service:8080
+    depends_on:
+      table-service:
+        condition: service_healthy
+
+  philosopher-socrates:
+    image: philosopher-socrates
+    build:
+      context: .
+      dockerfile: PhilosopherService.Host/Dockerfile
+      args:
+        APP_UID: 1000
+    environment:
+      ASPNETCORE_URLS: http://+:8081
+      PhilosopherOptions__Name: Сократ
+      PhilosopherOptions__Id: 3
+      PhilosopherOptions__LeftForkId: 3
+      PhilosopherOptions__RightForkId: 4
+      PhilosopherOptions__DurationMinutes: 0.2
+      RequestDomains__TableService: http://table-service:8080
+    depends_on:
+      table-service:
+        condition: service_healthy
+        
+  philosopher-descartes:
+    image: philosopher-descartes
+    build:
+      context: .
+      dockerfile: PhilosopherService.Host/Dockerfile
+      args:
+        APP_UID: 1000
+    environment:
+      ASPNETCORE_URLS: http://+:8081
+      PhilosopherOptions__Name: Декарт
+      PhilosopherOptions__Id: 4
+      PhilosopherOptions__LeftForkId: 4
+      PhilosopherOptions__RightForkId: 5
+      PhilosopherOptions__DurationMinutes: 0.2
+      RequestDomains__TableService: http://table-service:8080
+    depends_on:
+      table-service:
+        condition: service_healthy
+        
+  philosopher-kant:
+    image: philosopher-kant
+    build:
+      context: .
+      dockerfile: PhilosopherService.Host/Dockerfile
+      args:
+        APP_UID: 1000
+    environment:
+      ASPNETCORE_URLS: http://+:8081
+      PhilosopherOptions__Name: Кант
+      PhilosopherOptions__Id: 5
+      PhilosopherOptions__LeftForkId: 5
+      PhilosopherOptions__RightForkId: 1
+      PhilosopherOptions__DurationMinutes: 0.2
+      RequestDomains__TableService: http://table-service:8080
+    depends_on:
+      table-service:
+        condition: service_healthy
