@@ -19,6 +19,38 @@
       timeout: 10s
       retries: 3
       
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: user
+      RABBITMQ_DEFAULT_PASS: password
+    healthcheck:
+      test: [ "CMD", "rabbitmq-diagnostics", "-q", "status" ]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 10s
+      
+  coordinator-service:
+    image: coordinator-service
+    build:
+      context: .
+      dockerfile: CoordinatorService.Host/Dockerfile
+      args:
+        APP_UID: 1000
+    environment:
+      ASPNETCORE_URLS: http://+:8082
+      CoordinatorOptions__PhilosopherCount: 5
+      RabbitMQ__Host: rabbitmq
+      RabbitMQ__Username: user
+      RabbitMQ__Password: password
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+      
   philosopher-plato:
     image: philosopher-plato
     build:
@@ -33,9 +65,14 @@
       PhilosopherOptions__LeftForkId: 1
       PhilosopherOptions__RightForkId: 2
       PhilosopherOptions__DurationMinutes: 0.2
+      RabbitMQ__Host: rabbitmq
+      RabbitMQ__Username: user
+      RabbitMQ__Password: password
       RequestDomains__TableService: http://table-service:8080
     depends_on:
       table-service:
+        condition: service_healthy
+      rabbitmq:
         condition: service_healthy
         
   philosopher-aristotle:
@@ -52,9 +89,14 @@
       PhilosopherOptions__LeftForkId: 2
       PhilosopherOptions__RightForkId: 3
       PhilosopherOptions__DurationMinutes: 0.2
+      RabbitMQ__Host: rabbitmq
+      RabbitMQ__Username: user
+      RabbitMQ__Password: password
       RequestDomains__TableService: http://table-service:8080
     depends_on:
       table-service:
+        condition: service_healthy
+      rabbitmq:
         condition: service_healthy
 
   philosopher-socrates:
@@ -71,9 +113,14 @@
       PhilosopherOptions__LeftForkId: 3
       PhilosopherOptions__RightForkId: 4
       PhilosopherOptions__DurationMinutes: 0.2
+      RabbitMQ__Host: rabbitmq
+      RabbitMQ__Username: user
+      RabbitMQ__Password: password
       RequestDomains__TableService: http://table-service:8080
     depends_on:
       table-service:
+        condition: service_healthy
+      rabbitmq:
         condition: service_healthy
         
   philosopher-descartes:
@@ -90,9 +137,14 @@
       PhilosopherOptions__LeftForkId: 4
       PhilosopherOptions__RightForkId: 5
       PhilosopherOptions__DurationMinutes: 0.2
+      RabbitMQ__Host: rabbitmq
+      RabbitMQ__Username: user
+      RabbitMQ__Password: password
       RequestDomains__TableService: http://table-service:8080
     depends_on:
       table-service:
+        condition: service_healthy
+      rabbitmq:
         condition: service_healthy
         
   philosopher-kant:
@@ -109,7 +161,12 @@
       PhilosopherOptions__LeftForkId: 5
       PhilosopherOptions__RightForkId: 1
       PhilosopherOptions__DurationMinutes: 0.2
+      RabbitMQ__Host: rabbitmq
+      RabbitMQ__Username: user
+      RabbitMQ__Password: password
       RequestDomains__TableService: http://table-service:8080
     depends_on:
       table-service:
+        condition: service_healthy
+      rabbitmq:
         condition: service_healthy

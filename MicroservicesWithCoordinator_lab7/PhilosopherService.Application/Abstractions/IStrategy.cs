@@ -1,4 +1,5 @@
 ﻿using Contract.Enums;
+using PhilosopherService.Domain.Enums;
 
 namespace PhilosopherService.Application.Abstractions;
 

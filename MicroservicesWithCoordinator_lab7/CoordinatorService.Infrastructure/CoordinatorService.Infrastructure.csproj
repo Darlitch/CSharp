@@ -7,7 +7,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\PhilosopherService.Application\PhilosopherService.Application.csproj" />
+      <ProjectReference Include="..\CoordinatorService.Application\CoordinatorService.Application.csproj" />
     </ItemGroup>
 
     <ItemGroup>

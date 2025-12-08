@@ -1,4 +1,4 @@
-﻿namespace Contract.Enums;
+﻿namespace PhilosopherService.Domain.Enums;
 
 public enum ForkState
 {

@@ -7,6 +7,7 @@ using PhilosopherService.Application.Abstractions;
 using PhilosopherService.Application.Configurations;
 using PhilosopherService.Application.Extensions;
 using PhilosopherService.Domain;
+using PhilosopherService.Domain.Enums;
 
 namespace PhilosopherService.Application.Workers;
 

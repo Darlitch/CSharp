@@ -21,6 +21,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		docker-compose.yml = docker-compose.yml
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoordinatorService.Application", "CoordinatorService.Application\CoordinatorService.Application.csproj", "{8FC836ED-3E0C-4C0B-8374-F5377E997DF9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoordinatorService.Infrastructure", "CoordinatorService.Infrastructure\CoordinatorService.Infrastructure.csproj", "{5158EA44-A12E-49D1-997D-627073DD1C53}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoordinatorService.Host", "CoordinatorService.Host\CoordinatorService.Host.csproj", "{A2B03AA9-B9E7-441F-B7D8-58D55FBF3AE8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -59,5 +65,17 @@ Global
 		{D21E9449-93EA-4D59-ABA5-3598856CDFA3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D21E9449-93EA-4D59-ABA5-3598856CDFA3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D21E9449-93EA-4D59-ABA5-3598856CDFA3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8FC836ED-3E0C-4C0B-8374-F5377E997DF9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8FC836ED-3E0C-4C0B-8374-F5377E997DF9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8FC836ED-3E0C-4C0B-8374-F5377E997DF9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8FC836ED-3E0C-4C0B-8374-F5377E997DF9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5158EA44-A12E-49D1-997D-627073DD1C53}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5158EA44-A12E-49D1-997D-627073DD1C53}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5158EA44-A12E-49D1-997D-627073DD1C53}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5158EA44-A12E-49D1-997D-627073DD1C53}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A2B03AA9-B9E7-441F-B7D8-58D55FBF3AE8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A2B03AA9-B9E7-441F-B7D8-58D55FBF3AE8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A2B03AA9-B9E7-441F-B7D8-58D55FBF3AE8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A2B03AA9-B9E7-441F-B7D8-58D55FBF3AE8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
