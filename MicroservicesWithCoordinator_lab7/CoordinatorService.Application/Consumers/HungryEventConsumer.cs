@@ -4,7 +4,7 @@ using MassTransit;
 
 namespace CoordinatorService.Application.Consumers;
 
-public class HungryEventConsumer(ICoordinatorManager coordinatorManager, IPublishEndpoint publishEndpoint) : IConsumer<HungryEvent>
+public class HungryEventConsumer(ICoordinatorManager coordinatorManager, ISendEndpointProvider endpointProvider) : IConsumer<HungryEvent>
 {
     public async Task Consume(ConsumeContext<HungryEvent> context)
     {
@@ -12,7 +12,8 @@ public class HungryEventConsumer(ICoordinatorManager coordinatorManager, IPublis
         coordinatorManager.EnqueueHungry(philosopherId);
         if (coordinatorManager.TryGrantPermissionToEat(out var allowedPhilosopherId))
         {
-            await publishEndpoint.Publish(new EatingPermissionGrantedEvent(allowedPhilosopherId));
+            var endpoint = await endpointProvider.GetSendEndpoint(new Uri($"queue:philosopher-{allowedPhilosopherId}"));
+            await endpoint.Send(new EatingPermissionGrantedEvent(allowedPhilosopherId));
         }
     }
 }

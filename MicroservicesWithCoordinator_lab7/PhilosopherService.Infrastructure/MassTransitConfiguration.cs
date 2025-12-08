@@ -1,5 +1,4 @@
-﻿using Contract.Events;
-using MassTransit;
+﻿using MassTransit;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using PhilosopherService.Application.Consumers;

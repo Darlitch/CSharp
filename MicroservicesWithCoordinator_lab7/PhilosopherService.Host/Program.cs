@@ -15,10 +15,13 @@ builder.Services.Configure<RequestDomains>(builder.Configuration.GetSection("Req
 builder.Services.AddSingleton<RequestFactory>();
 
 builder.Services.AddSingleton<IStrategy, NaiveStrategy>();
+builder.Services.AddSingleton<IEatingPermissionService, EatingPermissionService>();
 
 builder.Services.AddHttpClient<ITableServiceClient, TableServiceClient>();
 
 builder.Services.AddHostedService<PhilosopherWorker>();
+
+builder.Services.AddMassTransitConfigurator(builder.Configuration);
 
 var app = builder.Build();
 app.Run();

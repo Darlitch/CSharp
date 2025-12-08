@@ -1,6 +1,8 @@
 ﻿using System.Diagnostics;
 using Contract.Dtos;
 using Contract.Enums;
+using Contract.Events;
+using MassTransit;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using PhilosopherService.Application.Abstractions;
@@ -11,8 +13,8 @@ using PhilosopherService.Domain.Enums;
 
 namespace PhilosopherService.Application.Workers;
 
-public class PhilosopherWorker(IStrategy strategy, IOptions<PhilosopherOptions> options,
-    ITableServiceClient tableServiceClient) : BackgroundService
+public class PhilosopherWorker(IStrategy strategy, IOptions<PhilosopherOptions> options, ITableServiceClient tableServiceClient,
+    IBus bus, IEatingPermissionService eatingPermissionService) : BackgroundService
 {
     private ForkState LeftFork { get; set; } = ForkState.NotInHand;
     private ForkState RightFork { get; set; } = ForkState.NotInHand;
@@ -24,6 +26,7 @@ public class PhilosopherWorker(IStrategy strategy, IOptions<PhilosopherOptions> 
     private readonly Stopwatch _waitingTime = new();
     private readonly Random _random = new();
     
+    
     private void SetState(PhilosopherState state, int duration)
     {
         _metrics.State = state;
@@ -32,15 +35,18 @@ public class PhilosopherWorker(IStrategy strategy, IOptions<PhilosopherOptions> 
         _currActionTime.Restart();
     }
     
-    private void StartThinking()
+    private async Task StartThinking()
     {
-        SetState(PhilosopherState.Thinking, _random.Next(_options.ThinkingTimeMin, _options.ThinkingTimeMax));
-        // SetState(PhilosopherState.Thinking, 100);
+        // SetState(PhilosopherState.Thinking, _random.Next(_options.ThinkingTimeMin, _options.ThinkingTimeMax));
+        eatingPermissionService.ResetPermission();
+        await bus.Publish(new EndEatingEvent(_options.Id));
+        SetState(PhilosopherState.Thinking, 100);
     }
     
-    private void SetHungry()
+    private async Task SetHungry()
     {
         SetState(PhilosopherState.Hungry, 0);
+        await bus.Publish(new HungryEvent(_options.Id));
         _waitingTime.Restart();
     }
     
@@ -91,10 +97,10 @@ public class PhilosopherWorker(IStrategy strategy, IOptions<PhilosopherOptions> 
         switch (_metrics.State)
         {
             case PhilosopherState.Thinking:
-                SetHungry();
+                await SetHungry();
                 break;
             case PhilosopherState.Eating:
-                StartThinking();
+                await StartThinking();
                 await ReleaseForks();
                 break;
             case PhilosopherState.Hungry:
@@ -133,14 +139,14 @@ public class PhilosopherWorker(IStrategy strategy, IOptions<PhilosopherOptions> 
     {
         await tableServiceClient.Register(_options.ToRegisterPhilosopherDto(), ct);
         _simulationTime.Restart();
-        StartThinking();
+        SetState(PhilosopherState.Thinking, _random.Next(_options.ThinkingTimeMin, _options.ThinkingTimeMax));
         var lastTime = _simulationTime.ElapsedMilliseconds;
         while (_simulationTime.ElapsedMilliseconds < _options.DurationMinutes * 60 * 1000)
         {
-            Console.WriteLine(_options.DurationMinutes);
             await Update();
-            if (_metrics is { State: PhilosopherState.Hungry, Action: PhilosopherAction.None })
+            if (_metrics is { State: PhilosopherState.Hungry, Action: PhilosopherAction.None } && eatingPermissionService.CheckPermission())
             {
+                Console.WriteLine($"{_options.Name}: {eatingPermissionService.CheckPermission()} {_metrics.State}");
                 await HandleAction(strategy.SelectAction(LeftFork, RightFork));
             }
             if (_simulationTime.ElapsedMilliseconds - lastTime >= 50)
